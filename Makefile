@@ -4,6 +4,7 @@ NAME		=	minishell
 # Compilation flags
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
+READLINE_FLAG = -lreadline
 
 # Libft
 LIBFT_PATH	=	src/libft/
@@ -16,7 +17,8 @@ INC			=	-I ./src/libft/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	test.c
+SRC			=	test.c\
+				function_test.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
@@ -52,7 +54,7 @@ $(LIBFT):
 # Target to build the mandatory part
 $(NAME): $(OBJS)
 	@echo "$(GREEN)Compiling $(NAME)..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(INC)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(INC) $(READLINE_FLAG)
 	@echo "$(YELLOW)\n\o\ Compilation completed! /o/\n"
 
 # Compiles C source files into object files
