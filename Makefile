@@ -17,8 +17,7 @@ INC			=	-I ./src/libft/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	test.c\
-				function_test.c
+SRC			=	test.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
