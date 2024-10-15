@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 14:00:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:02:03 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 typedef struct global
 {
 	char			*line;
-	struct global	*next; 
-	struct global	*prev; 
+	struct global	*next;
+	struct global	*prev;
 }					t_global;
 
 

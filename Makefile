@@ -13,8 +13,6 @@ LIBFT		=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Includes
 INC			=	-I ./src/libft/\
-				-I ./src/cmd/\
-				-i ./src/parsing/\
 				-I ./inc/
 
 # Sources
