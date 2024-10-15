@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 15:24:09 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:32:12 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ typedef struct s_env
 	char			*env;
 	struct s_env	*next;
 	struct s_env	*prev;
-}				t_env;
+}					t_env;
 
+// Deso Romaingue, quand je sauvegarde ca enleve les tabs :(((
+// SRC
+// BUILTING
+// CD
 
-//SRC
-	//BUILTING
-		//CD
-
-		//ECHO
-void	print_echo(int nbr_caract, char **av);
-void	ft_echo(char **av);
-int		check_n(char *line);
+// ECHO
+void				print_echo(int nbr_caract, char **av);
+void				ft_echo(char **av);
+int					check_n(char *line);
 #endif
