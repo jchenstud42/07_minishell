@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 11:15:52 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:00:15 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+//NEXT et PREV a mettre dans une autre structure plus tard pour plus boooooooo
 
 typedef struct global
 {
-	char	*line;
-}			t_global;
+	char			*line;
+	struct global	*next; 
+	struct global	*prev; 
+}					t_global;
 
 
 
