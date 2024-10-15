@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 14:56:11 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/15 15:24:09 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@
 typedef struct global
 {
 	char			*line;
-	struct global	*next;
-	struct global	*prev;
 }					t_global;
 
 // J'ai mis l'index(/position) pour le moment, a voir si c'est necessaire
@@ -48,4 +46,20 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_env
+{
+	char			*env;
+	struct s_env	*next;
+	struct s_env	*prev;
+}				t_env;
+
+
+//SRC
+	//BUILTING
+		//CD
+
+		//ECHO
+void	print_echo(int nbr_caract, char **av);
+void	ft_echo(char **av);
+int		check_n(char *line);
 #endif

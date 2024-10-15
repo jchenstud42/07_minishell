@@ -6,34 +6,42 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 10:25:45 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:14:40 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_echo(int count_arg, char **av)
+void	print_echo(int nbr_caract, char **av)
 {
 	int	i;
+	int	add_line;
 
 	i = 1;
-	while (i < count_arg)
+	add_line = 1;
+	if (av[i] && check_n(av[i]))
 	{
-		write(1, av[i], ft_strlen(av[i]));
+		add_line = 0;
 		i++;
 	}
-	if (check_n == 1)
-		ft_printf('\n');
+	while (i < nbr_caract)
+	{
+		write(1, av[i], ft_strlen(av[i]));
+		if (i != nbr_caract - 1)
+			write(1, ' ', 1);
+		i++;
+	}
+	if (add_line == 0)
+		write(1, '\n', 1);
 }
 
 void	ft_echo(char **av)
 {
-	int	count_arg;
+	int	nbr_caract;
 
-	count_arg = 0;
-	while (av[count_arg])
-		count_arg++;
-	print_echo(count_arg, av);
+	while (av[nbr_caract])
+		nbr_caract++;
+	print_echo(nbr_caract, av);
 }
 
 int	check_n(char *line)
@@ -41,11 +49,14 @@ int	check_n(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i])
+	if (!line)
+		return (1);
+	if (line[i] || line[i] == '-')
 	{
-		if (line[i] == '-' && line[i + 1] == 'n')
+		while (line[i] && line[i] == 'n')
+			i++;
+		if (i == ft_strlen(line))
 			return (1);
-		i++;
 	}
 	return (0);
 }
