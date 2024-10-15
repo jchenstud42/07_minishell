@@ -13,11 +13,13 @@ LIBFT		=	$(LIBFT_PATH)$(LIBFT_NAME)
 
 # Includes
 INC			=	-I ./src/libft/\
+				-I ./src/cmd/\
+				-i ./src/parsing/\
 				-I ./inc/
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	test.c
+SRC			=	test.c 
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
