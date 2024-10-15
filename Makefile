@@ -17,7 +17,7 @@ INC			=	-I ./src/libft/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	test.c 
+SRC			=	token/init_token.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
