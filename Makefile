@@ -17,7 +17,10 @@ INC			=	-I ./src/libft/\
 
 # Sources
 SRC_PATH	=	src/
-SRC			=	token/init_token.c
+SRC			=	minishell.c \
+				token/init_token.c \
+				free/free.c \
+				error/error_handler.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 

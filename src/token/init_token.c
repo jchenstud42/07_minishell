@@ -6,11 +6,11 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/15 15:30:02 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/18 12:15:31 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 // Ajoute un noeud a la fin de notre liste chainee de token.
 void	append_token_node(t_token **token_list, char *prompt)
@@ -22,7 +22,7 @@ void	append_token_node(t_token **token_list, char *prompt)
 		return ;
 	token_to_append = malloc(sizeof(t_token));
 	if (!token_to_append)
-		return ;
+		error_handler(TOKENIZATION_FAILED, *token_list);
 	token_to_append->next = NULL;
 	token_to_append->token = ft_strdup(prompt);
 	token_to_append->type = token_type(prompt);
