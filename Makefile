@@ -28,7 +28,7 @@ SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
 OBJ_PATH	=	obj/
-OBJ			=	$(SRCS:.c=.o)
+OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
 
 # Color codes for terminal output

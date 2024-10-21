@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/18 12:15:31 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/21 15:17:27 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,6 @@ void	append_token_node(t_token **token_list, char *prompt)
 		token_to_append->index = last_node->index + 1;
 	}
 }
+
+
+// Si tu vos ca, juste c'est quoi les couleurs dans le google docs ? Entre les differentes fonctions, genre y a du jaune et du orange, je ne vois pas trop desole...

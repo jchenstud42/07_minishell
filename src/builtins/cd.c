@@ -6,9 +6,13 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:31:41 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 11:32:59 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:11:05 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool	ft_cd(t_global *data, char **params)
+{
+	
+}
