@@ -18,15 +18,17 @@ INC			=	-I ./src/libft/\
 # Sources
 SRC_PATH	=	src/
 SRC			=	minishell.c \
+				builtins/cd.c echo.c env.c exit.c export.c pwd.c \
+				error/error_handler.c \
+				exec/exec.c \
 				token/init_token.c \
 				free/free.c \
-				error/error_handler.c
-
+				
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
 OBJ_PATH	=	obj/
-OBJ			=	$(SRC:.c=.o)
+OBJ			=	$(SRCS:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
 
 # Color codes for terminal output
