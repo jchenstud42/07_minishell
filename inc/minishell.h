@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 09:57:56 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:40:05 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ typedef struct global
 void				print_echo(int nbr_caract, char **av);
 void				ft_echo(char **av);
 int					check_n(char *line);
+
+//ENV
+int					ft_env(t_env *env);
+void				check_env(t_env **env, t_env *tmp);
+
+//PWD
+int					ft_pwd(void);
 
 // init_token.c
 void				append_token_node(t_token **token_list, char *prompt);

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:31:52 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 10:02:43 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:38:56 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,12 @@ int	ft_env(t_env *env)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	check_env(t_env **env, t_env *tmp)
+{
+	if (tmp == (*env))
+		(*env) = tmp->next;
+	if (tmp->next == tmp)
+		(*env) = NULL;
 }
