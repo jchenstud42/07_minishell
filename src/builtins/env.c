@@ -6,19 +6,19 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:31:52 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 10:38:56 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:40:17 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(t_env *env)
+bool	ft_env(t_env *env)
 {
 	t_env	*tmp;
 
 	tmp = env;
 	if (!tmp)
-		return (1);
+		return (false);
 	if (ft_strchr(tmp->str, "="))
 		printf("%s\n", tmp->str);
 	tmp = tmp->next;
@@ -28,7 +28,7 @@ int	ft_env(t_env *env)
 			printf("%s\n", tmp->str);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (true);
 }
 
 void	check_env(t_env **env, t_env *tmp)
