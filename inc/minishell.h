@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 12:44:59 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:48:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 enum				error_number
 {

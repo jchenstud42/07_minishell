@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/18 11:30:18 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/21 12:47:18 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Main temporaire, pour pouvoir tester les fonctions
 // deja codees
-int	main(int ac, char **av, char **env)
-{
-	return (0);
-}
+// int	main(int ac, char **av, char **env)
+// {
+// 	return (0);
+// }
