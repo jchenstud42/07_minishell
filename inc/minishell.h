@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 12:48:07 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:52:24 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdbool.h>
 
 enum				error_number
 {
@@ -28,14 +28,16 @@ enum				error_number
 	PROBLEM2
 };
 
-// Type de token
-# define INPUT 1 //"<"
-# define HEREDOC 2 //"<<"
-# define TRUNC 3 //">"
-# define APPEND 4 //">>"
-# define PIPE 5 //"|"
-# define CMD 6 //"echo"
-# define ARG 7 //"bonjour"
+enum				token_list
+{
+	INPUT = 1, //"<"
+	HEREDOC,   //"<<"
+	TRUNC,     //">"
+	APPEND,    //">>"
+	PIPE,      //"|"
+	CMD,       //"echo"
+	ARG        //"bonjour"
+};
 
 // J'ai mis l'index(/position) pour le moment, a voir si c'est necessaire
 typedef struct s_token
@@ -59,7 +61,7 @@ typedef struct s_env
 typedef struct global
 {
 	char			*line;
-	t_token			token_list;
+	t_token			*token_list;
 }					t_global;
 
 // Deso Romaingue, quand je sauvegarde ca enleve les tabs :(((
@@ -72,15 +74,20 @@ void				print_echo(int nbr_caract, char **av);
 void				ft_echo(char **av);
 bool				check_n(char *line);
 
-//ENV
+// ENV
 bool				ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 
-//PWD
+// PWD
 bool				ft_pwd(void);
 
+// initialization.c
+void				init_global_struct(t_global *global);
+
 // init_token.c
+t_token				*last_element(t_token *token_list);
 void				append_token_node(t_token **token_list, char *prompt);
+void				append_token_node_test(t_global **global, char *prompt);
 
 // error_handler.c
 void				error_handler(int nb, t_global *global_data);

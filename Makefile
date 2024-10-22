@@ -18,12 +18,18 @@ INC			=	-I ./src/libft/\
 # Sources
 SRC_PATH	=	src/
 SRC			=	minishell.c \
-				builtins/cd.c echo.c env.c exit.c export.c pwd.c \
 				error/error_handler.c \
-				exec/exec.c \
+				initialization.c \
 				token/init_token.c \
 				free/free.c \
-				
+				exec/exec.c \
+				builtins/cd.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/exit.c \
+				builtins/export.c \
+				builtins/pwd.c
+
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 
 # Objects
@@ -63,7 +69,7 @@ $(NAME): $(OBJS)
 
 # Compiles C source files into object files
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 # Cleans object files and dependencies

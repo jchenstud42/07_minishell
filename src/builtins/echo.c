@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/21 12:42:20 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:09:41 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_echo(int nbr_caract, char **av)
 {
@@ -57,7 +57,7 @@ bool	check_n(char *line)
 		i++;
 		while (line[i] && line[i] == 'n')
 			i++;
-		if (i == ft_strlen(line))
+		if (i == (int)ft_strlen(line))
 			return (true);
 	}
 	return (false);

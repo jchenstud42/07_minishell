@@ -123,14 +123,14 @@ int	more_elaborate_readline_example(char **env)
 	return (0);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)**av;
-	// readline_example();
-	// getcwd_example();
-	// chdir_example();
-	// opendir_example();
-	// getenv_example();
-	more_elaborate_readline_example(env);
-}
+// int	main(int ac, char **av, char **env)
+// {
+// 	(void)ac;
+// 	(void)**av;
+// 	// readline_example();
+// 	// getcwd_example();
+// 	// chdir_example();
+// 	// opendir_example();
+// 	// getenv_example();
+// 	more_elaborate_readline_example(env);
+// }

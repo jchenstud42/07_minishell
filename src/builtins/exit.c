@@ -3,12 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:00 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/15 11:32:55 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:08:24 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../../inc/minishell.h"
