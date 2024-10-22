@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 13:52:24 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/22 16:55:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 
 enum				error_number
 {
+	STRUCT_INIT_FAILED,
 	TOKENIZATION_FAILED,
-	PROBLEM2
+	STRUCT_NOT_INITIALIZED
 };
 
 enum				token_list
@@ -38,6 +39,10 @@ enum				token_list
 	CMD,       //"echo"
 	ARG        //"bonjour"
 };
+
+# define TRUE 1
+# define FALSE 0
+# define ERROR -1
 
 // J'ai mis l'index(/position) pour le moment, a voir si c'est necessaire
 typedef struct s_token
@@ -81,12 +86,21 @@ void				check_env(t_env **env, t_env *tmp);
 // PWD
 bool				ft_pwd(void);
 
-// initialization.c
-void				init_global_struct(t_global *global);
+// check_line.c
+int					count_pipe(char *line);
+int					quote_are_closed(char *line);
 
-// init_token.c
-t_token				*last_element(t_token *token_list);
-void				append_token_node(t_token **token_list, char *prompt);
+// is_special_token.c
+bool				is_redirection(char *str);
+bool				is_pipe(char *str);
+
+// initialization.c
+void				calloc_global_struct(t_global **global_data);
+
+// init_token_list.c
+t_token				*last_element_of_list(t_token *token_list);
+void				append_node_to_token_list(t_global **global, char *prompt);
+// A RETIRER PLUS TARD
 void				append_token_node_test(t_global **global, char *prompt);
 
 // error_handler.c

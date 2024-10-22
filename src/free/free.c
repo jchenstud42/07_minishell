@@ -6,12 +6,13 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 14:07:23 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/22 15:34:24 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Libere la memoire allouee a la token_list
 void	free_token_list(t_token **token_list)
 {
 	t_token	*temp;
@@ -29,8 +30,11 @@ void	free_token_list(t_token **token_list)
 	*token_list = NULL;
 }
 
+// Libere toute la memoire allouee
 void	free_all(t_global *global_data)
 {
-	if (global_data->token_list != NULL)
+	if (global_data->token_list)
 		free_token_list(&global_data->token_list);
+	if (global_data)
+		free(global_data);
 }

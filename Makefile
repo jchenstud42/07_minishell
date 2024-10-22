@@ -20,7 +20,9 @@ SRC_PATH	=	src/
 SRC			=	minishell.c \
 				error/error_handler.c \
 				initialization.c \
-				token/init_token.c \
+				token/init_token_list.c \
+				parsing/check_line.c \
+				parsing/is_special_token.c \
 				free/free.c \
 				exec/exec.c \
 				builtins/cd.c \
