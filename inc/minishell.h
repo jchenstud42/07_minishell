@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 16:55:39 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/22 19:08:50 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ enum				error_number
 {
 	STRUCT_INIT_FAILED,
 	TOKENIZATION_FAILED,
-	STRUCT_NOT_INITIALIZED
+	STRUCT_NOT_INITIALIZED,
+	EMPTY_LINE,
+	MALLOC_FAILED
 };
 
 enum				token_list
@@ -100,6 +102,10 @@ void				calloc_global_struct(t_global **global_data);
 // init_token_list.c
 t_token				*last_element_of_list(t_token *token_list);
 void				append_node_to_token_list(t_global **global, char *prompt);
+
+// tokenize_line.c
+void				stock_line(t_global **global, char *line);
+
 // A RETIRER PLUS TARD
 void				append_token_node_test(t_global **global, char *prompt);
 

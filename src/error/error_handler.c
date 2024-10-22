@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:43:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 16:55:33 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/22 18:56:50 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@ void	error_handler(int error_number, t_global *global_data)
 		ft_printf("Error, failed to initialize the struct.\n");
 	else if (error_number == STRUCT_NOT_INITIALIZED)
 		ft_printf("Error, struct isn't initialized.\n");
+	else if (error_number == EMPTY_LINE)
+		ft_printf("Error, empty line given to the struc.\n");
+	else if (error_number == MALLOC_FAILED)
+		ft_printf("Error, memory allocation failed.\n");
 	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 15:34:24 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/22 19:21:33 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	free_all(t_global *global_data)
 {
 	if (global_data->token_list)
 		free_token_list(&global_data->token_list);
+	if (global_data->line)
+		free(global_data->line);
 	if (global_data)
 		free(global_data);
 }
