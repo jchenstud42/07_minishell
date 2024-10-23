@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 10:14:53 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:19:15 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	stock_line(t_global **global, char *line)
 	ft_strlcpy((*global)->line, line, ft_strlen(line) + 1);
 }
 
-// A FINIR
+// A FINIR (normalement c bon)
 // Tokenise la phrase donnee en argument
 void	line_tokenization(t_global **global, int ac, char **av)
 {
@@ -86,28 +86,28 @@ void	line_tokenization(t_global **global, int ac, char **av)
 					return ;
 				ft_strlcpy(token, (*global)->line[beginning], end - beginning);
 				token[end - beginning] = '\0';
-				store_token(global_token) // FONCTION A CREER (apres je sais pas si ce que jai fais est bon ou pas)
+				store_token(global, token); // FONCTION A CREER (apres je sais pas si ce que jai fais est bon ou pas)
 			}
 		}
 	}
 }
 
 // TEST
-int	main(int ac, char **av)
-{
-	t_global	*global;
-	int			i;
+// int	main(int ac, char **av)
+// {
+// 	t_global	*global;
+// 	int			i;
 
-	if (ac > 1)
-	{
-		calloc_global_struct(&global);
-		i = 1;
-		while (av[i])
-		{
-			stock_line(&global, av[i]);
-			ft_printf("%s\n", global->line);
-			i++;
-		}
-		free_all(global);
-	}
-}
+// 	if (ac > 1)
+// 	{
+// 		calloc_global_struct(&global);
+// 		i = 1;
+// 		while (av[i])
+// 		{
+// 			stock_line(&global, av[i]);
+// 			ft_printf("%s\n", global->line);
+// 			i++;
+// 		}
+// 		free_all(global);
+// 	}
+// }
