@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 13:08:43 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:35:49 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ enum				e_error_number
 	STRUCT_NOT_INITIALIZED,
 	EMPTY_LINE,
 	MALLOC_FAILED,
-	WRONG_TOKEN_TYPE
+	ERROR_TOKEN_TYPE_ATTRIBUTION
 };
 
 enum				e_token_list
@@ -118,9 +118,6 @@ int					is_white_space(char c);
 
 // TOKENIZE_LINE.c
 void				stock_line(t_global **global, char *line);
-
-// A RETIRER PLUS TARD
-void				append_token_node_test(t_global **global, char *prompt);
 
 // FREE.c
 void				free_token_list(t_token **token_list);

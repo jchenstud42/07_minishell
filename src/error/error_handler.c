@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:43:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 14:45:59 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:25:49 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	error_handler(int error_number, t_global *global_data)
 		ft_printf("Error, empty line given to the struc.\n");
 	else if (error_number == MALLOC_FAILED)
 		ft_printf("Error, memory allocation failed.\n");
-	else if (error_number == WRONG_TOKEN_TYPE)
+	else if (error_number == ERROR_TOKEN_TYPE_ATTRIBUTION)
 		ft_printf("Error, unknown token type\n");
 	exit(EXIT_FAILURE);
 }

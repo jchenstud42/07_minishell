@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 14:47:49 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:36:41 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,29 @@ t_token	*last_element_of_list(t_token *token_list)
 	return (token_list);
 }
 
-// Verifie le type du token
-// int	check_token_type(char *token, t_global **global)
-// {
-// 	if (!token)
-// 		error_handler(WRONG_TOKEN_TYPE, *global);
-// 	if ((*global)->token_list->index == 1)
-// 	{
-// 		if (!is_redirection(token))
-// 			return (CMD);
-// 	}
-// 	if (!ft_strcmp(token, "<"))
-// 		return (INPUT);
-// 	else if (!ft_strcmp(token, "<<"))
-// 		return (HEREDOC);
-// 	else if (!ft_strcmp(token, ">"))
-// 		return (TRUNC);
-// 	else if (!ft_strcmp(token, ">>"))
-// 		return (APPEND);
-// 	else if (!ft_strcmp(token, "|"))
-// 		return (PIPE);
-// 	else if (!ft_strcmp(token, "<<"))
-// 		return (HEREDOC);
-// }
+// Attribue un type au token
+int	check_token_type(char *token, t_global **global)
+{
+	if (!token)
+		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
+	if (!ft_strcmp(token, "|"))
+		return (PIPE);
+	if ((*global)->token_list->index == 1
+		|| (*global)->token_list->prev->type == PIPE)
+	{
+		if (!ft_strcmp(token, "<"))
+			return (INPUT);
+		else if (!ft_strcmp(token, "<<"))
+			return (HEREDOC);
+		else if (!ft_strcmp(token, ">"))
+			return (TRUNC);
+		else if (!ft_strcmp(token, ">>"))
+			return (APPEND);
+		else
+			return (CMD);
+	}
+	return (ARG);
+}
 
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
@@ -71,38 +71,10 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		token_to_append->prev = last_node;
 		token_to_append->index = last_node->index + 1;
 	}
-	// token_to_append->type = check_token_type;
+	token_to_append->type = check_token_type(token_to_append->token, global);
 }
 
-void	append_token_node_test(t_global **global, char *prompt)
-{
-	t_token	*token_to_append;
-	t_token	*last_node;
-
-	if (!global)
-		return ;
-	token_to_append = ft_calloc(1, sizeof(t_token));
-	if (!token_to_append)
-		error_handler(TOKENIZATION_FAILED, *global);
-	token_to_append->next = NULL;
-	token_to_append->token = prompt;
-	token_to_append->type = CMD;
-	if ((*global)->token_list == NULL)
-	{
-		(*global)->token_list = token_to_append;
-		token_to_append->index = 1;
-		token_to_append->prev = NULL;
-	}
-	else
-	{
-		last_node = last_element_of_list((*global)->token_list);
-		last_node->next = token_to_append;
-		token_to_append->prev = last_node;
-		token_to_append->index = last_node->index + 1;
-	}
-}
-
-// // TEST
+// TEST
 // int	main(int ac, char **av)
 // {
 // 	t_global	*global_data;
@@ -116,11 +88,11 @@ void	append_token_node_test(t_global **global, char *prompt)
 // 	while (ac_nbr-- > 1)
 // 	{
 // 		if (ac_nbr == 2)
-// 			append_token_node_test(&global_data, "bonjour");
+// 			append_node_to_token_list(&global_data, "bonjour");
 // 		else if (ac_nbr == 1)
-// 			append_token_node_test(&global_data, "au revoir");
+// 			append_node_to_token_list(&global_data, "au revoir");
 // 		else
-// 			append_token_node_test(&global_data, "bla bla");
+// 			append_node_to_token_list(&global_data, "bla bla");
 // 	}
 // 	current = global_data->token_list;
 // 	while (current)
