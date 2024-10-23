@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 11:02:25 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:17:20 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	line_tokenization(t_global **global, int ac, char **av)
 	end = -1;
 	if (ac == 2)
 	{
-		// J'ai rajoute ceci au cas ou mais je sais pas si ca fonctionne
 		while (is_white_space(av[1][i]))
 			i++;
 		end = end + i;
@@ -86,16 +85,12 @@ void	line_tokenization(t_global **global, int ac, char **av)
 					return ;
 				ft_strlcpy(token, (*global)->line[beginning], end - beginning);
 				token[end - beginning] = '\0';
-				store_token(global, token); // FONCTION A CREER (apres je sais pas si ce que jai fais est bon ou pas)
+				append_node_to_token_list(global, token);
 			}
 		}
 	}
 }
 
-void	store_token(t_global **global, char *token)
-{
-	
-}
 
 
 // TEST

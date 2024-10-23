@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 10:44:34 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:08:22 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-enum				error_number
+enum				e_error_number
 {
 	STRUCT_INIT_FAILED,
 	TOKENIZATION_FAILED,
@@ -31,7 +31,7 @@ enum				error_number
 	MALLOC_FAILED
 };
 
-enum				token_list
+enum				e_token_list
 {
 	INPUT = 1, //"<"
 	HEREDOC,   //"<<"
