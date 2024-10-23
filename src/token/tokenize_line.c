@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 10:19:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:02:25 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ void	line_tokenization(t_global **global, int ac, char **av)
 		}
 	}
 }
+
+void	store_token(t_global **global, char *token)
+{
+	
+}
+
 
 // TEST
 // int	main(int ac, char **av)

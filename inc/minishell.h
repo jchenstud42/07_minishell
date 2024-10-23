@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 10:06:03 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:44:34 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ enum				token_list
 typedef struct s_token
 {
 	char			*token;
+	int				token_count;
 	int				index;
 	int				type;
 	struct s_token	*next;
