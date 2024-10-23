@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 19:08:50 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 10:06:03 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,13 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
-// NEXT et PREV a mettre dans une autre structure plus tard pour plus boooooooo
 typedef struct global
 {
 	char			*line;
 	t_token			*token_list;
 }					t_global;
 
-// Deso Romaingue, quand je sauvegarde ca enleve les tabs :(((
-// SRC
-// BUILTING
+
 // CD
 
 // ECHO
@@ -85,14 +82,25 @@ bool				check_n(char *line);
 bool				ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 
+//EXIT
+
+//EXPORT
+
 // PWD
 bool				ft_pwd(void);
 
-// check_line.c
+// ERROR_HANDLER.c
+void				error_handler(int nb, t_global *global_data);
+
+//EXEC.C
+
+int					is_builtins(char *cmd);
+
+// CHECK_LINE.c
 int					count_pipe(char *line);
 int					quote_are_closed(char *line);
 
-// is_special_token.c
+// IS_SPECIAL_TOKEN.c
 bool				is_redirection(char *str);
 bool				is_pipe(char *str);
 
@@ -103,14 +111,17 @@ void				calloc_global_struct(t_global **global_data);
 t_token				*last_element_of_list(t_token *token_list);
 void				append_node_to_token_list(t_global **global, char *prompt);
 
+//TOKEN_UTILS.c
+
+bool				is_white_space(char c);
+
 // tokenize_line.c
 void				stock_line(t_global **global, char *line);
 
 // A RETIRER PLUS TARD
 void				append_token_node_test(t_global **global, char *prompt);
 
-// error_handler.c
-void				error_handler(int nb, t_global *global_data);
+
 
 // free.c
 void				free_token_list(t_token **token_list);

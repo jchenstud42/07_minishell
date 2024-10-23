@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 19:49:06 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 10:14:53 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,36 @@ void	stock_line(t_global **global, char *line)
 void	line_tokenization(t_global **global, int ac, char **av)
 {
 	char	*line;
+	char	*token;
 	int		beginning;
 	int		end;
+	int		i;
 
+	i = 0;
 	end = -1;
 	if (ac == 2)
 	{
+		// J'ai rajoute ceci au cas ou mais je sais pas si ca fonctionne
+		while (is_white_space(av[1][i]))
+			i++;
+		end = end + i;
 		stock_line(global, av[1]);
 		while ((*global)->line[++end])
 		{
+			while (is_white_space((*global)->line[end]))
+				end++;
 			beginning = end;
-			while ()
+			while ((*global)->line[end] && !is_white_space((*global)->line[end]))
+				end++;
+			if (beginning != end)
+			{
+				token = malloc((end - beginning + 1) * sizeof(char));
+				if (!token)
+					return ;
+				ft_strlcpy(token, (*global)->line[beginning], end - beginning);
+				token[end - beginning] = '\0';
+				store_token(global_token) // FONCTION A CREER (apres je sais pas si ce que jai fais est bon ou pas)
+			}
 		}
 	}
 }
