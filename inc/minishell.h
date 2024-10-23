@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 11:53:13 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 12:09:34 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void				append_node_to_token_list(t_global **global, char *prompt);
 
 // TOKEN_UTILS.c
 
-bool				is_white_space(char c);
+int 				is_white_space(char c);
 
 // TOKENIZE_LINE.c
 void				stock_line(t_global **global, char *line);

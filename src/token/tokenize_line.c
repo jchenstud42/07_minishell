@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 12:04:07 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 12:32:46 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// Permet de stocker tous les arguments dans la structure
-// Pas utile en realite ??
-// void	stock_line(t_global **global, char *line)
-// {
-// 	char	*new_line;
-
-// 	if (!line)
-// 		error_handler(EMPTY_LINE, *global);
-// 	if (!(*global)->line)
-// 	{
-// 		(*global)->line = malloc((ft_strlen(line) + 1));
-// 		if (!(*global)->line)
-// 			error_handler(MALLOC_FAILED, *global);
-// 		ft_strlcpy((*global)->line, line, ft_strlen(new_line) + 1);
-// 	}
-// 	else
-// 	{
-// 		new_line = malloc((ft_strlen(line) + ft_strlen((*global)->line) + 1));
-// 		if (!new_line)
-// 			error_handler(MALLOC_FAILED, *global);
-// 		ft_strlcpy(new_line, (*global)->line, ft_strlen((*global)->line) + 1);
-// 		ft_strlcat(new_line, line, (ft_strlen(line) + ft_strlen((*global)->line)
-// 				+ 1));
-// 		free((*global)->line);
-// 		(*global)->line = new_line;
-// 	}
-// }
 
 // Permet de stocker l'argument dans notre structure
 void	stock_line(t_global **global, char *line)
@@ -83,7 +55,7 @@ void	line_tokenization(t_global **global, int ac, char **av)
 				token = malloc((end - beginning + 1) * sizeof(char));
 				if (!token)
 					return ;
-				ft_strlcpy(token, &(*global)->line[beginning], end - beginning);
+				ft_strlcpy(token, &(*global)->line[beginning], end - beginning + 1);
 				token[end - beginning] = '\0';
 				append_node_to_token_list(global, token);
 			}
