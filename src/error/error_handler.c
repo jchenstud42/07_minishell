@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:43:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 18:56:50 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 13:04:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void	error_handler(int error_number, t_global *global_data)
 		ft_printf("Error, empty line given to the struc.\n");
 	else if (error_number == MALLOC_FAILED)
 		ft_printf("Error, memory allocation failed.\n");
+	else if (error_number == WRONG_TOKEN_TYPE)
+		fr_printf("Error, unknown token type\n");
 	exit(EXIT_FAILURE);
 }
