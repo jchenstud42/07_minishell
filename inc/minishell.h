@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 13:04:09 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 13:08:43 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void				calloc_global_struct(t_global **global_data);
 // INIT_TOKEN_LIST.c
 t_token				*last_element_of_list(t_token *token_list);
 void				append_node_to_token_list(t_global **global, char *prompt);
+void				line_tokenization(t_global **global, int ac, char **av);
 
 // TOKEN_UTILS.c
 
