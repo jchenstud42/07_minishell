@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 12:32:46 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:44:33 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,26 @@ void	line_tokenization(t_global **global, int ac, char **av)
 }
 
 // TEST
-int	main(int ac, char **av)
-{
-	t_global	*global;
-	int			i;
+// int	main(int ac, char **av)
+// {
+// 	t_global	*global;
+// 	int			i;
 
-	if (ac > 1)
-	{
-		calloc_global_struct(&global);
-		i = 1;
-		while (av[i])
-		{
-			line_tokenization(&global, ac, av);
-			ft_printf("%s\n", global->line);
-			i++;
-		}
-		while (global->token_list)
-		{
-			ft_printf("%s\n", global->token_list->token);
-			global->token_list = global->token_list->next;
-		}
-		free_all(global);
-	}
-}
+// 	if (ac > 1)
+// 	{
+// 		calloc_global_struct(&global);
+// 		i = 1;
+// 		while (av[i])
+// 		{
+// 			line_tokenization(&global, ac, av);
+// 			ft_printf("%s\n", global->line);
+// 			i++;
+// 		}
+// 		while (global->token_list)
+// 		{
+// 			ft_printf("%s\n", global->token_list->token);
+// 			global->token_list = global->token_list->next;
+// 		}
+// 		free_all(global);
+// 	}
+// }

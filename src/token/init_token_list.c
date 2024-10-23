@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 13:03:56 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/23 14:47:49 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,28 @@ t_token	*last_element_of_list(t_token *token_list)
 }
 
 // Verifie le type du token
-int	check_token_type(char *token, t_global **global)
-{
-	if (!token)
-		error_handler(WRONG_TOKEN_TYPE, *global);
-	if ((*global)->token_list->index == 1)
-	{
-		if (!is_redirection(token))
-			return (CMD);
-	}
-	if (!ft_strcmp(token, "<"))
-		return (INPUT);
-	else if (!ft_strcmp(token, "<<"))
-		return (HEREDOC);
-	else if (!ft_strcmp(token, ">"))
-		return (TRUNC);
-	else if (!ft_strcmp(token, ">>"))
-		return (APPEND);
-	else if (!ft_strcmp(token, "|"))
-		return (PIPE);
-	else if (!ft_strcmp(token, "<<"))
-		return (HEREDOC);
-}
+// int	check_token_type(char *token, t_global **global)
+// {
+// 	if (!token)
+// 		error_handler(WRONG_TOKEN_TYPE, *global);
+// 	if ((*global)->token_list->index == 1)
+// 	{
+// 		if (!is_redirection(token))
+// 			return (CMD);
+// 	}
+// 	if (!ft_strcmp(token, "<"))
+// 		return (INPUT);
+// 	else if (!ft_strcmp(token, "<<"))
+// 		return (HEREDOC);
+// 	else if (!ft_strcmp(token, ">"))
+// 		return (TRUNC);
+// 	else if (!ft_strcmp(token, ">>"))
+// 		return (APPEND);
+// 	else if (!ft_strcmp(token, "|"))
+// 		return (PIPE);
+// 	else if (!ft_strcmp(token, "<<"))
+// 		return (HEREDOC);
+// }
 
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
@@ -71,7 +71,7 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		token_to_append->prev = last_node;
 		token_to_append->index = last_node->index + 1;
 	}
-	token_to_append->type = check_token_type;
+	// token_to_append->type = check_token_type;
 }
 
 void	append_token_node_test(t_global **global, char *prompt)
