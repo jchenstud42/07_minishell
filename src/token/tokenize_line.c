@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 11:17:20 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:04:07 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	stock_line(t_global **global, char *line)
 // Tokenise la phrase donnee en argument
 void	line_tokenization(t_global **global, int ac, char **av)
 {
-	char	*line;
 	char	*token;
 	int		beginning;
 	int		end;
@@ -76,14 +75,15 @@ void	line_tokenization(t_global **global, int ac, char **av)
 			while (is_white_space((*global)->line[end]))
 				end++;
 			beginning = end;
-			while ((*global)->line[end] && !is_white_space((*global)->line[end]))
+			while ((*global)->line[end]
+				&& !is_white_space((*global)->line[end]))
 				end++;
 			if (beginning != end)
 			{
 				token = malloc((end - beginning + 1) * sizeof(char));
 				if (!token)
 					return ;
-				ft_strlcpy(token, (*global)->line[beginning], end - beginning);
+				ft_strlcpy(token, &(*global)->line[beginning], end - beginning);
 				token[end - beginning] = '\0';
 				append_node_to_token_list(global, token);
 			}
@@ -91,24 +91,27 @@ void	line_tokenization(t_global **global, int ac, char **av)
 	}
 }
 
-
-
 // TEST
-// int	main(int ac, char **av)
-// {
-// 	t_global	*global;
-// 	int			i;
+int	main(int ac, char **av)
+{
+	t_global	*global;
+	int			i;
 
-// 	if (ac > 1)
-// 	{
-// 		calloc_global_struct(&global);
-// 		i = 1;
-// 		while (av[i])
-// 		{
-// 			stock_line(&global, av[i]);
-// 			ft_printf("%s\n", global->line);
-// 			i++;
-// 		}
-// 		free_all(global);
-// 	}
-// }
+	if (ac > 1)
+	{
+		calloc_global_struct(&global);
+		i = 1;
+		while (av[i])
+		{
+			line_tokenization(&global, ac, av);
+			ft_printf("%s\n", global->line);
+			i++;
+		}
+		while (global->token_list)
+		{
+			ft_printf("%s\n", global->token_list->token);
+			global->token_list = global->token_list->next;
+		}
+		free_all(global);
+	}
+}

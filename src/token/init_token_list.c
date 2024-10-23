@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 11:14:18 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:02:27 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,33 @@ t_token	*last_element_of_list(t_token *token_list)
 }
 
 // Ajoute un noeud a la fin de notre token_list.
-// void	append_node_to_token_list(t_global **global, char *prompt)
-// {
-// 	t_token	*token_to_append;
-// 	t_token	*last_node;
+void	append_node_to_token_list(t_global **global, char *prompt)
+{
+	t_token	*token_to_append;
+	t_token	*last_node;
 
-// 	if (!global)
-// 		return ;
-// 	token_to_append = ft_calloc(1, sizeof(t_token));
-// 	if (!token_to_append)
-// 		error_handler(TOKENIZATION_FAILED, *global);
-// 	token_to_append->next = NULL;
-// 	token_to_append->token = ft_strdup(prompt);
-// 	token_to_append->type = token_type(prompt);
-// 	if ((*global)->token_list == NULL)
-// 	{
-// 		(*global)->token_list = token_to_append;
-// 		token_to_append->index = 1;
-// 		token_to_append->prev = NULL;
-// 	}
-// 	else
-// 	{
-// 		last_node = last_element((*global)->token_list);
-// 		last_node->next = token_to_append;
-// 		token_to_append->prev = last_node;
-// 		token_to_append->index = last_node->index + 1;
-// 	}
-// }
+	if (!global)
+		return ;
+	token_to_append = ft_calloc(1, sizeof(t_token));
+	if (!token_to_append)
+		error_handler(TOKENIZATION_FAILED, *global);
+	token_to_append->next = NULL;
+	token_to_append->token = ft_strdup(prompt);
+	token_to_append->type = CMD;
+	if ((*global)->token_list == NULL)
+	{
+		(*global)->token_list = token_to_append;
+		token_to_append->index = 1;
+		token_to_append->prev = NULL;
+	}
+	else
+	{
+		last_node = last_element_of_list((*global)->token_list);
+		last_node->next = token_to_append;
+		token_to_append->prev = last_node;
+		token_to_append->index = last_node->index + 1;
+	}
+}
 
 void	append_token_node_test(t_global **global, char *prompt)
 {

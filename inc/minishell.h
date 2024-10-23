@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 11:08:22 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:53:13 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct global
 	t_token			*token_list;
 }					t_global;
 
-
 // CD
 
 // ECHO
@@ -83,9 +82,9 @@ bool				check_n(char *line);
 bool				ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 
-//EXIT
+// EXIT
 
-//EXPORT
+// EXPORT
 
 // PWD
 bool				ft_pwd(void);
@@ -93,8 +92,7 @@ bool				ft_pwd(void);
 // ERROR_HANDLER.c
 void				error_handler(int nb, t_global *global_data);
 
-//EXEC.C
-
+// EXEC.C
 int					is_builtins(char *cmd);
 
 // CHECK_LINE.c
@@ -105,26 +103,25 @@ int					quote_are_closed(char *line);
 bool				is_redirection(char *str);
 bool				is_pipe(char *str);
 
-// initialization.c
+// INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
 
-// init_token_list.c
+// INIT_TOKEN_LIST.c
 t_token				*last_element_of_list(t_token *token_list);
 void				append_node_to_token_list(t_global **global, char *prompt);
 
-//TOKEN_UTILS.c
+// TOKEN_UTILS.c
 
 bool				is_white_space(char c);
 
-// tokenize_line.c
+// TOKENIZE_LINE.c
 void				stock_line(t_global **global, char *line);
 
 // A RETIRER PLUS TARD
 void				append_token_node_test(t_global **global, char *prompt);
 
-
-
-// free.c
+// FREE.c
 void				free_token_list(t_token **token_list);
 void				free_all(t_global *global_data);
+
 #endif
