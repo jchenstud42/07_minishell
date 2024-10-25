@@ -13,20 +13,20 @@
 #include "../../inc/minishell.h"
 
 // Verifie si l'element est une redirection (INPUT, HEREDOC, TRUNC, APPEND)
-bool	is_redirection(char *str)
+int	is_redirection(char *str)
 {
 	if (!ft_strcmp(str, "<") || !ft_strcmp(str, "<<") || !ft_strcmp(str, ">")
 		|| !ft_strcmp(str, ">>"))
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
 // Verifie si l'element est une PIPE
-bool	is_pipe(char *str)
+int	is_pipe(char *str)
 {
 	if (!ft_strcmp(str, "|"))
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
 // TEST

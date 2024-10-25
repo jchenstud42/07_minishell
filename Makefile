@@ -19,6 +19,7 @@ INC			=	-I ./src/libft/\
 SRC_PATH	=	src/
 SRC			=	minishell.c \
 				error/error_handler.c \
+				test.c \
 				initialization.c \
 				token/init_token_list.c \
 				token/tokenize_line.c \
@@ -32,7 +33,8 @@ SRC			=	minishell.c \
 				builtins/env.c \
 				builtins/exit.c \
 				builtins/export.c \
-				builtins/pwd.c
+				builtins/pwd.c \
+				builtins/unset.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 11:32:37 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:42:55 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ typedef struct global
 // ECHO.c
 void				print_echo(int nbr_caract, char **av);
 void				ft_echo(char **av);
-bool				check_n(char *line);
+int					check_n(char *line);
 
 // ENV.c
-bool				ft_env(t_env *env);
+int					ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 
 // EXIT.c
@@ -89,11 +89,10 @@ void				check_env(t_env **env, t_env *tmp);
 // EXPORT.c
 
 // PWD.c
-bool				ft_pwd(void);
+int					ft_pwd(void);
 
 // UNSET.c
-
-bool				unset_syntaxe(char *av);
+int					unset_syntaxe(char *av);
 
 // ERROR_HANDLER.c
 void				error_handler(int nb, t_global *global_data);
@@ -106,8 +105,8 @@ int					count_pipe(char *line);
 int					quote_are_closed(char *line);
 
 // IS_SPECIAL_TOKEN.c
-bool				is_redirection(char *str);
-bool				is_pipe(char *str);
+int					is_redirection(char *str);
+int					is_pipe(char *str);
 
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);

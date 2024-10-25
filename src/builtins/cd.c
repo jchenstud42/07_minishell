@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:31:41 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 14:08:16 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 11:41:19 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// bool	ft_cd(t_global *data, char **params)
+// int	ft_cd(t_global *data, char **params)
 // {
 
 // }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 14:09:41 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 11:41:14 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ void	ft_echo(char **av)
 	print_echo(nbr_caract, av);
 }
 
-bool	check_n(char *line)
+int	check_n(char *line)
 {
 	int	i;
 
 	i = 0;
 	if (!line)
-		return (false);
+		return (FALSE);
 	if (line[i] && line[i] == '-')
 	{
 		i++;
 		while (line[i] && line[i] == 'n')
 			i++;
 		if (i == (int)ft_strlen(line))
-			return (true);
+			return (TRUE);
 	}
-	return (false);
+	return (FALSE);
 }
