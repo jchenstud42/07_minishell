@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 14:02:01 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 14:35:19 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	line_tokenization(t_global **global, char *line)
 
 	free_token_list(&(*global)->token_list);
 	i = 0;
-	end = -1;
+	end = 0;
 	while (is_white_space(line[i]))
 		i++;
-	end = end + i;
+	end += i;
 	stock_line(global, line);
-	while ((*global)->line[++end])
+	while ((*global)->line[end])
 	{
 		while (is_white_space((*global)->line[end]))
 			end++;
@@ -54,6 +54,7 @@ void	line_tokenization(t_global **global, char *line)
 			ft_strlcpy(token, &(*global)->line[beginning], end - beginning + 1);
 			token[end - beginning] = '\0';
 			append_node_to_token_list(global, token);
+			free(token);
 		}
 	}
 }
