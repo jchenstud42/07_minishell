@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 10:27:37 by rbouquet         ###   ########.fr       */
+/*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/10/25 10:26:16 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	main(int ac, char **av, char **env)
+bool	unset_syntaxe(char *av)
 {
-	t_global	*global;
-	char		*line;
+	int	i;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	calloc_global_struct(&global);
-	while (1)
+	i = 0;
+	if (av[0] != '_' || !ft_isalpha(av[0]))
+		return (false);
+	while (av[i])
 	{
-		line = readline("\033[1;032mMinishell> \033[m");
-		if (!line)
-			free_all(global);
-		add_history(line);
+		if (av[i] == '_' || ft_isalnum(av[i]))
+			return (false);
+		i++;
 	}
-	rl_clear_history();
-	free_all(global);
-	return (0);
+	return (true);
 }
+

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 14:44:33 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:28:16 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,40 @@ void	line_tokenization(t_global **global, int ac, char **av)
 		}
 	}
 }
+
+// Je test de refaire la fonction line_tokenization sans les arguments
+
+// void	line_tokenization(t_global **global, char line)
+// {
+// 	char	*token;
+// 	int		beginning;
+// 	int		end;
+
+// 	end = -1;
+// 	while (is_white_space(line))
+// 		line++;
+// 	end = end + i;
+// 	stock_line(global, &line);
+// 	while ((*global)->line[++end])
+// 	{
+// 		while (is_white_space((*global)->line[end]))
+// 			end++;
+// 		beginning = end;
+// 		while ((*global)->line[end]
+// 			&& !is_white_space((*global)->line[end]))
+// 			end++;
+// 		if (beginning != end)
+// 		{
+// 			token = malloc((end - beginning + 1) * sizeof(char));
+// 			if (!token)
+// 				return ;
+// 			ft_strlcpy(token, &(*global)->line[beginning], end - beginning + 1);
+// 			token[end - beginning] = '\0';
+// 			append_node_to_token_list(global, token);
+// 		}
+// 	}
+// }
+
 
 // TEST
 // int	main(int ac, char **av)
