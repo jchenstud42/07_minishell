@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 09:30:04 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 14:31:09 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:48:19 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Verifie si le caractere est un espace blanc
 int	is_white_space(char c)
 {
 	return (((9 <= c) && (c <= 13)) || (c == 32));

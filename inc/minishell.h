@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 15:07:40 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:36:32 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 enum				e_error_number
@@ -35,13 +36,13 @@ enum				e_error_number
 
 enum				e_token_list
 {
-	INPUT = 1, //"<"
-	HEREDOC,   //"<<"
-	TRUNC,     //">"
-	APPEND,    //">>"
-	PIPE,      //"|"
-	CMD,       //"echo"
-	ARG        //"bonjour"
+	INPUT = 1,
+	HEREDOC,
+	TRUNC,
+	APPEND,
+	PIPE,
+	CMD,
+	ARG
 };
 
 # define TRUE 1
@@ -98,7 +99,9 @@ int					unset_syntaxe(char *av);
 void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
-int					is_builtins(char *cmd);
+bool				is_builtin(char *cmd);
+void				execute_command(char *cmd, char **env);
+void				launch_line(t_global *global, char **env);
 
 // CHECK_LINE.c
 int					count_pipe(char *line);

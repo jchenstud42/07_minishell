@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 15:38:58 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 16:22:53 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 {
 	if (!token)
 		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
-	if (!last_node || last_node->type == PIPE)
-		return (CMD);
 	if (!ft_strcmp(token, "|"))
 		return (PIPE);
 	else if (!ft_strcmp(token, "<"))
@@ -39,6 +37,8 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 		return (TRUNC);
 	else if (!ft_strcmp(token, ">>"))
 		return (APPEND);
+	else if (!last_node || last_node->type == PIPE)
+		return (CMD);
 	else
 		return (ARG);
 }
@@ -74,34 +74,3 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 	ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
 		token_to_append->type, token_to_append->token);
 }
-
-// // TEST
-// int	main(int ac, char **av)
-// {
-// 	t_global	*global_data;
-// 	int			ac_nbr;
-// 	t_token		*current;
-
-// 	(void)**av;
-// 	global_data = NULL;
-// 	calloc_global_struct(&global_data);
-// 	ac_nbr = ac;
-// 	while (ac_nbr-- > 1)
-// 	{
-// 		if (ac_nbr == 2)
-// 			append_node_to_token_list(&global_data, "bonjour");
-// 		else if (ac_nbr == 1)
-// 			append_node_to_token_list(&global_data, "|");
-// 		else
-// 			append_node_to_token_list(&global_data, "<");
-// 	}
-// 	current = global_data->token_list;
-// 	while (current)
-// 	{
-// 		ft_printf("[%d] Type : %d, %s\n", current->index, current->type,
-// 			current->token);
-// 		current = current->next;
-// 	}
-// 	free_all(global_data);
-// 	return (0);
-// }

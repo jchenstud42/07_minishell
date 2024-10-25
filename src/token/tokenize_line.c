@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 14:35:19 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:48:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,27 @@ void	stock_line(t_global **global, char *line)
 		error_handler(MALLOC_FAILED, *global);
 }
 
+// Passe les espaces au debut de la phrase s'il y en a
+static void	skip_beginning_white_space(int *end, char *line)
+{
+	int	i;
+
+	i = 0;
+	*end = 0;
+	while (is_white_space(line[i]))
+		i++;
+	*end += i;
+}
+
 // Tokenise la phrase entree apres le prompt
 void	line_tokenization(t_global **global, char *line)
 {
 	char	*token;
 	int		beginning;
 	int		end;
-	int		i;
 
 	free_token_list(&(*global)->token_list);
-	i = 0;
-	end = 0;
-	while (is_white_space(line[i]))
-		i++;
-	end += i;
+	skip_beginning_white_space(&end, line);
 	stock_line(global, line);
 	while ((*global)->line[end])
 	{

@@ -18,7 +18,7 @@ INC			=	-I ./src/libft/\
 # Sources
 SRC_PATH	=	src/
 SRC			=	minishell.c \
-				error/error_handler.c \
+				error_handler.c \
 				test.c \
 				initialization.c \
 				token/init_token_list.c \

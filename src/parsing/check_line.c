@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:00:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/23 09:24:08 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:44:00 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Compte le nombre de pipe
 int	count_pipe(char *line)
 {
 	int	i;
