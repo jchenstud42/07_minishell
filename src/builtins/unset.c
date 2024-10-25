@@ -6,25 +6,24 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 11:41:53 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:29:30 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	unset_syntaxe(char *av)
+int	unset_syntaxe(char *line)
 {
 	int	i;
 
 	i = 0;
-	if (av[0] != '_' || !ft_isalpha(av[0]))
+	if (line[0] != '_' || !ft_isalpha(line[0]))
 		return (FALSE);
-	while (av[i])
+	while (line[i])
 	{
-		if (av[i] == '_' || ft_isalnum(av[i]))
+		if (line[i] == '_' || ft_isalnum(line[i]))
 			return (FALSE);
 		i++;
 	}
 	return (TRUE);
 }
-
