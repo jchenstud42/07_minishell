@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 17:37:58 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 11:24:36 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ t_token	*last_element_of_list(t_token *token_list)
 }
 
 // Attribue un type au token
-int	check_token_type(char *token, t_global **global)
+int	check_token_type(char *token, t_token *last_node, t_global **global)
 {
 	if (!token)
 		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
 	if (!ft_strcmp(token, "|"))
 		return (PIPE);
-	if ((*global)->token_list->index == 1
-		|| (*global)->token_list->prev->type == PIPE)
+	if (!last_node || last_node->type == PIPE)
 	{
 		if (!ft_strcmp(token, "<"))
 			return (INPUT);
@@ -58,7 +57,10 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 	if (!token_to_append)
 		error_handler(TOKENIZATION_FAILED, *global);
 	token_to_append->token = ft_strdup(prompt);
-	if ((*global)->token_list == NULL)
+	last_node = last_element_of_list((*global)->token_list);
+	token_to_append->type = check_token_type(token_to_append->token, last_node,
+			global);
+	if (!(*global)->token_list)
 	{
 		(*global)->token_list = token_to_append;
 		token_to_append->index = 1;
@@ -66,15 +68,13 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 	}
 	else
 	{
-		last_node = last_element_of_list((*global)->token_list);
 		last_node->next = token_to_append;
 		token_to_append->prev = last_node;
 		token_to_append->index = last_node->index + 1;
 	}
-	token_to_append->type = check_token_type(token_to_append->token, global);
 }
 
-// TEST
+// // TEST
 // int	main(int ac, char **av)
 // {
 // 	t_global	*global_data;
@@ -90,9 +90,9 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 // 		if (ac_nbr == 2)
 // 			append_node_to_token_list(&global_data, "bonjour");
 // 		else if (ac_nbr == 1)
-// 			append_node_to_token_list(&global_data, "au revoir");
+// 			append_node_to_token_list(&global_data, "|");
 // 		else
-// 			append_node_to_token_list(&global_data, "bla bla");
+// 			append_node_to_token_list(&global_data, "<");
 // 	}
 // 	current = global_data->token_list;
 // 	while (current)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 10:23:40 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:17:16 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,56 +75,57 @@ typedef struct global
 // CD.c
 
 // ECHO.c
-void			print_echo(int nbr_caract, char **av);
-void			ft_echo(char **av);
-bool			check_n(char *line);
+void				print_echo(int nbr_caract, char **av);
+void				ft_echo(char **av);
+bool				check_n(char *line);
 
 // ENV.c
-bool			ft_env(t_env *env);
-void			check_env(t_env **env, t_env *tmp);
+bool				ft_env(t_env *env);
+void				check_env(t_env **env, t_env *tmp);
 
 // EXIT.c
 
 // EXPORT.c
 
 // PWD.c
-bool			ft_pwd(void);
+bool				ft_pwd(void);
 
 // UNSET.c
 
-bool			unset_syntaxe(char *av);
+bool				unset_syntaxe(char *av);
 
 // ERROR_HANDLER.c
 void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
-int				is_builtins(char *cmd);
+int					is_builtins(char *cmd);
 
 // CHECK_LINE.c
-int				count_pipe(char *line);
-int				quote_are_closed(char *line);
+int					count_pipe(char *line);
+int					quote_are_closed(char *line);
 
 // IS_SPECIAL_TOKEN.c
-bool			is_redirection(char *str);
-bool			is_pipe(char *str);
+bool				is_redirection(char *str);
+bool				is_pipe(char *str);
 
 // INITIALIZATION.c
-void			calloc_global_struct(t_global **global_data);
+void				calloc_global_struct(t_global **global_data);
 
 // INIT_TOKEN_LIST.c
-t_token			*last_element_of_list(t_token *token_list);
-void			append_node_to_token_list(t_global **global, char *prompt);
-void			line_tokenization(t_global **global, int ac, char **av);
+t_token				*last_element_of_list(t_token *token_list);
+int					check_token_type(char *token, t_token *last_node,
+						t_global **global);
+void				append_node_to_token_list(t_global **global, char *prompt);
 
 // TOKEN_UTILS.c
-
-int				is_white_space(char c);
+int					is_white_space(char c);
 
 // TOKENIZE_LINE.c
-void			stock_line(t_global **global, char *line);
+void				stock_line(t_global **global, char *line);
+void				line_tokenization(t_global **global, int ac, char **av);
 
 // FREE.c
-void			free_token_list(t_token **token_list);
-void			free_all(t_global *global_data);
+void				free_token_list(t_token **token_list);
+void				free_all(t_global *global_data);
 
 #endif
