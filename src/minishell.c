@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 12:43:14 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:01:21 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	main(int ac, char **av, char **env)
 	{
 		line = readline("\033[1;032mMinishell> \033[m");
 		if (!line)
-			free_all(global);
+			error_handler(EMPTY_LINE, global);
+		line_tokenization(&global, line);
 		add_history(line);
 	}
 	rl_clear_history();

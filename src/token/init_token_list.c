@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 11:24:36 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 13:54:40 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,20 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 {
 	if (!token)
 		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
+	if (!last_node || last_node->type == PIPE)
+		return (CMD);
 	if (!ft_strcmp(token, "|"))
 		return (PIPE);
-	if (!last_node || last_node->type == PIPE)
-	{
-		if (!ft_strcmp(token, "<"))
-			return (INPUT);
-		else if (!ft_strcmp(token, "<<"))
-			return (HEREDOC);
-		else if (!ft_strcmp(token, ">"))
-			return (TRUNC);
-		else if (!ft_strcmp(token, ">>"))
-			return (APPEND);
-		else
-			return (CMD);
-	}
-	return (ARG);
+	else if (!ft_strcmp(token, "<"))
+		return (INPUT);
+	else if (!ft_strcmp(token, "<<"))
+		return (HEREDOC);
+	else if (!ft_strcmp(token, ">"))
+		return (TRUNC);
+	else if (!ft_strcmp(token, ">>"))
+		return (APPEND);
+	else
+		return (ARG);
 }
 
 // Ajoute un noeud a la fin de notre token_list.
@@ -72,6 +70,9 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		token_to_append->prev = last_node;
 		token_to_append->index = last_node->index + 1;
 	}
+	// A RETIRER PLUS TARD
+	ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
+		token_to_append->type, token_to_append->token);
 }
 
 // // TEST

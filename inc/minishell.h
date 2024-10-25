@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 12:14:17 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:33:58 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "libft.h"
 # include <dirent.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
 
 enum				e_error_number
 {
@@ -122,7 +122,7 @@ int					is_white_space(char c);
 
 // TOKENIZE_LINE.c
 void				stock_line(t_global **global, char *line);
-void				line_tokenization(t_global **global, int ac, char **av);
+void				line_tokenization(t_global **global, char *line);
 
 // FREE.c
 void				free_token_list(t_token **token_list);

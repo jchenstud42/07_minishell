@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 19:21:33 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 13:24:42 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_token_list(t_token **token_list)
 	while (current)
 	{
 		temp = current->next;
+		free(current->token);
 		free(current);
 		current = temp;
 	}

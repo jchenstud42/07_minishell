@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:41:19 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/22 15:46:12 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 13:40:14 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,6 @@ void	calloc_global_struct(t_global **global_data)
 	*global_data = ft_calloc(1, sizeof(t_global));
 	if (!*global_data)
 		error_handler(STRUCT_INIT_FAILED, *global_data);
+	(*global_data)->line = NULL;
+	(*global_data)->token_list = NULL;
 }
