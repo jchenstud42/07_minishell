@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/22 14:08:29 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/25 11:32:25 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 bool	ft_pwd(void)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 
-	pwd = getcwd(NULL, 0);
-	if (pwd != NULL)
+	if (getcwd(pwd, PATH_MAX))
 		printf("%s\n", pwd);
 	else
 	{
 		printf("error\n");
-		free(pwd);
 		return (false);
 	}
-	free(pwd);
 	return (true);
 }
