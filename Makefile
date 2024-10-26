@@ -34,7 +34,8 @@ SRC			=	minishell.c \
 				builtins/exit.c \
 				builtins/export.c \
 				builtins/pwd.c \
-				builtins/unset.c
+				builtins/unset.c \
+				signal/signal.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 

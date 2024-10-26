@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 09:48:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 11:03:08 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 enum				e_error_number
 {
@@ -114,6 +115,10 @@ int					quote_are_closed(char *line);
 // IS_SPECIAL_TOKEN.c
 int					is_redirection(char *str);
 int					is_pipe(char *str);
+
+// SIGNAL.c
+void				sig_c(int sig);
+void				init_signals(void);
 
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
