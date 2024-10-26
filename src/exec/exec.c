@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 12:34:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 12:55:25 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ char	*get_command_path(const char *cmd, t_global *global)
 		error_handler(MALLOC_FAILED, global);
 	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
 	ft_strlcat(command_file, cmd, ft_strlen(filename) + ft_strlen(cmd) + 1);
-	if (access(command_file, X_OK) != 0)
-	{
-		free(command_file);
-		error_handler(COMMAND_NOT_FOUND, global);
-	}
 	return (command_file);
 }
 
@@ -67,7 +62,7 @@ void	execute_command(char *cmd, char **env, t_global *global)
 		argv[0] = command_file;
 		argv[1] = NULL;
 		if (execve(command_file, argv, env) == -1)
-			error_handler(EXECVE_FAILED, global);
+			ft_printf("%s: command not found\n", cmd);
 		free(command_file);
 		exit(EXIT_FAILURE);
 	}
