@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 09:49:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 12:18:49 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,35 @@ bool	is_builtin(char *cmd)
 // PROTOTYPE :
 // On utilise execve() pour lancer la commande/verifier si c'est une
 // vraie commande
-void	execute_command(char *cmd, char **env, t_global *global)
+
+char	*get_command_path(const char *cmd, t_global *global)
 {
 	const char	*filename;
+	char		*command_file;
+
+	filename = "/usr/bin/";
+	command_file = malloc(ft_strlen(filename) + ft_strlen(cmd) + 1);
+	if (!command_file)
+		error_handler(MALLOC_FAILED, global);
+	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
+	ft_strlcat(command_file, cmd, ft_strlen(filename) + ft_strlen(cmd) + 1);
+	if (access(command_file, X_OK) != 0)
+	{
+		free(command_file);
+		error_handler(COMMAND_NOT_FOUND, global);
+	}
+	return (command_file);
+}
+
+void	execute_command(char *cmd, char **env, t_global *global)
+{
 	char		*command_file;
 	char		*argv[2];
 	pid_t		pid;
 
 	if (!cmd)
 		return ;
-	filename = "/usr/bin/";
-	command_file = malloc(ft_strlen(filename) + ft_strlen(cmd) + 1);
-	if (!command_file)
-		error_handler(MALLOC_FAILED, global);
-	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
-	ft_strlcat(command_file, cmd, ft_strlen(cmd) + ft_strlen(filename) + 1);
-	if (access(command_file, X_OK) != 0)
-	{
-		free(command_file);
-		error_handler(COMMAND_NOT_FOUND, global);
-	}
+	command_file = get_command_path(cmd, global);
 	pid = fork();
 	if (pid == -1)
 	{

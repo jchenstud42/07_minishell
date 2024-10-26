@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:43:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/26 09:45:35 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 12:09:50 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	error_handler(int error_number, t_global *global_data)
 	else if (error_number == EXECVE_FAILED)
 		ft_printf("Error, problem with execve\n");
 	else if (error_number == FORK_FAILED)
-		ft_printf("Error, creation of the child process failed\n");
+		ft_printf("Error, creation of the child process fail\n");
 	exit(EXIT_FAILURE);
 }

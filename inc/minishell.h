@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 11:03:08 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 12:20:12 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
 bool				is_builtin(char *cmd);
+char				*get_command_path(const char *cmd, t_global *global);
 void				execute_command(char *cmd, char **env, t_global *global);
 void				launch_line(t_global *global, char **env);
 

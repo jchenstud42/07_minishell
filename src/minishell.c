@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/26 11:02:25 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 12:00:38 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	calloc_global_struct(&global);
-	init_signals();
 	while (1)
 	{
+		calloc_global_struct(&global);
+		init_signals();
 		line = readline("\033[1;032mMinishell > \033[m");
 		// "exit" + Ctrl D
 		if (!line || ft_strcmp(line, "exit") == 0)
