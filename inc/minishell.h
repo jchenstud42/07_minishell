@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 12:20:12 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:23:50 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
 # include <sys/wait.h>
-# include <signal.h>
+# include <unistd.h>
 
 enum				e_error_number
 {
@@ -68,7 +68,7 @@ typedef struct s_token
 typedef struct s_env
 {
 	char			*env;
-	char			*str;
+	char			*value;
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;

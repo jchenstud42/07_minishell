@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 16:22:53 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/26 17:30:24 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 {
 	if (!token)
 		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
-	if (!ft_strcmp(token, "|"))
-		return (PIPE);
-	else if (!ft_strcmp(token, "<"))
+	if (!ft_strcmp(token, "<"))
 		return (INPUT);
 	else if (!ft_strcmp(token, "<<"))
 		return (HEREDOC);
@@ -39,6 +37,9 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 		return (APPEND);
 	else if (!last_node || last_node->type == PIPE)
 		return (CMD);
+	else if ((!ft_strcmp(token, "|")) && (last_node->type == ARG
+			|| last_node->type == CMD))
+		return (PIPE);
 	else
 		return (ARG);
 }

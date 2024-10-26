@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 15:07:58 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:02:28 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ bool	is_builtin(char *cmd)
 	return (true);
 }
 
-// PROTOTYPE :
-// On utilise execve() pour lancer la commande/verifier si c'est une
-// vraie commande
-
+// Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd, t_global *global)
 {
 	const char	*filename;
@@ -42,11 +39,19 @@ char	*get_command_path(const char *cmd, t_global *global)
 	return (command_file);
 }
 
+// ICI
+// Theorie :
+// - Malloc un tableau char **argv, size : nombre de ARG qui suivent notre CMD
+// - Stocker justement tous les tokens ARG qui suivent CMD jusqu'a la fin de la
+// liste, ou bien si on tombe sur autre chose.
+//
+// On utilise execve() pour lancer la commande/verifier si c'est une
+// vraie commande
 void	execute_command(char *cmd, char **env, t_global *global)
 {
-	char		*command_file;
-	char		*argv[2];
-	pid_t		pid;
+	char	*command_file;
+	char	*argv[2];
+	pid_t	pid;
 
 	if (!cmd)
 		return ;
