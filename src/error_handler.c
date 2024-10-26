@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:43:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/23 17:25:49 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/26 09:45:35 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ void	error_handler(int error_number, t_global *global_data)
 		ft_printf("Error, memory allocation failed.\n");
 	else if (error_number == ERROR_TOKEN_TYPE_ATTRIBUTION)
 		ft_printf("Error, unknown token type\n");
+	else if (error_number == COMMAND_NOT_FOUND)
+		ft_printf("Error, command not found\n");
+	else if (error_number == EXECVE_FAILED)
+		ft_printf("Error, problem with execve\n");
+	else if (error_number == FORK_FAILED)
+		ft_printf("Error, creation of the child process failed\n");
 	exit(EXIT_FAILURE);
 }

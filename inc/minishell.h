@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 17:36:32 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/26 09:48:15 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <sys/wait.h>
 
 enum				e_error_number
 {
@@ -31,7 +32,10 @@ enum				e_error_number
 	STRUCT_NOT_INITIALIZED,
 	EMPTY_LINE,
 	MALLOC_FAILED,
-	ERROR_TOKEN_TYPE_ATTRIBUTION
+	ERROR_TOKEN_TYPE_ATTRIBUTION,
+	FORK_FAILED,
+	COMMAND_NOT_FOUND,
+	EXECVE_FAILED
 };
 
 enum				e_token_list
@@ -100,7 +104,7 @@ void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
 bool				is_builtin(char *cmd);
-void				execute_command(char *cmd, char **env);
+void				execute_command(char *cmd, char **env, t_global *global);
 void				launch_line(t_global *global, char **env);
 
 // CHECK_LINE.c

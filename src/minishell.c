@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 17:11:05 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/26 09:51:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **env)
 		// "exit" + Ctrl D
 		if (!line || ft_strcmp(line, "exit") == 0)
 		{
-			ft_printf("exit");
+			ft_printf("exit\n");
 			free(line);
 			break ;
 		}
