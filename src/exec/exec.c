@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 15:02:56 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:07:08 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	execute_command(char *cmd, char **env, t_global *global)
 	char	**execve_args;
 	pid_t	pid;
 
+	execve_args = NULL;
 	if (!cmd)
 		return ;
 	command_file = get_command_path(cmd, global);

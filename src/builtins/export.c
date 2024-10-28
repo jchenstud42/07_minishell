@@ -6,15 +6,15 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 14:49:21 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:09:32 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	export_no_arg(t_env *env)
+int	export_no_arg(t_env **env)
 {
-	char	env_tab;
+	char	**env_tab;
 	int		i;
 	int		j;
 
@@ -27,7 +27,7 @@ void	export_no_arg(t_env *env)
 	{
 		j = 0;
 		ft_printf("declare -x ");
-		while (env_tab[i][j] && env[i][j] != '\n')
+		while (env_tab[i][j] && env_tab[i][j] != '=')
 			ft_printf("%c", env_tab[i][j++]);
 		if (env_tab[i][j] && env_tab[i][j] == '=')
 			ft_printf("=\"%s\"\n", &env_tab[i][j++]);
@@ -64,7 +64,7 @@ int	ft_export(t_env **env, char **line)
 	i = 1;
 	if (!line[i])
 	{
-		if (*env && !export_no_arg((*env)))
+		if (*env && !export_no_arg((env)))
 			return (1);
 		return (0);
 	}
@@ -72,7 +72,7 @@ int	ft_export(t_env **env, char **line)
 	{
 		if (!export_syntaxe(line[i]))
 		{
-			ft_printf("bash: export: '%s': invalid identifier\n", str[i]);
+			ft_printf("bash: export: '%s': invalid identifier\n", line[i]);
 			return (1);
 		}
 		else if (!env_add_node(env, line[i]))
