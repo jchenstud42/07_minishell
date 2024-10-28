@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 10:59:40 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:52:29 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char			*cmd
-}
+	char *cmd
+}					t_cmd;
 
 typedef struct s_env
 {
@@ -109,7 +109,6 @@ int					unset_syntaxe(char *av);
 void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
-int					is_builtin(char *cmd);
 char				*get_command_path(const char *cmd, t_global *global);
 void				execute_command(char *cmd, char **env, t_global *global);
 void				launch_line(t_global *global, char **env);
@@ -119,6 +118,7 @@ int					count_pipe(char *line);
 int					quote_are_closed(char *line);
 
 // IS_SPECIAL_TOKEN.c
+int					is_builtin(char *cmd);
 int					is_redirection(char *str);
 int					is_pipe(char *str);
 
