@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/26 19:02:28 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 09:28:48 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Verifie si c'est un builtin
-bool	is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (false);
+		return (0);
 	if (!ft_strcmp("echo", cmd) || !ft_strcmp("cd", cmd) || !ft_strcmp("pwd",
 			cmd) || !ft_strcmp("export", cmd) || !ft_strcmp("unset", cmd)
 		|| !ft_strcmp("env", cmd) || !ft_strcmp("exit", cmd))
-		return (false);
-	return (true);
+		return (0);
+	return (1);
 }
 
 // Permet d'obtenir le chemin absolu d'une commande

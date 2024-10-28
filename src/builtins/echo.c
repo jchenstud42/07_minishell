@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 11:41:14 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:28:10 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ int	check_n(char *line)
 
 	i = 0;
 	if (!line)
-		return (FALSE);
+		return (0);
 	if (line[i] && line[i] == '-')
 	{
 		i++;
 		while (line[i] && line[i] == 'n')
 			i++;
 		if (i == (int)ft_strlen(line))
-			return (TRUE);
+			return (1);
 	}
-	return (FALSE);
+	return (0);
 }

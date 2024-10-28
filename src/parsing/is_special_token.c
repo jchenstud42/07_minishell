@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:18:10 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 15:07:25 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:29:10 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	is_redirection(char *str)
 {
 	if (!ft_strcmp(str, "<") || !ft_strcmp(str, "<<") || !ft_strcmp(str, ">")
 		|| !ft_strcmp(str, ">>"))
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
 
 // Verifie si l'element est une PIPE
 int	is_pipe(char *str)
 {
 	if (!ft_strcmp(str, "|"))
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
 
 // TEST

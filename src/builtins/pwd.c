@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 11:41:36 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:28:19 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_pwd(void)
 	else
 	{
 		printf("error\n");
-		return (FALSE);
+		return (0);
 	}
-	return (TRUE);
+	return (1);
 }

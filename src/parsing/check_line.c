@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:00:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/25 16:44:00 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 10:17:37 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,26 @@ int	quote_are_closed(char *line)
 		i++;
 	}
 	if (quote_count % 2 == 0)
-		return (TRUE);
-	return (FALSE);
+		return (1);
+	return (0);
 }
+
+// int	first_token(t_global *global, t_token *token_list)
+// {
+// 	if (!token_list)
+// 		return (0);
+// 	else if (token_list->type == PIPE)
+// 		return (PIPE);
+// 	else if (token_list->type == )
+// }
+
+// int	check_line(t_global *global, t_token *token_list)
+// {
+// 	if (quote_are_closed(global) == 0)
+// 		return (0);
+// 	else if (first_token(global, token_list) == PIPE)
+// 		return (0);
+// }
 
 // TEST
 // int	main(int ac, char **av)
