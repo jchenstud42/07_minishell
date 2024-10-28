@@ -28,6 +28,7 @@ SRC			=	minishell.c \
 				parsing/is_special_token.c \
 				free/free.c \
 				exec/exec.c \
+				exec/execve.c \
 				builtins/cd.c \
 				builtins/echo.c \
 				builtins/env.c \

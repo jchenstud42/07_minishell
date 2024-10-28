@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 15:04:11 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:16:48 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,13 @@ int					unset_syntaxe(char *av);
 void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
+void				launch_line(t_global *global, char **env);
+
+// EXECVE.C
 char				*get_command_path(const char *cmd, t_global *global);
 int					nbr_arg_after_cmd(t_global *global);
 char				**fill_execve_arg_array(t_global *global);
 void				execute_command(char *cmd, char **env, t_global *global);
-void				launch_line(t_global *global, char **env);
 
 // ENV_UTILS.c
 int					env_add_node(t_env **env, char *value);
