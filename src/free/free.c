@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/25 16:05:03 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:02:48 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@ void	free_token_list(t_token **token_list)
 		current = temp;
 	}
 	*token_list = NULL;
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
 }
 
 // Libere toute la memoire allouee

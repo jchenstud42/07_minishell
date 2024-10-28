@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 14:47:58 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:04:11 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,14 @@ void				error_handler(int nb, t_global *global_data);
 
 // EXEC.C
 char				*get_command_path(const char *cmd, t_global *global);
+int					nbr_arg_after_cmd(t_global *global);
+char				**fill_execve_arg_array(t_global *global);
 void				execute_command(char *cmd, char **env, t_global *global);
 void				launch_line(t_global *global, char **env);
+
+// ENV_UTILS.c
+int					env_add_node(t_env **env, char *value);
+int					find_last_node(t_env *env);
 
 // CHECK_LINE.c
 int					count_pipe(char *line);
@@ -138,11 +144,8 @@ void				stock_line(t_global **global, char *line);
 void				line_tokenization(t_global **global, char *line);
 
 // FREE.c
+void				free_array(char **array);
 void				free_token_list(t_token **token_list);
 void				free_all(t_global *global_data);
-
-// ENV_UTILS.c
-int					env_add_node(t_env **env, char *value);
-int					find_last_node(t_env *env);
 
 #endif
