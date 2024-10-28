@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 11:52:29 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/28 14:47:58 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,6 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
-
-typedef struct s_cmd
-{
-	char *cmd
-}					t_cmd;
 
 typedef struct s_env
 {
@@ -145,5 +140,9 @@ void				line_tokenization(t_global **global, char *line);
 // FREE.c
 void				free_token_list(t_token **token_list);
 void				free_all(t_global *global_data);
+
+// ENV_UTILS.c
+int					env_add_node(t_env **env, char *value);
+int					find_last_node(t_env *env);
 
 #endif
