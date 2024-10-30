@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/30 12:21:46 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:07:09 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ char	**get_env(t_env *env)
 	return (env_tab);
 }
 
-// t_env	*create_env_node(const char *str)
-// {
-// 	t_env	*new_node;
+t_env	*create_env_node(const char *str)
+{
+	t_env	*new_node;
 
-// 	new_node = malloc(sizeof(t_env));
-// 	if (!new_node)
-// 		return (NULL);
-// 	new_node->env = strdup(str);
-// 	new_node->next = NULL;
-// 	return (new_node);
-// }
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->env = strdup(str);
+	new_node->next = NULL;
+	return (new_node);
+}
 
 // Fonction de test pour get_env
 // void	test_get_env(void)

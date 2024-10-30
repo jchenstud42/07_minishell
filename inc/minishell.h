@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/30 12:13:10 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:17:14 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ typedef struct global
 	t_env			*env;
 }					t_global;
 
+
+
+void				test_ft_export(void);
+t_env				*create_env_node(const char *str);
+
 // BUILTINS_UTILS.c
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
@@ -100,7 +105,7 @@ void				sort_env(char **tab, int len);
 
 // EXPORT.c
 
-int					export_no_arg(t_env **env);
+int					export_no_arg(t_env *env);
 int					export_syntaxe(char *line);
 int					ft_export(t_env **env, char **line);
 
