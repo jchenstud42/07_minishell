@@ -29,6 +29,7 @@ SRC			=	minishell.c \
 				free/free.c \
 				exec/exec.c \
 				exec/execve.c \
+				builtins/builtins_utils.c \
 				builtins/cd.c \
 				builtins/echo.c \
 				builtins/env.c \
@@ -37,7 +38,8 @@ SRC			=	minishell.c \
 				builtins/pwd.c \
 				builtins/unset.c \
 				signal/signal.c \
-				env/get_env.c
+				env/get_env.c \
+				env/env_utils.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 

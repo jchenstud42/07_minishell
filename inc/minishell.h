@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/28 15:16:48 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/30 12:13:10 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,12 @@ typedef struct global
 {
 	char			*line;
 	t_token			*token_list;
+	t_env			*env;
 }					t_global;
+
+// BUILTINS_UTILS.c
+void				ft_swap_tab(int i, int j, char **tab);
+int					env_len(t_env *env);
 
 // CD.c
 
@@ -89,10 +94,15 @@ int					check_n(char *line);
 // ENV.c
 int					ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
+void				sort_env(char **tab, int len);
 
 // EXIT.c
 
 // EXPORT.c
+
+int					export_no_arg(t_env **env);
+int					export_syntaxe(char *line);
+int					ft_export(t_env **env, char **line);
 
 // PWD.c
 int					ft_pwd(void);
@@ -100,8 +110,12 @@ int					ft_pwd(void);
 // UNSET.c
 int					unset_syntaxe(char *av);
 
-// ERROR_HANDLER.c
-void				error_handler(int nb, t_global *global_data);
+// ENV_UTILS.c
+int					env_add_node(t_env **env, char *value);
+t_env				*find_last_node_env(t_env *env);
+
+// GET_ENV.c
+char				**get_env(t_env *env);
 
 // EXEC.C
 void				launch_line(t_global *global, char **env);
@@ -112,9 +126,11 @@ int					nbr_arg_after_cmd(t_global *global);
 char				**fill_execve_arg_array(t_global *global);
 void				execute_command(char *cmd, char **env, t_global *global);
 
-// ENV_UTILS.c
-int					env_add_node(t_env **env, char *value);
-int					find_last_node(t_env *env);
+// FREE.c
+void				free_token_list(t_token **token_list);
+void				free_array(char **array);
+void				free_env_list(t_env *env);
+void				free_all(t_global *global_data);
 
 // CHECK_LINE.c
 int					count_pipe(char *line);
@@ -129,9 +145,6 @@ int					is_pipe(char *str);
 void				sig_c(int sig);
 void				init_signals(void);
 
-// INITIALIZATION.c
-void				calloc_global_struct(t_global **global_data);
-
 // INIT_TOKEN_LIST.c
 t_token				*last_element_of_list(t_token *token_list);
 int					check_token_type(char *token, t_token *last_node,
@@ -145,9 +158,18 @@ int					is_white_space(char c);
 void				stock_line(t_global **global, char *line);
 void				line_tokenization(t_global **global, char *line);
 
-// FREE.c
-void				free_array(char **array);
-void				free_token_list(t_token **token_list);
-void				free_all(t_global *global_data);
+// ERROR_HANDLER.c
+void				error_handler(int nb, t_global *global_data);
+
+// INITIALIZATION.c
+void				calloc_global_struct(t_global **global_data);
+
+
+
+
+
+
+
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/28 15:13:34 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/30 11:20:52 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 			free(line);
 			break ;
 		}
+		// test_get_env(void);
 		line_tokenization(&global, line);
 		launch_line(global, env);
 		add_history(line);

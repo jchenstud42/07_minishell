@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/28 14:02:48 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/30 11:11:27 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ void	free_array(char **array)
 	free(array);
 }
 
+void	free_env_list(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env;
+		env = env->next;
+		free(tmp->env);
+		free(tmp);
+	}
+}
+
 // Libere toute la memoire allouee
 void	free_all(t_global *global_data)
 {
@@ -48,6 +61,8 @@ void	free_all(t_global *global_data)
 		free_token_list(&global_data->token_list);
 	if (global_data->line)
 		free(global_data->line);
+	if (global_data->env)
+		free_env_list(global_data->env);
 	if (global_data)
 		free(global_data);
 }
