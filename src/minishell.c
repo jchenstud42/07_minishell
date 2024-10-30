@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/30 14:05:54 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:10:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		}
 		// test_get_env();
-		test_ft_export();
+		// test_ft_export();
 		line_tokenization(&global, line);
 		launch_line(global, env);
 		add_history(line);
