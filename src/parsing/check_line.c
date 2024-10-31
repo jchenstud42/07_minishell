@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:00:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 10:32:27 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:36:21 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	first_token_pipe(t_token *token_list)
 	return (0);
 }
 
-int	last_token(t_token **token_list)
+int	last_token(t_token *token_list)
 {
 	t_token	*tmp;
 
-	if (!(*token_list))
+	if (!token_list)
 	{
-		ft_printf("AAAAA");
+		ft_printf("AAAAA"); // ca rentre dedans je ne sais pas pourquoi
 		return (0);
 	}
-	tmp = (*token_list);
-	while (tmp->next != (*token_list))
+	tmp = token_list;
+	while (tmp->next != token_list)
 		tmp = tmp->next;
 	if (tmp->type == INPUT || tmp->type == HEREDOC
 		|| tmp->type == TRUNC || tmp->type == APPEND)
