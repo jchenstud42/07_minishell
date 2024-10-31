@@ -26,7 +26,7 @@ GNL			=	get_next_line.c get_next_line_fds.c get_next_line_utils.c
 AUTRE		=	ft_strcmp.c ft_strstr.c
 
 # Includes
-INC			=	-I libft.h
+INC			=	-I .
 
 # Sources
 SRC_PATH	=	./

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:00:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 10:36:21 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:28:05 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,23 @@ int	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
 		return (0);
-	else if (token_list->type == PIPE)
+	if (token_list->type == PIPE)
 		return (PIPE);
 	return (0);
 }
 
-int	last_token(t_token *token_list)
+int	last_token_redirection(t_token *token_list)
 {
-	t_token	*tmp;
+	t_token	*last_node;
 
 	if (!token_list)
 	{
 		ft_printf("AAAAA"); // ca rentre dedans je ne sais pas pourquoi
 		return (0);
 	}
-	tmp = token_list;
-	while (tmp->next != token_list)
-		tmp = tmp->next;
-	if (tmp->type == INPUT || tmp->type == HEREDOC
-		|| tmp->type == TRUNC || tmp->type == APPEND)
+	last_node = last_element_of_list(token_list);
+	if (last_node->type == INPUT || last_node->type == HEREDOC
+		|| last_node->type == TRUNC || last_node->type == APPEND)
 		return (0);
 	return (1);
 }
@@ -83,18 +81,18 @@ int	check_line(t_global *global, t_token *token_list)
 {
 	if (quote_are_closed(global->line) == 0)
 		return (0);
-	else if (first_token_pipe(token_list) == PIPE)
+	if (first_token_pipe(token_list) == PIPE)
 	{
-		ft_printf("bash: syntax error near unexpected token `|'\n");
-		return (0);
+		write(2, "bash: syntax error near unexpected token `|'\n", 45);
+		return (1);
 	}
-	else if (last_token(token_list) == 0)
+	else if (last_token_redirection(token_list) == 0)
 	{
-		ft_printf("bash: syntax error near unexpected token `newline'\n");
-		return (0);
+		write(2, "bash: syntax error near unexpected token `newline'\n", 51);
+		return (1);
 	}
 	else
-		return (1);
+		return (0);
 }
 
 // TEST
