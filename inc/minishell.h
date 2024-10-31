@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/30 15:10:03 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:32:36 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,9 @@ void				free_all(t_global *global_data);
 // CHECK_LINE.c
 int					count_pipe(char *line);
 int					quote_are_closed(char *line);
+int					first_token_pipe(t_token *token_list);
+int					last_token(t_token **token_list);
+int					check_line(t_global *global, t_token *token_list);
 
 // IS_SPECIAL_TOKEN.c
 int					is_builtin(char *cmd);
