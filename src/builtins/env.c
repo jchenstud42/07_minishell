@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:31:52 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/30 11:31:52 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:34:54 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_env(t_env *env)
 	if (ft_strchr(tmp->value, '='))
 		ft_printf("%s\n", tmp->value);
 	tmp = tmp->next;
-	while (tmp != env)
+	while (tmp->next)
 	{
 		if (ft_strchr(tmp->value, '='))
 			ft_printf("%s\n", tmp->value);

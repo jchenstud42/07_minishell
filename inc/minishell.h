@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 11:26:44 by jchen            ###   ########.fr       */
+/*   Updated: 2024/10/31 13:16:51 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct global
 // BUILTINS_UTILS.c
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
+int					choose_builtins(char **cmd);
 
 // CD.c
 
@@ -111,7 +112,7 @@ int					ft_pwd(void);
 int					unset_syntaxe(char *av);
 
 // ENV_UTILS.c
-int					env_add_node(t_env **env, char *value);
+void				env_add_node(t_env **env, t_env *value);
 t_env				*find_last_node_env(t_env *env);
 
 // GET_ENV.c

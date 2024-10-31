@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/30 14:07:09 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:10:32 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,28 @@ char	**get_env(t_env *env)
 	i = 0;
 	while (env_size)
 	{
-		env_tab[i++] = env_size->env;
+		env_tab[i] = env_size->env;
 		env_size = env_size->next;
+		i++;
 	}
 	env_tab[i] = NULL;
 	return (env_tab);
 }
 
-t_env	*create_env_node(const char *str)
-{
-	t_env	*new_node;
 
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (NULL);
-	new_node->env = strdup(str);
-	new_node->next = NULL;
-	return (new_node);
-}
+// // Fonction de test pour get_env
+// t_env	*create_env_node(const char *str)
+// {
+// 	t_env	*new_node;
 
-// Fonction de test pour get_env
+// 	new_node = malloc(sizeof(t_env));
+// 	if (!new_node)
+// 		return (NULL);
+// 	new_node->env = strdup(str);
+// 	new_node->next = NULL;
+// 	return (new_node);
+// }
+
 // void	test_get_env(void)
 // {
 // 	t_env	*env1 = create_env_node("PATH=/usr/bin");
