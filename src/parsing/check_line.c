@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/15 11:00:20 by rbouquet          #+#    #+#             */
 /*   Updated: 2024/10/31 11:28:05 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -12,11 +15,12 @@
 
 #include "../../inc/minishell.h"
 
+
 // Compte le nombre de pipe
 int	count_pipe(char *line)
 {
-	int	i;
-	int	pipe_count;
+	int i;
+	int pipe_count;
 
 	if (!line)
 		return (ERROR);
@@ -34,8 +38,8 @@ int	count_pipe(char *line)
 // Verifie si les guillemet sont bien fermees
 int	quote_are_closed(char *line)
 {
-	int	i;
-	int	quote_count;
+	int i;
+	int quote_count;
 
 	if (!line)
 		return (ERROR);
@@ -63,13 +67,10 @@ int	first_token_pipe(t_token *token_list)
 
 int	last_token_redirection(t_token *token_list)
 {
-	t_token	*last_node;
+	t_token *last_node;
 
 	if (!token_list)
-	{
-		ft_printf("AAAAA"); // ca rentre dedans je ne sais pas pourquoi
-		return (0);
-	}
+		return (-1);
 	last_node = last_element_of_list(token_list);
 	if (last_node->type == INPUT || last_node->type == HEREDOC
 		|| last_node->type == TRUNC || last_node->type == APPEND)
