@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 13:16:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:35:04 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ enum				e_token_list
 typedef struct s_token
 {
 	char			*token;
-	int				token_count;
 	int				index;
 	int				type;
 	struct s_token	*next;
@@ -76,6 +75,7 @@ typedef struct s_env
 typedef struct global
 {
 	char			*line;
+	int				cmd_number;
 	t_token			*token_list;
 	t_env			*env;
 }					t_global;
@@ -119,22 +119,27 @@ t_env				*find_last_node_env(t_env *env);
 char				**get_env(t_env *env);
 
 // EXEC.C
+bool				pipe_inside_token_list(t_global *global);
 void				launch_line(t_global *global, char **env);
 
 // EXECVE.C
 char				*get_command_path(const char *cmd, t_global *global);
-int					nbr_arg_after_cmd(t_global *global);
-char				**fill_execve_arg_array(t_global *global);
+int					nbr_arg_after_cmd(t_token *token_list);
+char				**fill_execve_arg_array(t_global *global,
+						t_token *token_list);
 void				execute_command(char *cmd, char **env, t_global *global);
+
+// PIPE.C
+void				execute_pipe(char *line, char **env, t_global *global);
 
 // FREE.c
 void				free_token_list(t_token **token_list);
 void				free_array(char **array);
+void				free_double_array(char ***array_array);
 void				free_env_list(t_env *env);
 void				free_all(t_global *global_data);
 
 // CHECK_LINE.c
-int					count_pipe(char *line);
 int					quote_are_closed(char *line);
 int					first_token_pipe(t_token *token_list);
 int					last_token_redirection(t_token *token_list);
@@ -144,6 +149,10 @@ int					check_line(t_global *global, t_token *token_list);
 int					is_builtin(char *cmd);
 int					is_redirection(char *str);
 int					is_pipe(char *str);
+
+// COUNT.C
+int					count_pipe(char *line);
+int					count_cmd_token(t_token *token_list);
 
 // SIGNAL.c
 void				sig_c(int sig);
@@ -167,13 +176,6 @@ void				error_handler(int nb, t_global *global_data);
 
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
-
-
-
-
-
-
-
-
+char				***init_cmd_double_array(t_global *global);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 12:20:49 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/31 15:00:12 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/01 17:59:37 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 // int	pipe_example(void)
 // {
@@ -108,72 +108,145 @@
 // 		waitpid(pid, NULL);
 // }
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <unistd.h>
+// Remplie un tableau de string d'arguments qui vont etre utilises par execve()
+// On en profite pour passer les noeuds possedant des ARG
+// char	***fill_pipe_command_array(t_global *global)
+// {
+// 	char	**execve_args;
+// 	int		nbr_arg;
+// 	int		i;
 
-int	pipe_example(int ac, char **av)
+// 	i = -1;
+// 	nbr_arg = nbr_arg_after_cmd(global);
+// 	execve_args = malloc((nbr_arg + 1) * sizeof(char *));
+// 	if (!execve_args)
+// 	{
+// 		free(execve_args);
+// 		error_handler(MALLOC_FAILED, global);
+// 	}
+// 	while (nbr_arg > ++i)
+// 	{
+// 		execve_args[i] = ft_strdup(global->token_list->token);
+// 		if (!execve_args[i])
+// 		{
+// 			free_array(execve_args);
+// 			error_handler(MALLOC_FAILED, global);
+// 		}
+// 		global->token_list = global->token_list->next;
+// 	}
+// 	execve_args[i] = NULL;
+// 	return (execve_args);
+// }
+
+char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays,
+		t_global *global)
 {
-	int		temp_infile;
-	int		temp_outfile;
-	int		fd_infile;
-	int		fd_outfile;
-	int		pid;
-	int		fds[2];
+	t_token	*current_token;
 	int		i;
-	char	*args[] = {"ls", NULL};
 
-	i = 0;
-	temp_infile = dup(0);
-	temp_outfile = dup(1);
-	// if (infile)
-	// 	fd_infile = open(infile, O_RDONLY);
-	// else
-	fd_infile = dup(temp_infile);
-	while (i < ac)
+	if (!token_list || !cmd_arrays)
+		return (NULL);
+	i = -1;
+	current_token = token_list;
+	while (current_token)
 	{
-		dup2(fd_infile, 0);
-		close(fd_infile);
-		if (i + 1 == ac)
-			// if (outfile)
-			// 	fd_outfile = open(outfile, ???);
-			// else
-			fd_outfile = dup(temp_outfile);
-		else
-		{
-			pipe(fds);
-			fd_outfile = fds[1];
-			fd_infile = fds[0];
-		}
-		dup2(fd_outfile, 1);
-		close(fd_outfile);
-		pid = fork();
-		if (pid == 0)
-		{
-			execvp(args[0], args);
-			exit(1);
-		}
-		i++;
+		if (current_token->type == CMD)
+			cmd_arrays[++i] = fill_execve_arg_array(global, current_token);
+		current_token = current_token->next;
 	}
-	dup2(temp_infile, 0);
-	dup2(temp_outfile, 1);
-	close(temp_infile);
-	close(temp_outfile);
-	while (1)
-	{
-		waitpid(pid, NULL, 0);
-	}
+	return (cmd_arrays);
 }
 
-int	main(int argc, char **argv)
+void	execute_pipe(char *line, char **env, t_global *global)
 {
-	if (argc < 2)
+	char	***cmd_arrays;
+	int		i;
+	int		j;
+
+	j = -1;
+	if (!line || !env || !global)
+		error_handler(STRUCT_INIT_FAILED, global);
+	cmd_arrays = init_cmd_double_array(global);
+	fill_cmd_double_array(global->token_list, cmd_arrays, global);
+	//// TEST POUR PRINT - A ENLEVER PLUS TARD
+	i = -1;
+	while (cmd_arrays[++i])
 	{
-		fprintf(stderr, "Usage: %s <command1> <command2> ...\n", argv[0]);
-		return (1);
+		j = -1;
+		while (cmd_arrays[i][++j])
+			printf("[%d - %d] : %s\n", i, j, cmd_arrays[i][j]);
+		printf("\n");
 	}
-	pipe_example(argc - 1, argv + 1);
-	return (0);
+	free_double_array(cmd_arrays);
+	return ;
 }
+// fill_pipe_execve_arg_array(global);
+// command_file = get_command_path(cmd, global);
+// pid = fork();
+// if (pid == -1)
+// {
+// 	free(command_file);
+// 	error_handler(FORK_FAILED, global);
+// }
+// else if (pid == 0)
+// {
+// 	execve_args = fill_execve_arg_array(global);
+// 	if (execve(command_file, execve_args, env) == -1)
+// 		ft_printf("%s: command not found\n", cmd);
+// 	free_array(execve_args);
+// 	free(command_file);
+// 	exit(EXIT_FAILURE);
+// }
+// else
+// 	waitpid(pid, NULL, 0);
+// free(command_file);
+// }
+
+// static void	pipeline(char ***cmd)
+// {
+// 	int		fd[2];
+// 	pid_t	pid;
+
+// 	int fdd = 0; /* Backup */
+// 	while (*cmd != NULL)
+// 	{
+// 		pipe(fd);
+// 		if ((pid = fork()) == -1)
+// 		{
+// 			perror("fork");
+// 			exit(1);
+// 		}
+// 		else if (pid == 0)
+// 		{
+// 			dup2(fdd, 0);
+// 			if (*(cmd + 1) != NULL)
+// 			{
+// 				dup2(fd[1], 1);
+// 			}
+// 			close(fd[0]);
+// 			execvp((*cmd)[0], *cmd);
+// 			exit(1);
+// 		}
+// 		else
+// 		{
+// 			wait(NULL); /* Collect childs */
+// 			close(fd[1]);
+// 			fdd = fd[0];
+// 			cmd++;
+// 		}
+// 	}
+// }
+
+// int	main(int argc, char *argv[])
+// {
+// 	char	*ls[] = {"ls", "-al", NULL};
+// 	char	*rev[] = {"rev", NULL};
+// 	char	*nl[] = {"nl", NULL};
+// 	char	*cat[] = {"cat", "-e", NULL};
+// 	char	**cmd[] = {ls, rev, nl, cat, NULL};
+
+// 	(void)argc;
+// 	(void)argv;
+// 	pipeline(cmd);
+// 	return (0);
+// }

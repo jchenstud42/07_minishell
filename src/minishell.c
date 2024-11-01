@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/31 12:31:50 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:45:40 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	(void)env;
 	while (1)
 	{
 		calloc_global_struct(&global);
@@ -37,7 +36,8 @@ int	main(int ac, char **av, char **env)
 		if (!check_line(global, global->token_list))
 		{
 			launch_line(global, env);
-			ft_env(global->env);
+			// TON FT_ENV FAIT SEGFAULT A PARTIR DU 2E PROMPT
+			// ft_env(global->env);
 		}
 	}
 	rl_clear_history();

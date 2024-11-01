@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/10/30 11:11:27 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:41:19 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,36 @@ void	free_token_list(t_token **token_list)
 	*token_list = NULL;
 }
 
+// Libere la memoire allouee a un tableau de string
 void	free_array(char **array)
 {
 	int	i;
 
+	if (!array)
+		return ;
 	i = -1;
 	while (array[++i])
 		free(array[i]);
 	free(array);
+}
+
+// Libere la memoire allouee a un tableau de tableau de string
+void	free_double_array(char ***array_array)
+{
+	int	i;
+	int	j;
+
+	if (!array_array)
+		return ;
+	i = -1;
+	while (array_array[++i])
+	{
+		j = -1;
+		while (array_array[i][++j])
+			free(array_array[i][j]);
+		free(array_array[i]);
+	}
+	free(array_array);
 }
 
 void	free_env_list(t_env *env)
