@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:31:52 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 12:34:54 by rbouquet         ###   ########.fr       */
+/*   Created: 2024/11/02 10:05:06 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/11/02 10:21:13 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@ int	ft_env(t_env *env)
 
 	tmp = env;
 	if (!tmp)
-		return (1);
-	if (ft_strchr(tmp->value, '='))
-		ft_printf("%s\n", tmp->value);
-	tmp = tmp->next;
-	while (tmp->next)
+		return (0);
+	while (tmp != NULL)
 	{
-		if (ft_strchr(tmp->value, '='))
-			ft_printf("%s\n", tmp->value);
+		if (ft_strchr(tmp->env, '='))
+			ft_printf("%s\n", tmp->env);
 		tmp = tmp->next;
 	}
 	return (0);
