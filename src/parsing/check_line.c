@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:56:07 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/01 12:56:04 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/02 16:07:05 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Verifie si les guillemet sont bien fermees
-int	quote_are_closed(char *line)
+bool	quote_are_closed(char *line)
 {
 	int	i;
 	int	quote_count;
 
 	if (!line)
-		return (ERROR);
+		return (false);
 	i = 0;
 	quote_count = 0;
 	while (line[i])
@@ -29,14 +29,14 @@ int	quote_are_closed(char *line)
 		i++;
 	}
 	if (quote_count % 2 == 0)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 int	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
-		return (0);
+		return (1);
 	if (token_list->type == PIPE)
 		return (PIPE);
 	return (0);
@@ -47,7 +47,7 @@ int	last_token_redirection(t_token *token_list)
 	t_token	*last_node;
 
 	if (!token_list)
-		return (-1);
+		return (1);
 	last_node = last_element_of_list(token_list);
 	if (last_node->type == INPUT || last_node->type == HEREDOC
 		|| last_node->type == TRUNC || last_node->type == APPEND)
@@ -57,8 +57,8 @@ int	last_token_redirection(t_token *token_list)
 
 int	check_line(t_global *global, t_token *token_list)
 {
-	if (quote_are_closed(global->line) == 0)
-		return (0);
+	if (quote_are_closed(global->line) == false)
+		return (1);
 	if (first_token_pipe(token_list) == PIPE)
 	{
 		write(2, "bash: syntax error near unexpected token `|'\n", 45);

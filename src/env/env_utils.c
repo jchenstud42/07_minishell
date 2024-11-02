@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 12:07:21 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:01:41 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	env_add_node(t_env **env, char *value)
 
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
-		return (0);
+		return (1);
 	new_node->env = strdup(value);
 	if (!new_node->env)
 	{
 		free(new_node);
-		return (0);
+		return (1);
 	}
 	new_node->next = NULL;
 	if (*env)
@@ -35,7 +35,7 @@ int	env_add_node(t_env **env, char *value)
 	}
 	else
 		*env = new_node;
-	return (1);
+	return (0);
 }
 
 t_env	*find_last_node_env(t_env *env)
@@ -54,7 +54,7 @@ int	check_env_line(t_env *env, char *line)
 	t_env	*tmp;
 
 	if (!env || !line)
-		return (0);
+		return (-1);
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
@@ -84,7 +84,7 @@ int	update_env(t_env **env, char *line)
 
 	index = check_env_line(*env, line);
 	if (!line)
-		return (0);
+		return (1);
 	if (index >= 0)
 	{
 		tmp = *env;
@@ -97,7 +97,7 @@ int	update_env(t_env **env, char *line)
 	else if (index == -1)
 	{
 		if (!env_add_node(env, line))
-			return (0);
+			return (1);
 	}
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 12:07:27 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/02 16:08:09 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void				free_env_list(t_env *env);
 void				free_all(t_global *global_data);
 
 // CHECK_LINE.c
-int					quote_are_closed(char *line);
+bool				quote_are_closed(char *line);
 int					first_token_pipe(t_token *token_list);
 int					last_token_redirection(t_token *token_list);
 int					check_line(t_global *global, t_token *token_list);
