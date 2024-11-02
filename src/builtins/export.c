@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 10:26:09 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/02 11:48:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,11 @@ int	ft_export(t_env **env, char **line)
 			ft_printf("bash: export: '%s': invalid identifier\n", line[i]);
 			return (1);
 		}
-		else if (!env_add_node(env, line[i]))
+		else if (!update_env(env, line[i]))
 			return (1);
 		i++;
 	}
 	return (0);
-}
-
-int	update_env(t_env **env, char *line)
-{
-	int		index;
-	int		i;
-	t_env	*tmp;
-
-	if (!line)
-		return (0);
-	if (index)
 }
 
 // void test_ft_export() {

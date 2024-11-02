@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 10:20:49 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/02 12:07:27 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,10 @@ int					ft_pwd(void);
 int					unset_syntaxe(char *av);
 
 // ENV_UTILS.c
-void				env_add_node(t_env **env, t_env *value);
+int					env_add_node(t_env **env, char *value);
 t_env				*find_last_node_env(t_env *env);
+int					check_env_line(t_env *env, char *line);
+int					update_env(t_env **env, char *line);
 
 // GET_ENV.c
 char				**get_env(t_env *env);

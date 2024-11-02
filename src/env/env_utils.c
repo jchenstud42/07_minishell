@@ -5,24 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 14:47:25 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 11:03:22 by rbouquet         ###   ########.fr       */
+/*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/11/02 12:07:21 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	env_add_node(t_env **env, t_env *value)
+int	env_add_node(t_env **env, char *value)
 {
+	t_env	*new_node;
 	t_env	*tmp;
 
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (0);
+	new_node->env = strdup(value);
+	if (!new_node->env)
+	{
+		free(new_node);
+		return (0);
+	}
+	new_node->next = NULL;
 	if (*env)
 	{
 		tmp = find_last_node_env(*env);
-		tmp->next = value;
+		tmp->next = new_node;
 	}
 	else
-		*env = value;
+		*env = new_node;
+	return (1);
 }
 
 t_env	*find_last_node_env(t_env *env)
@@ -34,7 +47,7 @@ t_env	*find_last_node_env(t_env *env)
 	return (env);
 }
 
-int	check_env_line(t_env **env, char *line)
+int	check_env_line(t_env *env, char *line)
 {
 	int		i;
 	int		j;
@@ -47,18 +60,44 @@ int	check_env_line(t_env **env, char *line)
 		i++;
 	j = 0;
 	tmp = env;
-	if (!ft_strcmp(tmp->line, line, i) && (tmp->line[i] == '\0'
-			|| tmp->line[i] == '='))
+	if (!ft_strncmp(tmp->env, line, i) && (tmp->env[i] == '\0'
+			|| tmp->env[i] == '='))
 		return (j);
 	tmp = tmp->next;
 	j++;
 	while (tmp != NULL)
 	{
-		if (!ft_strcmp(tmp->line, line, i) && (tmp->line[i] == '\0'
-				|| tmp->line[i] == '='))
+		if (!ft_strncmp(tmp->env, line, i) && (tmp->env[i] == '\0'
+				|| tmp->env[i] == '='))
 			return (j);
 		tmp = tmp->next;
 		j++;
 	}
 	return (-1);
+}
+
+int	update_env(t_env **env, char *line)
+{
+	int		index;
+	int		i;
+	t_env	*tmp;
+
+	index = check_env_line(*env, line);
+	if (!line)
+		return (0);
+	if (index >= 0)
+	{
+		tmp = *env;
+		i = 0;
+		while (i++ < index)
+			tmp = tmp->next;
+		free(tmp->env);
+		tmp->env = line;
+	}
+	else if (index == -1)
+	{
+		if (!env_add_node(env, line))
+			return (0);
+	}
+	return (1);
 }
