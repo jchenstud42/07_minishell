@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 15:59:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:41:01 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,34 @@ int	update_oldpwd(t_global *global)
 	return (0);
 }
 
-// int	update_pwd(t_global *global)
-// {
-// 	char	*path;
+void	update_pwd(t_global *global)
+{
+	char	*path;
+	char	*pwd;
 
-// 	update_oldpwd(global);
-// 	if (getcwd(path, PATH_MAX) == NULL)
-// 		return (1);
-// 	return (0);
+	update_oldpwd(global);
+	if (getcwd(path, PATH_MAX) == NULL)
+		return (1);
+	pwd = ft_strjoin("PWD=", path)
+	if (!pwd)
+		error_handler(MALLOC_FAILED, global);
+	update_env(&global->env, pwd);
+	free(pwd);
+	return (0);
+}
+
+// int	ft_cd(t_global *global, char *av)
+// {
+// 	int i;
+
+// 	i = 0;;
+// 	while (av[i])
+// 		i++;
+// 	if (i == 1)
+// 		cd_home(global); //Fonction a coder
+// 	else if (i == 2)
+// 	{
+		
+// 	}
+		
 // }

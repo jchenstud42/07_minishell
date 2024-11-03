@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/02 09:58:19 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:13:30 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		token_to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
-		token_to_append->type, token_to_append->token);
+	// ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
+	// 	token_to_append->type, token_to_append->token);
 }
