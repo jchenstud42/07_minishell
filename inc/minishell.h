@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 11:11:44 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:01:40 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ enum				e_error_number
 	ERROR_TOKEN_TYPE_ATTRIBUTION,
 	FORK_FAILED,
 	COMMAND_NOT_FOUND,
-	EXECVE_FAILED
+	EXECVE_FAILED,
 };
 
 enum				e_token_list
@@ -120,7 +120,7 @@ int					env_add_node(t_env **env, char *value);
 t_env				*find_last_node_env(t_env *env);
 int					check_env_line(t_env *env, char *line);
 int					update_env(t_env **env, char *line);
-char				*get_env_name(t_env *find_env, char	*name_env);
+char				*get_env_name(t_env *find_env, char *name_env);
 
 // GET_ENV.c
 char				**get_env(t_env *env);
@@ -137,6 +137,9 @@ char				**fill_execve_arg_array(t_global *global,
 void				execute_command(char *cmd, char **env, t_global *global);
 
 // PIPE.C
+void				pipeline(char ***cmd, char **env, t_global *global);
+char				***fill_cmd_double_array(t_token *token_list,
+						char ***cmd_arrays, t_global *global);
 void				execute_pipe(char *line, char **env, t_global *global);
 
 // FREE.c

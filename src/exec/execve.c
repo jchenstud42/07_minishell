@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:16:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/01 17:58:19 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 11:59:48 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	nbr_arg_after_cmd(t_token *token_list)
 	return (nbr_arg);
 }
 
-// Remplie un tableau de string d'arguments qui vont etre utilises par execve()
+// Remplie un tableau de string d'arguments qui seront utilises par execve()
 // On en profite pour passer les noeuds possedant des ARG
 char	**fill_execve_arg_array(t_global *global, t_token *token_list)
 {
@@ -83,29 +83,29 @@ char	**fill_execve_arg_array(t_global *global, t_token *token_list)
 // vraie commande
 void	execute_command(char *cmd, char **env, t_global *global)
 {
-	char	*command_file;
+	char	*command_path;
 	char	**execve_args;
 	pid_t	pid;
 
 	if (!cmd)
 		return ;
-	command_file = get_command_path(cmd, global);
+	command_path = get_command_path(cmd, global);
 	pid = fork();
 	if (pid == -1)
 	{
-		free(command_file);
+		free(command_path);
 		error_handler(FORK_FAILED, global);
 	}
 	else if (pid == 0)
 	{
 		execve_args = fill_execve_arg_array(global, global->token_list);
-		if (execve(command_file, execve_args, env) == -1)
+		if (execve(command_path, execve_args, env) == -1)
 			ft_printf("%s: command not found\n", cmd);
 		free_array(execve_args);
-		free(command_file);
+		free(command_path);
 		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, NULL, 0);
-	free(command_file);
+	free(command_path);
 }
