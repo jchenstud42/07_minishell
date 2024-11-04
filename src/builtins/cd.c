@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 10:28:36 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:12:47 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ int	cd_home(t_global *global)
 	char	*home;
 	int		home_path;
 
-	home = get_env_name(&global->env, "HOME");  //Fonction a coder
+	home = get_env_name(global->env, "HOME");
 	if (!home)
 	{
-		write(2, "bash: cd: HOME not set\n, 23");
+		write(2, "bash: cd: HOME not set\n", 23);
 		return (1);
 	}
 	else
@@ -105,11 +105,11 @@ int	cd_home(t_global *global)
 		home_path = chdir(home);
 		if (!home_path)
 		{
-			ft_printf("bash: cd: %s: No such file or directory", new_path);
+			ft_printf("bash: cd: %s: No such file or directory", home_path);
 			return (1);
 		}
 		else
-			update_pwd(global, home);
+			update_pwd(global);
 	}
 	return (0);
 }
