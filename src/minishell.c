@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 14:52:39 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:36:39 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int ac, char **av, char **env)
 	{
 		calloc_global_struct(&global);
 		init_signals();
+		init_env(&global->env_list, env);
 		line = readline("\033[1;032mMinishell > \033[m");
 		// "exit" + Ctrl D
 		if (!line || ft_strcmp(line, "exit") == 0)
@@ -72,6 +73,6 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	free_all(global);
-	ft_printf("NOTE A ROMAIN ( DE ROMAIN ), FAIS EN SORTE QUE L'ON PUISSE UTILSER LES BUILTINS"); // NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
+	ft_printf("NOTE A ROMAIN ( DE ROMAIN ), FAIS EN SORTE QUE L'ON PUISSE UTILSER LES BUILTINS, ENV ET PWD C'EST BON"); // NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
 	return (0);
 }

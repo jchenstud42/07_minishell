@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 16:41:19 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 15:11:38 by rbouquet         ###   ########.fr       */
+/*   Created: 2024/11/04 16:30:05 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/11/04 16:43:23 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,64 @@ char	***init_cmd_double_array(t_global *global)
 	return (cmd_arrays);
 }
 
-// void	fill_arg_after_cmd()
+char	**fill_arg_after_cmd(t_global *global, t_token *token_list)
+{
+	t_token	*current_token;
+	char	**execve_args;
+	int		nbr_arg;
+	int		i;
+
+	i = -1;
+	current_token = token_list;
+	nbr_arg = nbr_arg_after_cmd(token_list);
+	execve_args = malloc((nbr_arg + 1) * sizeof(char *));
+	if (!execve_args)
+	{
+		free(execve_args);
+		error_handler(MALLOC_FAILED, global);
+	}
+	current_token = current_token->next;
+	while (++i < nbr_arg && current_token)
+	{
+		execve_args[i] = ft_strdup(current_token->token);
+		if (!execve_args[i])
+		{
+			free_array(execve_args);
+			error_handler(MALLOC_FAILED, global);
+		}
+		current_token = current_token->next;
+	}
+	execve_args[i] = NULL;
+	return (execve_args);
+}
+
+int	nbr_arg_after_cmd2(t_token *token_list)
+{
+	int		nbr_arg;
+	t_token	*current_token;
+
+	nbr_arg = 0;
+	if (!token_list)
+		return (-1);
+	current_token = token_list->next;
+	while (current_token && current_token->type == ARG)
+	{
+		current_token = current_token->next;
+		nbr_arg++;
+	}
+	return (nbr_arg);
+}
+
+void	init_env(t_env **env_to_add, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (!env || !*env)
+		return ;
+	while (env[i])
+	{
+		env_add_node(env_to_add, env[i]);
+		i++;
+	}
+}

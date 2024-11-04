@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 15:29:35 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:40:58 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ enum				e_token_list
 typedef struct s_token
 {
 	char			*token;
-	char			*arg;
 	int				index;
 	int				type;
 	struct s_token	*next;
@@ -76,6 +75,7 @@ typedef struct s_env
 typedef struct global
 {
 	char			*line;
+	char			*arg;
 	int				cmd_number;
 	t_token			*token_list;
 	t_env			*env_list;
@@ -187,5 +187,9 @@ void				error_handler(int nb, t_global *global_data);
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
 char				***init_cmd_double_array(t_global *global);
+void				init_env(t_env **env_to_add, char **env);
 
+
+
+char				**fill_arg_after_cmd(t_global *global, t_token *token_list);
 #endif

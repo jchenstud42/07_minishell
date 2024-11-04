@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 11:48:07 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:17:51 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	export_no_arg(t_env *env)
 
 	env_tab = get_env(env);
 	if (!env_tab)
-		return (0);
+		return (1);
 	sort_env(env_tab, env_len(env));
 	i = 0;
 	while (env_tab[i])
@@ -36,7 +36,7 @@ int	export_no_arg(t_env *env)
 		i++;
 	}
 	free(env_tab);
-	return (1);
+	return (0);
 }
 
 int	export_syntaxe(char *line)

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/02 16:04:37 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:40:47 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	free_all(t_global *global_data)
 		free_token_list(&global_data->token_list);
 	if (global_data->line)
 		free(global_data->line);
-	if (global_data->env)
-		free_env_list(global_data->env);
+	if (global_data->env_list)
+		free_env_list(global_data->env_list);
 	if (global_data)
 		free(global_data);
 }
