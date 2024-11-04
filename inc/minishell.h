@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 16:40:58 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:00:30 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ enum				e_error_number
 	FORK_FAILED,
 	COMMAND_NOT_FOUND,
 	EXECVE_FAILED,
+	DUP_FAILED,
+	PIPE_FAILED
 };
 
 enum				e_token_list
@@ -137,6 +139,9 @@ char				**fill_execve_arg_array(t_global *global,
 void				execute_command(char *cmd, char **env, t_global *global);
 
 // PIPE.C
+void				child_process(char ***cmd, int *fds, t_global *global,
+						char **env);
+void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				pipeline(char ***cmd, char **env, t_global *global);
 char				***fill_cmd_double_array(t_token *token_list,
 						char ***cmd_arrays, t_global *global);
@@ -188,8 +193,6 @@ void				error_handler(int nb, t_global *global_data);
 void				calloc_global_struct(t_global **global_data);
 char				***init_cmd_double_array(t_global *global);
 void				init_env(t_env **env_to_add, char **env);
-
-
 
 char				**fill_arg_after_cmd(t_global *global, t_token *token_list);
 #endif

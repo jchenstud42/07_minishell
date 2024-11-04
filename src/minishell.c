@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 16:36:39 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:02:26 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	free_all(global);
-	ft_printf("NOTE A ROMAIN ( DE ROMAIN ), FAIS EN SORTE QUE L'ON PUISSE UTILSER LES BUILTINS, ENV ET PWD C'EST BON"); // NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
+	// NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
+	ft_printf("NOTE A ROMAIN (DE ROMAIN): ");
+	ft_printf("FAIS EN SORTE D'UTILISER LES BUILTINS, ENV ET PWD C'EST BON");
 	return (0);
 }

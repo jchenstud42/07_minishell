@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:16:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 11:59:48 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 16:29:56 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ void	execute_command(char *cmd, char **env, t_global *global)
 	{
 		execve_args = fill_execve_arg_array(global, global->token_list);
 		if (execve(command_path, execve_args, env) == -1)
-			ft_printf("%s: command not found\n", cmd);
+		{
+			ft_putstr_fd(execve_args[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
 		free_array(execve_args);
 		free(command_path);
 		exit(EXIT_FAILURE);
