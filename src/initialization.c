@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:41:19 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/01 17:22:26 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 15:11:38 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,5 @@ char	***init_cmd_double_array(t_global *global)
 	}
 	return (cmd_arrays);
 }
+
+// void	fill_arg_after_cmd()

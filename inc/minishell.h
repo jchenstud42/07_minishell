@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 12:01:40 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 15:29:35 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ enum				e_token_list
 # define FALSE 0
 # define ERROR -1
 
-// J'ai mis l'index(/position) pour le moment, a voir si c'est necessaire
 typedef struct s_token
 {
 	char			*token;
+	char			*arg;
 	int				index;
 	int				type;
 	struct s_token	*next;
@@ -78,13 +78,13 @@ typedef struct global
 	char			*line;
 	int				cmd_number;
 	t_token			*token_list;
-	t_env			*env;
+	t_env			*env_list;
 }					t_global;
 
 // BUILTINS_UTILS.c
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
-int					choose_builtins(char **cmd);
+void				execute_builtin(char *cmd, t_global *global);
 
 // CD.c
 int					update_oldpwd(t_global *global);

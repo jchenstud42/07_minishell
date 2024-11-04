@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 12:36:02 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:09:57 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,18 @@ void	launch_line(t_global *global, char **env)
 	if (pipe_inside_token_list(global))
 		execute_pipe(global->line, env, global);
 	else
+	{
 		while (global->token_list)
 		{
 			if (global->token_list->type == CMD)
-				if (is_builtin(global->token_list->type))
-					return ()
-				execute_command(global->token_list->token, env, global);
+			{
+				if (is_builtin(global->token_list->token) == 0)
+					execute_builtin(global->token_list->token, global);
+				else
+					execute_command(global->token_list->token, env, global);
+			}
 			global->token_list = global->token_list->next;
 		}
+	}
 }
+

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 12:33:06 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:52:39 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)env;
 	(void)ac;
+	(void)av;
 	while (1)
 	{
 		calloc_global_struct(&global);
@@ -71,5 +72,6 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	free_all(global);
+	ft_printf("NOTE A ROMAIN ( DE ROMAIN ), FAIS EN SORTE QUE L'ON PUISSE UTILSER LES BUILTINS"); // NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
 	return (0);
 }

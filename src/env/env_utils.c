@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 11:08:55 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:22:54 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	env_add_node(t_env **env, char *value)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (1);
-	new_node->env = strdup(value);
+	new_node->env = ft_strdup(value);
 	if (!new_node->env)
 	{
 		free(new_node);

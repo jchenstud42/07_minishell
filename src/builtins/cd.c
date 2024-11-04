@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 12:29:50 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:30:42 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	update_oldpwd(t_global *global)
 	char	*stock_oldpwd;
 
 	i = 0;
-	tmp = global->env;
+	tmp = global->env_list;
 	if (!tmp)
 		return (1);
-	while (global->env)
+	while (global->env_list)
 	{
 		i++;
-		global->env = global->env->next;
+		global->env_list = global->env_list->next;
 	}
 	while (i--)
 	{
@@ -36,12 +36,12 @@ int	update_oldpwd(t_global *global)
 	if (!stock_oldpwd)
 	{
 		if (!stock_oldpwd)
-			update_env(&global->env, "OLDPWD");
+			update_env(&global->env_list, "OLDPWD");
 	}
 	else if (stock_oldpwd)
 	{
 		stock_oldpwd = ft_strjoin("OLD", stock_oldpwd);
-		update_env(&global->env, stock_oldpwd);
+		update_env(&global->env_list, stock_oldpwd);
 	}
 	free(stock_oldpwd);
 	return (0);
@@ -58,7 +58,7 @@ void	update_pwd(t_global *global)
 	pwd = ft_strjoin("PWD=", path);
 	if (!pwd)
 		error_handler(MALLOC_FAILED, global);
-	update_env(&global->env, pwd);
+	update_env(&global->env_list, pwd);
 	free(pwd);
 }
 
@@ -94,7 +94,7 @@ int	cd_home(t_global *global)
 	char	*home;
 	int		home_path;
 
-	home = get_env_name(global->env, "HOME");
+	home = get_env_name(global->env_list, "HOME");
 	if (!home)
 	{
 		write(2, "bash: cd: HOME not set\n", 23);
