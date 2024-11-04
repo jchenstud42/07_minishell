@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/01 17:59:03 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 12:36:02 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	launch_line(t_global *global, char **env)
 		while (global->token_list)
 		{
 			if (global->token_list->type == CMD)
+				if (is_builtin(global->token_list->type))
+					return ()
 				execute_command(global->token_list->token, env, global);
 			global->token_list = global->token_list->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 11:12:47 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:29:50 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_cd(t_global *global, char **av)
 		new_path = chdir(av[1]);
 		if (!new_path)
 		{
-			ft_printf("bash: cd: %s: No such file or directory", new_path);
+			ft_printf("bash: cd: %s: No such file or directory\n", new_path);
 			return (1);
 		}
 		else
@@ -86,7 +86,7 @@ int	ft_cd(t_global *global, char **av)
 			return (0);
 		}
 	}
-	return (ft_printf("bash: cd: too many arguments"));
+	return (ft_printf("bash: cd: too many arguments\n"));
 }
 
 int	cd_home(t_global *global)
@@ -105,7 +105,7 @@ int	cd_home(t_global *global)
 		home_path = chdir(home);
 		if (!home_path)
 		{
-			ft_printf("bash: cd: %s: No such file or directory", home_path);
+			ft_printf("bash: cd: %s: No such file or directory\n", home_path);
 			return (1);
 		}
 		else
