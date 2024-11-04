@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:56:07 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/02 16:07:05 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:13:03 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	quote_are_closed(char *line)
 int	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
-		return (1);
+		return (perror("error, empty token list"), 1);
 	if (token_list->type == PIPE)
 		return (PIPE);
 	return (0);
@@ -47,7 +47,7 @@ int	last_token_redirection(t_token *token_list)
 	t_token	*last_node;
 
 	if (!token_list)
-		return (1);
+		return (perror("error, empty token list"), 1);
 	last_node = last_element_of_list(token_list);
 	if (last_node->type == INPUT || last_node->type == HEREDOC
 		|| last_node->type == TRUNC || last_node->type == APPEND)
@@ -58,15 +58,13 @@ int	last_token_redirection(t_token *token_list)
 int	check_line(t_global *global, t_token *token_list)
 {
 	if (quote_are_closed(global->line) == false)
-		return (1);
+		return (perror("error, quotes are open"), 1);
 	if (first_token_pipe(token_list) == PIPE)
-	{
-		write(2, "bash: syntax error near unexpected token `|'\n", 45);
-		return (1);
-	}
+		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
+				2), 1);
 	else if (last_token_redirection(token_list) == 0)
 	{
-		write(2, "bash: syntax error near unexpected token `newline'\n", 51);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		return (1);
 	}
 	else

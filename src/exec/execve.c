@@ -6,12 +6,13 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 15:16:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 16:29:56 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 18:07:01 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// A REFAIRE EN UTILISANT $PATH
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd, t_global *global)
 {
@@ -19,11 +20,11 @@ char	*get_command_path(const char *cmd, t_global *global)
 	char		*command_file;
 
 	if (!cmd | !global)
-		error_handler(EMPTY_LINE, global);
+		return (perror("error, empty line"), NULL);
 	filename = "/usr/bin/";
 	command_file = malloc(ft_strlen(filename) + ft_strlen(cmd) + 1);
 	if (!command_file)
-		error_handler(MALLOC_FAILED, global);
+		return (perror("error, malloc failed"), NULL);
 	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
 	ft_strlcat(command_file, cmd, ft_strlen(filename) + ft_strlen(cmd) + 1);
 	return (command_file);
@@ -37,7 +38,7 @@ int	nbr_arg_after_cmd(t_token *token_list)
 
 	nbr_arg = 1;
 	if (!token_list)
-		return (-1);
+		return (perror("error, empty token list"), -1);
 	current_token = token_list->next;
 	while (current_token && current_token->type == ARG)
 	{
@@ -63,7 +64,7 @@ char	**fill_execve_arg_array(t_global *global, t_token *token_list)
 	if (!execve_args)
 	{
 		free(execve_args);
-		error_handler(MALLOC_FAILED, global);
+		return (perror("error, malloc failed"), NULL);
 	}
 	while (++i < nbr_arg && current_token)
 	{
@@ -71,7 +72,7 @@ char	**fill_execve_arg_array(t_global *global, t_token *token_list)
 		if (!execve_args[i])
 		{
 			free_array(execve_args);
-			error_handler(MALLOC_FAILED, global);
+			return (perror("error, malloc failed"), NULL);
 		}
 		current_token = current_token->next;
 	}
@@ -88,13 +89,13 @@ void	execute_command(char *cmd, char **env, t_global *global)
 	pid_t	pid;
 
 	if (!cmd)
-		return ;
+		return (perror("error, no command entered"));
 	command_path = get_command_path(cmd, global);
 	pid = fork();
 	if (pid == -1)
 	{
 		free(command_path);
-		error_handler(FORK_FAILED, global);
+		return (perror("error, fork failed"));
 	}
 	else if (pid == 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:32:46 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 16:41:44 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:48:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	env_len(t_env *env)
 
 void	execute_builtin(char *cmd, t_global *global)
 {
-// 	if (ft_strcmp(cmd, "cd") == 0)
-// 		ft_cd(global->arg);
+	// 	if (ft_strcmp(cmd, "cd") == 0)
+	// 		ft_cd(global->arg);
 	if (ft_strcmp(cmd, "echo") == 0)
 		ft_echo(&global->arg);
 	else if (ft_strcmp(cmd, "env") == 0)

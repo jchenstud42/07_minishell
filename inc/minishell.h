@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 17:00:30 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/04 17:39:23 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,24 @@ typedef struct global
 	t_env			*env_list;
 }					t_global;
 
-// BUILTINS_UTILS.c
+// BUILTINS_UTILS.C
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
 void				execute_builtin(char *cmd, t_global *global);
 
-// CD.c
+// CD.C
+void				cd_print_error_message(char *error_msg);
 int					update_oldpwd(t_global *global);
 void				update_pwd(t_global *global);
 int					ft_cd(t_global *global, char **av);
 int					cd_home(t_global *global);
 
-// ECHO.c
+// ECHO.C
 void				print_echo(int nbr_caract, char **av);
 void				ft_echo(char **av);
 int					check_n(char *line);
 
-// ENV.c
+// ENV.C
 int					ft_env(t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 void				sort_env(char **tab, int len);
@@ -127,18 +128,18 @@ char				*get_env_name(t_env *find_env, char *name_env);
 // GET_ENV.c
 char				**get_env(t_env *env);
 
-// EXEC.C
+// EXEC.c
 bool				pipe_inside_token_list(t_global *global);
 void				launch_line(t_global *global, char **env);
 
-// EXECVE.C
+// EXECVE.c
 char				*get_command_path(const char *cmd, t_global *global);
 int					nbr_arg_after_cmd(t_token *token_list);
 char				**fill_execve_arg_array(t_global *global,
 						t_token *token_list);
 void				execute_command(char *cmd, char **env, t_global *global);
 
-// PIPE.C
+// PIPE.c
 void				child_process(char ***cmd, int *fds, t_global *global,
 						char **env);
 void				parent_process(int *fds, int *backup_fd, pid_t pid);
@@ -160,14 +161,14 @@ int					first_token_pipe(t_token *token_list);
 int					last_token_redirection(t_token *token_list);
 int					check_line(t_global *global, t_token *token_list);
 
+// COUNT.c
+int					count_pipe(char *line);
+int					count_cmd_token(t_token *token_list);
+
 // IS_SPECIAL_TOKEN.c
 int					is_builtin(char *cmd);
 int					is_redirection(char *str);
 int					is_pipe(char *str);
-
-// COUNT.C
-int					count_pipe(char *line);
-int					count_cmd_token(t_token *token_list);
 
 // SIGNAL.c
 void				sig_c(int sig);

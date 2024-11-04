@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 15:30:42 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:46:27 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	cd_print_error_message(char *error_msg)
+{
+	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+}
+
+// TU ME DIRAS QUAND TU AURAS FINI CETTE FONCTION POUR QUE JE LA DECOUPE!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int	update_oldpwd(t_global *global)
 {
 	t_env	*tmp;
@@ -76,17 +85,14 @@ int	ft_cd(t_global *global, char **av)
 	{
 		new_path = chdir(av[1]);
 		if (!new_path)
-		{
-			ft_printf("bash: cd: %s: No such file or directory\n", new_path);
-			return (1);
-		}
+			return (cd_print_error_message(av[1]), 1);
 		else
 		{
 			update_pwd(global);
 			return (0);
 		}
 	}
-	return (ft_printf("bash: cd: too many arguments\n"));
+	return (ft_putstr_fd("bash: cd: too many arguments\n", 2), 1);
 }
 
 int	cd_home(t_global *global)
@@ -96,18 +102,12 @@ int	cd_home(t_global *global)
 
 	home = get_env_name(global->env_list, "HOME");
 	if (!home)
-	{
-		write(2, "bash: cd: HOME not set\n", 23);
-		return (1);
-	}
+		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);
 	else
 	{
 		home_path = chdir(home);
 		if (!home_path)
-		{
-			ft_printf("bash: cd: %s: No such file or directory\n", home_path);
-			return (1);
-		}
+			return (cd_print_error_message(home), 1);
 		else
 			update_pwd(global);
 	}

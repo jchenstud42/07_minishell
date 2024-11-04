@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 16:17:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:53:50 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	ft_export(t_env **env, char **line)
 	{
 		if (!export_syntaxe(line[i]))
 		{
-			ft_printf("bash: export: '%s': invalid identifier\n", line[i]);
+			ft_putstr_fd("bash: export: '", 2);
+			ft_putstr_fd(line[i], 2);
+			ft_putstr_fd("': invalid identifier\n", 2);
 			return (1);
 		}
 		else if (!update_env(env, line[i]))

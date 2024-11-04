@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 15:44:33 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:58:40 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	pipe_inside_token_list(t_global *global)
 void	launch_line(t_global *global, char **env)
 {
 	if (!global)
-		return ;
+		return (perror("erreur, empty global struct"));
 	if (pipe_inside_token_list(global))
 		execute_pipe(global->line, env, global);
 	else
@@ -51,4 +51,3 @@ void	launch_line(t_global *global, char **env)
 		}
 	}
 }
-

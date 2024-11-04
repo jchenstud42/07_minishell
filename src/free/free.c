@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:37:14 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 15:40:47 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:10:10 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_token_list(t_token **token_list)
 	t_token	*current;
 
 	if (!token_list)
-		return ;
+		return (perror("error, empty token list"));
 	current = *token_list;
 	while (current)
 	{
@@ -37,7 +37,7 @@ void	free_array(char **array)
 	int	i;
 
 	if (!array)
-		return ;
+		return (perror("error, array"));
 	i = -1;
 	while (array[++i])
 		free(array[i]);
@@ -51,7 +51,7 @@ void	free_double_array(char ***array_array)
 	int	j;
 
 	if (!array_array)
-		return ;
+		return (perror("error, empty double array"));
 	i = -1;
 	while (array_array[++i])
 	{
@@ -67,6 +67,8 @@ void	free_env_list(t_env *env)
 {
 	t_env	*tmp;
 
+	if (!env)
+		return (perror("error, empty env list"));
 	while (env)
 	{
 		tmp = env;
