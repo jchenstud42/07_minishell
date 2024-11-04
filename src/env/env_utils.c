@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 10:33:36 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:08:55 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,13 @@ int	update_env(t_env **env, char *line)
 	return (0);
 }
 
-int	get_env_name(t_env *find_env, char	*name_env)
+char	*get_env_name(t_env *find_env, char	*name_env)
 {
 	while (find_env)
 	{
-		if (ft_strcmp(find_env, name_env) == 0)
+		if (ft_strcmp(find_env->name, name_env) == 0)
 			return (find_env->value);
 		find_env = find_env->next;
 	}
-	return (1);
+	return (NULL);
 }

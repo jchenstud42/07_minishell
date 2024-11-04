@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 10:22:00 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:09:04 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_env
 {
 	char			*env;
 	char			*value;
+	char			*name;
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
