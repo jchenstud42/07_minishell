@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:25:12 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/03 15:19:49 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/04 10:22:00 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,10 @@ int					env_len(t_env *env);
 int					choose_builtins(char **cmd);
 
 // CD.c
-
 int					update_oldpwd(t_global *global);
 void				update_pwd(t_global *global);
+int					ft_cd(t_global *global, char **av);
+int					cd_home(t_global *global);
 
 // ECHO.c
 void				print_echo(int nbr_caract, char **av);
@@ -103,7 +104,6 @@ void				sort_env(char **tab, int len);
 // EXIT.c
 
 // EXPORT.c
-
 int					export_no_arg(t_env *env);
 int					export_syntaxe(char *line);
 int					ft_export(t_env **env, char **line);

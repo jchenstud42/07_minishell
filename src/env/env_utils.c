@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/02 16:01:41 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:33:36 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	update_env(t_env **env, char *line)
 	int		i;
 	t_env	*tmp;
 
-	index = check_env_line(*env, line);
 	if (!line)
 		return (1);
+	index = check_env_line(*env, line);
 	if (index >= 0)
 	{
 		tmp = *env;
@@ -92,12 +92,25 @@ int	update_env(t_env **env, char *line)
 		while (i++ < index)
 			tmp = tmp->next;
 		free(tmp->env);
-		tmp->env = line;
+		tmp->env = ft_strdup(line);
+		if (!tmp->env)
+			return (1);
 	}
 	else if (index == -1)
 	{
-		if (!env_add_node(env, line))
+		if (env_add_node(env, line) != 0)
 			return (1);
 	}
 	return (0);
+}
+
+int	get_env_name(t_env *find_env, char	*name_env)
+{
+	while (find_env)
+	{
+		if (ft_strcmp(find_env, name_env) == 0)
+			return (find_env->value);
+		find_env = find_env->next;
+	}
+	return (1);
 }

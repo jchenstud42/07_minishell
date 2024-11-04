@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/03 15:41:01 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/04 10:28:36 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,67 @@ int	update_oldpwd(t_global *global)
 
 void	update_pwd(t_global *global)
 {
-	char	*path;
+	char	path[PATH_MAX];
 	char	*pwd;
 
 	update_oldpwd(global);
 	if (getcwd(path, PATH_MAX) == NULL)
-		return (1);
-	pwd = ft_strjoin("PWD=", path)
+		return ;
+	pwd = ft_strjoin("PWD=", path);
 	if (!pwd)
 		error_handler(MALLOC_FAILED, global);
 	update_env(&global->env, pwd);
 	free(pwd);
-	return (0);
 }
 
-// int	ft_cd(t_global *global, char *av)
-// {
-// 	int i;
+int	ft_cd(t_global *global, char **av)
+{
+	int	i;
+	int	new_path;
 
-// 	i = 0;;
-// 	while (av[i])
-// 		i++;
-// 	if (i == 1)
-// 		cd_home(global); //Fonction a coder
-// 	else if (i == 2)
-// 	{
-		
-// 	}
-		
-// }
+	i = 0;
+	while (av[i])
+		i++;
+	if (i == 1)
+		cd_home(global);
+	else if (i == 2)
+	{
+		new_path = chdir(av[1]);
+		if (!new_path)
+		{
+			ft_printf("bash: cd: %s: No such file or directory", new_path);
+			return (1);
+		}
+		else
+		{
+			update_pwd(global);
+			return (0);
+		}
+	}
+	return (ft_printf("bash: cd: too many arguments"));
+}
+
+int	cd_home(t_global *global)
+{
+	char	*home;
+	int		home_path;
+
+	home = get_env_name(&global->env, "HOME");  //Fonction a coder
+	if (!home)
+	{
+		write(2, "bash: cd: HOME not set\n, 23");
+		return (1);
+	}
+	else
+	{
+		home_path = chdir(home);
+		if (!home_path)
+		{
+			ft_printf("bash: cd: %s: No such file or directory", new_path);
+			return (1);
+		}
+		else
+			update_pwd(global, home);
+	}
+	return (0);
+}
