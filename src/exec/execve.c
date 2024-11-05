@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/28 15:16:11 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/04 18:07:01 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -12,12 +15,13 @@
 
 #include "../../inc/minishell.h"
 
+
 // A REFAIRE EN UTILISANT $PATH
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd, t_global *global)
 {
-	const char	*filename;
-	char		*command_file;
+	const char *filename;
+	char *command_file;
 
 	if (!cmd | !global)
 		return (perror("error, empty line"), NULL);
@@ -33,8 +37,8 @@ char	*get_command_path(const char *cmd, t_global *global)
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
 {
-	int		nbr_arg;
-	t_token	*current_token;
+	int nbr_arg;
+	t_token *current_token;
 
 	nbr_arg = 1;
 	if (!token_list)
@@ -50,12 +54,12 @@ int	nbr_arg_after_cmd(t_token *token_list)
 
 // Remplie un tableau de string d'arguments qui seront utilises par execve()
 // On en profite pour passer les noeuds possedant des ARG
-char	**fill_execve_arg_array(t_global *global, t_token *token_list)
+char	**fill_execve_arg_array(t_token *token_list)
 {
-	t_token	*current_token;
-	char	**execve_args;
-	int		nbr_arg;
-	int		i;
+	t_token *current_token;
+	char **execve_args;
+	int nbr_arg;
+	int i;
 
 	i = -1;
 	current_token = token_list;
@@ -84,9 +88,9 @@ char	**fill_execve_arg_array(t_global *global, t_token *token_list)
 // vraie commande
 void	execute_command(char *cmd, char **env, t_global *global)
 {
-	char	*command_path;
-	char	**execve_args;
-	pid_t	pid;
+	char *command_path;
+	char **execve_args;
+	pid_t pid;
 
 	if (!cmd)
 		return (perror("error, no command entered"));
@@ -99,7 +103,7 @@ void	execute_command(char *cmd, char **env, t_global *global)
 	}
 	else if (pid == 0)
 	{
-		execve_args = fill_execve_arg_array(global, global->token_list);
+		execve_args = fill_execve_arg_array(global->token_list);
 		if (execve(command_path, execve_args, env) == -1)
 		{
 			ft_putstr_fd(execve_args[0], 2);

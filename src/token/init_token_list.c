@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_token_list.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: romain <romain@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/15 15:03:08 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/03 15:13:30 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 // Recherche et renvoie le dernier élément de la liste chainee.
 t_token	*last_element_of_list(t_token *token_list)
@@ -23,10 +27,10 @@ t_token	*last_element_of_list(t_token *token_list)
 }
 
 // Attribue un type au token
-int	check_token_type(char *token, t_token *last_node, t_global **global)
+int	check_token_type(char *token, t_token *last_node)
 {
 	if (!token)
-		error_handler(ERROR_TOKEN_TYPE_ATTRIBUTION, *global);
+		return (perror("error, empty token"), 0);
 	if (!ft_strcmp(token, "|"))
 		return (PIPE);
 	else if (!ft_strcmp(token, "<"))
@@ -49,18 +53,18 @@ int	check_token_type(char *token, t_token *last_node, t_global **global)
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
 {
-	t_token	*token_to_append;
-	t_token	*last_node;
+	t_token *token_to_append;
+	t_token *last_node;
 
 	if (!global)
-		return ;
+		return (perror("error, empty global structure"));
 	token_to_append = ft_calloc(1, sizeof(t_token));
 	if (!token_to_append)
-		error_handler(TOKENIZATION_FAILED, *global);
+		return (perror("error, tokenization failed"));
 	token_to_append->token = ft_strdup(prompt);
 	last_node = last_element_of_list((*global)->token_list);
-	token_to_append->type = check_token_type(token_to_append->token, last_node,
-			global);
+	token_to_append->type = check_token_type(token_to_append->token,
+			last_node);
 	if (!(*global)->token_list)
 	{
 		(*global)->token_list = token_to_append;

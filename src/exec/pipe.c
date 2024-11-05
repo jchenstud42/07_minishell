@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/31 12:20:49 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/04 17:02:36 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -12,10 +15,11 @@
 
 #include "../../inc/minishell.h"
 
+
 // Processus enfant
 void	child_process(char ***cmd, int *fds, t_global *global, char **env)
 {
-	char	*cmd_path;
+	char *cmd_path;
 
 	if (*(cmd + 1) != NULL)
 	{
@@ -48,9 +52,9 @@ void	parent_process(int *fds, int *backup_fd, pid_t pid)
 
 void	pipeline(char ***cmd, char **env, t_global *global)
 {
-	int		fds[2];
-	pid_t	pid;
-	int		backup_fd;
+	int fds[2];
+	pid_t pid;
+	int backup_fd;
 
 	backup_fd = 0;
 	while (*cmd != NULL)
@@ -109,11 +113,10 @@ void	pipeline(char ***cmd, char **env, t_global *global)
 
 // Remplie un double tableau de string d'arguments
 // qui seront utilises par execve()
-char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays,
-		t_global *global)
+char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays)
 {
-	t_token	*current_token;
-	int		i;
+	t_token *current_token;
+	int i;
 
 	if (!token_list || !cmd_arrays)
 		return (perror("error, empty array"), NULL);
@@ -122,7 +125,7 @@ char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays,
 	while (current_token)
 	{
 		if (current_token->type == CMD)
-			cmd_arrays[++i] = fill_execve_arg_array(global, current_token);
+			cmd_arrays[++i] = fill_execve_arg_array(current_token);
 		current_token = current_token->next;
 	}
 	return (cmd_arrays);
@@ -131,12 +134,12 @@ char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays,
 // Prepare et launch le code comme si on utilisait les pipes
 void	execute_pipe(char *line, char **env, t_global *global)
 {
-	char	***cmd_arrays;
+	char ***cmd_arrays;
 
 	if (!line || !env || !global)
 		return (perror("error, pipe execution"));
 	cmd_arrays = init_cmd_double_array(global);
-	fill_cmd_double_array(global->token_list, cmd_arrays, global);
+	fill_cmd_double_array(global->token_list, cmd_arrays);
 	//// TEST POUR PRINT - A ENLEVER PLUS TARD //////////////////////////////
 	// i = -1;
 	// while (cmd_arrays[++i])

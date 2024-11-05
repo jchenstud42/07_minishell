@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/11/04 16:30:05 by rbouquet          #+#    #+#             */
 /*   Updated: 2024/11/04 16:43:23 by rbouquet         ###   ########.fr       */
 /*                                                                            */
@@ -12,12 +15,13 @@
 
 #include "../inc/minishell.h"
 
+
 // Malloc + initilise a 0 la structure global
 void	calloc_global_struct(t_global **global_data)
 {
 	*global_data = ft_calloc(1, sizeof(t_global));
 	if (!*global_data)
-		error_handler(STRUCT_INIT_FAILED, *global_data);
+		return (perror("error, global struct calloc failed"));
 	(*global_data)->line = NULL;
 	(*global_data)->token_list = NULL;
 }
@@ -25,27 +29,27 @@ void	calloc_global_struct(t_global **global_data)
 // Initialise notre tableau de tableau de commandes (char ***)
 char	***init_cmd_double_array(t_global *global)
 {
-	int		nbr_cmd;
-	char	***cmd_arrays;
+	int nbr_cmd;
+	char ***cmd_arrays;
 
 	if (!global)
-		error_handler(STRUCT_NOT_INITIALIZED, global);
+		return (perror("error, struct not initialized"), NULL);
 	nbr_cmd = count_cmd_token(global->token_list);
 	cmd_arrays = ft_calloc((nbr_cmd + 1), sizeof(char **));
 	if (!cmd_arrays)
 	{
 		free(cmd_arrays);
-		error_handler(MALLOC_FAILED, global);
+		return (perror("error, double array malloc failed"), NULL);
 	}
 	return (cmd_arrays);
 }
 
-char	**fill_arg_after_cmd(t_global *global, t_token *token_list)
+char	**fill_arg_after_cmd(t_token *token_list)
 {
-	t_token	*current_token;
-	char	**execve_args;
-	int		nbr_arg;
-	int		i;
+	t_token *current_token;
+	char **execve_args;
+	int nbr_arg;
+	int i;
 
 	i = -1;
 	current_token = token_list;
@@ -54,7 +58,7 @@ char	**fill_arg_after_cmd(t_global *global, t_token *token_list)
 	if (!execve_args)
 	{
 		free(execve_args);
-		error_handler(MALLOC_FAILED, global);
+		return (perror("error, malloc failed"), NULL);
 	}
 	current_token = current_token->next;
 	while (++i < nbr_arg && current_token)
@@ -63,7 +67,7 @@ char	**fill_arg_after_cmd(t_global *global, t_token *token_list)
 		if (!execve_args[i])
 		{
 			free_array(execve_args);
-			error_handler(MALLOC_FAILED, global);
+			return (perror("error, malloc failed"), NULL);
 		}
 		current_token = current_token->next;
 	}
@@ -73,12 +77,12 @@ char	**fill_arg_after_cmd(t_global *global, t_token *token_list)
 
 int	nbr_arg_after_cmd2(t_token *token_list)
 {
-	int		nbr_arg;
-	t_token	*current_token;
+	int nbr_arg;
+	t_token *current_token;
 
 	nbr_arg = 0;
 	if (!token_list)
-		return (-1);
+		return (perror("error, empty token list"), 0);
 	current_token = token_list->next;
 	while (current_token && current_token->type == ARG)
 	{
@@ -90,11 +94,11 @@ int	nbr_arg_after_cmd2(t_token *token_list)
 
 void	init_env(t_env **env_to_add, char **env)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!env || !*env)
-		return ;
+		return (perror("error, empty env list"));
 	while (env[i])
 	{
 		env_add_node(env_to_add, env[i]);

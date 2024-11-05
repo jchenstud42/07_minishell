@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/11/01 11:56:07 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/04 18:13:03 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -12,11 +15,12 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie si les guillemet sont bien fermees
 bool	quote_are_closed(char *line)
 {
-	int	i;
-	int	quote_count;
+	int i;
+	int quote_count;
 
 	if (!line)
 		return (false);
@@ -36,7 +40,7 @@ bool	quote_are_closed(char *line)
 int	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
-		return (perror("error, empty token list"), 1);
+		return (1);
 	if (token_list->type == PIPE)
 		return (PIPE);
 	return (0);
@@ -44,10 +48,10 @@ int	first_token_pipe(t_token *token_list)
 
 int	last_token_redirection(t_token *token_list)
 {
-	t_token	*last_node;
+	t_token *last_node;
 
 	if (!token_list)
-		return (perror("error, empty token list"), 1);
+		return (1);
 	last_node = last_element_of_list(token_list);
 	if (last_node->type == INPUT || last_node->type == HEREDOC
 		|| last_node->type == TRUNC || last_node->type == APPEND)
@@ -64,7 +68,8 @@ int	check_line(t_global *global, t_token *token_list)
 				2), 1);
 	else if (last_token_redirection(token_list) == 0)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
+			2);
 		return (1);
 	}
 	else

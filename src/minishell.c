@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/18 11:27:56 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/04 17:51:59 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
 
 // int	main(int ac, char **av, char **env)
 // {
@@ -45,8 +49,8 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_global	*global;
-	char		*line;
+	t_global *global;
+	char *line;
 
 	(void)env;
 	(void)ac;
@@ -75,6 +79,6 @@ int	main(int ac, char **av, char **env)
 	free_all(global);
 	// NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
 	ft_printf("NOTE A ROMAIN (DE ROMAIN): ");
-	ft_printf("FAIS EN SORTE D'UTILISER LES BUILTINS, ENV ET PWD C'EST BON");
+	ft_printf("FAIS EN SORTE D'UTILISER LES BUILTINS, ENV ET PWD C'EST BON\n");
 	return (0);
 }
