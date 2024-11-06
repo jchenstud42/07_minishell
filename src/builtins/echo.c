@@ -3,15 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 15:37:54 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:47:01 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+int	check_n(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (1);
+	if (line[i] && line[i] == '-' && line[i + 1] == 'n')
+	{
+		i++;
+		while (line[i] && line[i] == 'n')
+			i++;
+		if (i == (int)ft_strlen(line))
+			return (1);
+	}
+	return (0);
+}
+
+// il faudra modifier le write, pour qu'il redirige vers un fd
+// precis, car on peut write dans un fichier par exemple
 void	print_echo(int nbr_caract, char **av)
 {
 	int	i;
@@ -43,22 +63,4 @@ void	ft_echo(char **av)
 	while (av[nbr_caract])
 		nbr_caract++;
 	print_echo(nbr_caract, av);
-}
-
-int	check_n(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (!line)
-		return (1);
-	if (line[i] && line[i] == '-' && line[i + 1] == 'n')
-	{
-		i++;
-		while (line[i] && line[i] == 'n')
-			i++;
-		if (i == (int)ft_strlen(line))
-			return (1);
-	}
-	return (0);
 }

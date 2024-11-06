@@ -128,7 +128,7 @@ void				execute_command(char *cmd, char **env, t_global *global);
 
 // PIPE.c
 void				child_process(char ***cmd, int *fds, t_global *global,
-						char **env);
+						char **env, int backup_fd);
 void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				pipeline(char ***cmd, char **env, t_global *global);
 char				***fill_cmd_double_array(t_token *token_list,

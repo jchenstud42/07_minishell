@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:32:46 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/06 12:35:39 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/06 16:42:10 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_command_path(const char *cmd)
 		free(exec);
 	}
 	free_array(allpath);
-	return (perror("error, can't get cmd path"), NULL);
+	return (NULL);
 }
 
 // char	*get_command_path(const char *cmd, t_env *env)

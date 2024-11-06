@@ -61,7 +61,7 @@ char	**fill_arg_after_cmd(t_token *token_list)
 		return (perror("error, malloc failed"), NULL);
 	}
 	current_token = current_token->next;
-	while (++i < nbr_arg && current_token)
+	while (++i < nbr_arg && current_token && current_token->type == ARG)
 	{
 		execve_args[i] = ft_strdup(current_token->token);
 		if (!execve_args[i])
