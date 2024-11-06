@@ -15,12 +15,11 @@
 
 #include "../../inc/minishell.h"
 
-
 // Libere la memoire allouee a la token_list
 void	free_token_list(t_token **token_list)
 {
-	t_token *temp;
-	t_token *current;
+	t_token	*temp;
+	t_token	*current;
 
 	if (!token_list)
 		return (perror("error, empty token list"));
@@ -38,7 +37,7 @@ void	free_token_list(t_token **token_list)
 // Libere la memoire allouee a un tableau de string
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	if (!array)
 		return (perror("error, array"));
@@ -51,8 +50,8 @@ void	free_array(char **array)
 // Libere la memoire allouee a un tableau de tableau de string
 void	free_double_array(char ***array_array)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	if (!array_array)
 		return (perror("error, empty double array"));
@@ -69,7 +68,7 @@ void	free_double_array(char ***array_array)
 
 void	free_env_list(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (!env)
 		return (perror("error, empty env list"));

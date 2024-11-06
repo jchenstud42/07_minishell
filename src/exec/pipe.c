@@ -15,11 +15,10 @@
 
 #include "../../inc/minishell.h"
 
-
 // Processus enfant
 void	child_process(char ***cmd, int *fds, t_global *global, char **env)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	if (*(cmd + 1) != NULL)
 	{
@@ -52,9 +51,9 @@ void	parent_process(int *fds, int *backup_fd, pid_t pid)
 
 void	pipeline(char ***cmd, char **env, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int backup_fd;
+	int		fds[2];
+	pid_t	pid;
+	int		backup_fd;
 
 	backup_fd = 0;
 	while (*cmd != NULL)
@@ -115,8 +114,8 @@ void	pipeline(char ***cmd, char **env, t_global *global)
 // qui seront utilises par execve()
 char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays)
 {
-	t_token *current_token;
-	int i;
+	t_token	*current_token;
+	int		i;
 
 	if (!token_list || !cmd_arrays)
 		return (perror("error, empty array"), NULL);
@@ -134,7 +133,7 @@ char	***fill_cmd_double_array(t_token *token_list, char ***cmd_arrays)
 // Prepare et launch le code comme si on utilisait les pipes
 void	execute_pipe(char *line, char **env, t_global *global)
 {
-	char ***cmd_arrays;
+	char	***cmd_arrays;
 
 	if (!line || !env || !global)
 		return (perror("error, pipe execution"));

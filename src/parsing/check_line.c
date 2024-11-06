@@ -15,12 +15,11 @@
 
 #include "../../inc/minishell.h"
 
-
 // Verifie si les guillemet sont bien fermees
 bool	quote_are_closed(char *line)
 {
-	int i;
-	int quote_count;
+	int	i;
+	int	quote_count;
 
 	if (!line)
 		return (false);
@@ -48,7 +47,7 @@ int	first_token_pipe(t_token *token_list)
 
 int	last_token_redirection(t_token *token_list)
 {
-	t_token *last_node;
+	t_token	*last_node;
 
 	if (!token_list)
 		return (1);
@@ -68,8 +67,7 @@ int	check_line(t_global *global, t_token *token_list)
 				2), 1);
 	else if (last_token_redirection(token_list) == 0)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
-			2);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		return (1);
 	}
 	else

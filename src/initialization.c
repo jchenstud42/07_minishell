@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 // Malloc + initilise a 0 la structure global
 void	calloc_global_struct(t_global **global_data)
 {
@@ -29,8 +28,8 @@ void	calloc_global_struct(t_global **global_data)
 // Initialise notre tableau de tableau de commandes (char ***)
 char	***init_cmd_double_array(t_global *global)
 {
-	int nbr_cmd;
-	char ***cmd_arrays;
+	int		nbr_cmd;
+	char	***cmd_arrays;
 
 	if (!global)
 		return (perror("error, struct not initialized"), NULL);
@@ -46,11 +45,12 @@ char	***init_cmd_double_array(t_global *global)
 
 char	**fill_arg_after_cmd(t_token *token_list)
 {
-	t_token *current_token;
-	char **execve_args;
-	int nbr_arg;
-	int i;
+	t_token	*current_token;
+	char	**execve_args;
+	int		nbr_arg;
+	int		i;
 
+	// int		y;
 	i = -1;
 	current_token = token_list;
 	nbr_arg = nbr_arg_after_cmd(token_list);
@@ -72,13 +72,21 @@ char	**fill_arg_after_cmd(t_token *token_list)
 		current_token = current_token->next;
 	}
 	execve_args[i] = NULL;
+	/// TESTS A ENLEVER PLUS TARD ///////////////////////////////
+	// y = 0;
+	// while (execve_args[y])
+	// {
+	// 	printf("%s\n", execve_args[y]);
+	// 	y++;
+	// }
+	////////////////////////////////////////////////////////////
 	return (execve_args);
 }
 
 int	nbr_arg_after_cmd2(t_token *token_list)
 {
-	int nbr_arg;
-	t_token *current_token;
+	int		nbr_arg;
+	t_token	*current_token;
 
 	nbr_arg = 0;
 	if (!token_list)
@@ -94,7 +102,7 @@ int	nbr_arg_after_cmd2(t_token *token_list)
 
 void	init_env(t_env **env_to_add, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!env || !*env)

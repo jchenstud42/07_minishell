@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/10/31 12:10:32 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:22:02 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	**get_env(t_env *env)
 	env_tab[i] = NULL;
 	return (env_tab);
 }
-
 
 // // Fonction de test pour get_env
 // t_env	*create_env_node(const char *str)

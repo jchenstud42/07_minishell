@@ -15,13 +15,12 @@
 
 #include "../../inc/minishell.h"
 
-
 // A REFAIRE EN UTILISANT $PATH
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd, t_global *global)
 {
-	const char *filename;
-	char *command_file;
+	const char	*filename;
+	char		*command_file;
 
 	if (!cmd | !global)
 		return (perror("error, empty line"), NULL);
@@ -37,8 +36,8 @@ char	*get_command_path(const char *cmd, t_global *global)
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
 {
-	int nbr_arg;
-	t_token *current_token;
+	int		nbr_arg;
+	t_token	*current_token;
 
 	nbr_arg = 1;
 	if (!token_list)
@@ -56,10 +55,10 @@ int	nbr_arg_after_cmd(t_token *token_list)
 // On en profite pour passer les noeuds possedant des ARG
 char	**fill_execve_arg_array(t_token *token_list)
 {
-	t_token *current_token;
-	char **execve_args;
-	int nbr_arg;
-	int i;
+	t_token	*current_token;
+	char	**execve_args;
+	int		nbr_arg;
+	int		i;
 
 	i = -1;
 	current_token = token_list;
@@ -88,9 +87,9 @@ char	**fill_execve_arg_array(t_token *token_list)
 // vraie commande
 void	execute_command(char *cmd, char **env, t_global *global)
 {
-	char *command_path;
-	char **execve_args;
-	pid_t pid;
+	char	*command_path;
+	char	**execve_args;
+	pid_t	pid;
 
 	if (!cmd)
 		return (perror("error, no command entered"));

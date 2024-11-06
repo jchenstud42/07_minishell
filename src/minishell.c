@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 // int	main(int ac, char **av, char **env)
 // {
 // 	t_global	*global;
@@ -49,8 +48,8 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
-	char *line;
+	t_global	*global;
+	char		*line;
 
 	(void)env;
 	(void)ac;
@@ -77,8 +76,5 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	free_all(global);
-	// NOTE A MOI MEME POUR ME RAPPELER QUOI FAIRE LA PROCHAINE FOIS
-	ft_printf("NOTE A ROMAIN (DE ROMAIN): ");
-	ft_printf("FAIS EN SORTE D'UTILISER LES BUILTINS, ENV ET PWD C'EST BON\n");
 	return (0);
 }

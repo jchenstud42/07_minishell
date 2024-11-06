@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 // Permet de stocker la ligne de commande dans notre structure
 void	stock_line(t_global **global, char *line)
 {
@@ -31,7 +30,7 @@ void	stock_line(t_global **global, char *line)
 // Passe les espaces au debut de la phrase s'il y en a
 static void	skip_beginning_white_space(int *end, char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
@@ -45,9 +44,9 @@ static void	skip_beginning_white_space(int *end, char *line)
 // Tokenise la phrase entree apres le prompt
 void	line_tokenization(t_global **global, char *line)
 {
-	char *token;
-	int beginning;
-	int end;
+	char	*token;
+	int		beginning;
+	int		end;
 
 	free_token_list(&(*global)->token_list);
 	skip_beginning_white_space(&end, line);
@@ -64,8 +63,7 @@ void	line_tokenization(t_global **global, char *line)
 			token = malloc((end - beginning + 1) * sizeof(char));
 			if (!token)
 				return (perror("error, malloc failed"));
-			ft_strlcpy(token, &(*global)->line[beginning], end - beginning
-				+ 1);
+			ft_strlcpy(token, &(*global)->line[beginning], end - beginning + 1);
 			token[end - beginning] = '\0';
 			append_node_to_token_list(global, token);
 			free(token);

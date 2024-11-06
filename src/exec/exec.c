@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 17:58:40 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/06 11:43:03 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	launch_line(t_global *global, char **env)
 			if (global->token_list->type == CMD)
 			{
 				if (is_builtin(global->token_list->token) == 0)
+				{
 					execute_builtin(global->token_list->token, global);
+				}
 				else
 					execute_command(global->token_list->token, env, global);
 			}

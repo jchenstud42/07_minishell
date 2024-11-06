@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/04 15:22:54 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:22:00 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	env_add_node(t_env **env, char *value)
 {
 	t_env	*new_node;
 	t_env	*tmp;
-
 
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
@@ -104,7 +103,7 @@ int	update_env(t_env **env, char *line)
 	return (0);
 }
 
-char	*get_env_name(t_env *find_env, char	*name_env)
+char	*get_env_name(t_env *find_env, char *name_env)
 {
 	while (find_env)
 	{
