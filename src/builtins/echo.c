@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 11:45:12 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/06 15:37:54 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	print_echo(int nbr_caract, char **av)
 	int	i;
 	int	add_line;
 
-	i = 1;
+	i = 0;
 	add_line = 1;
-	if (av[i] && check_n(av[i]))
+	while (i < nbr_caract && check_n(av[i]))
 	{
 		add_line = 0;
-		i++;
+		++i;
 	}
 	while (i < nbr_caract)
 	{
@@ -31,7 +31,7 @@ void	print_echo(int nbr_caract, char **av)
 			write(1, " ", 1);
 		i++;
 	}
-	if (add_line == 0)
+	if (add_line == 1)
 		write(1, "\n", 1);
 }
 
@@ -52,7 +52,7 @@ int	check_n(char *line)
 	i = 0;
 	if (!line)
 		return (1);
-	if (line[i] && line[i] == '-')
+	if (line[i] && line[i] == '-' && line[i + 1] == 'n')
 	{
 		i++;
 		while (line[i] && line[i] == 'n')
