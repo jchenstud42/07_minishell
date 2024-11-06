@@ -20,6 +20,7 @@ void	child_process(char ***cmd, int *fds, t_global *global, char **env)
 {
 	char	*cmd_path;
 
+	(void)*global;
 	if (*(cmd + 1) != NULL)
 	{
 		if (dup2(fds[1], 1) == -1)
@@ -27,7 +28,7 @@ void	child_process(char ***cmd, int *fds, t_global *global, char **env)
 	}
 	close(fds[1]);
 	close(fds[0]);
-	cmd_path = get_command_path((*cmd)[0], global);
+	cmd_path = get_command_path((*cmd)[0]);
 	execve(cmd_path, *cmd, env);
 	// ---------------------------------------------- PAS NECESSAIRE????????
 	// if (execve(cmd_path, *cmd, env) == -1)

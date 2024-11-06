@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 11:21:51 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/06 12:28:56 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	update_pwd(t_global *global)
 		return ;
 	pwd = ft_strjoin("PWD=", path);
 	if (!pwd)
-		error_handler(MALLOC_FAILED, global);
+		return (perror("error, malloc failed"));
 	update_env(&global->env_list, pwd);
 	free(pwd);
 }

@@ -24,7 +24,7 @@ void	stock_line(t_global **global, char *line)
 		free((*global)->line);
 	(*global)->line = ft_strdup(line);
 	if (!(*global)->line)
-		error_handler(MALLOC_FAILED, *global);
+		return (perror("error, malloc failed"));
 }
 
 // Passe les espaces au debut de la phrase s'il y en a

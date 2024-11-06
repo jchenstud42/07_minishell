@@ -29,21 +29,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-enum				e_error_number
-{
-	STRUCT_INIT_FAILED,
-	TOKENIZATION_FAILED,
-	STRUCT_NOT_INITIALIZED,
-	EMPTY_LINE,
-	MALLOC_FAILED,
-	ERROR_TOKEN_TYPE_ATTRIBUTION,
-	FORK_FAILED,
-	COMMAND_NOT_FOUND,
-	EXECVE_FAILED,
-	DUP_FAILED,
-	PIPE_FAILED
-};
-
 enum				e_token_list
 {
 	INPUT = 1,
@@ -136,7 +121,7 @@ bool				pipe_inside_token_list(t_global *global);
 void				launch_line(t_global *global, char **env);
 
 // EXECVE.c
-char				*get_command_path(const char *cmd, t_global *global);
+char				*get_command_path(const char *cmd);
 int					nbr_arg_after_cmd(t_token *token_list);
 char				**fill_execve_arg_array(t_token *token_list);
 void				execute_command(char *cmd, char **env, t_global *global);

@@ -2,36 +2,60 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/10/28 15:16:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/04 18:07:01 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/06 12:32:46 by jchen             #+#    #+#             */
+/*   Updated: 2024/11/06 12:35:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// A REFAIRE EN UTILISANT $PATH
 // Permet d'obtenir le chemin absolu d'une commande
-char	*get_command_path(const char *cmd, t_global *global)
+// char *get_path(char *cmd, char **env)
+char	*get_command_path(const char *cmd)
 {
-	const char	*filename;
-	char		*command_file;
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
 
-	if (!cmd | !global)
-		return (perror("error, empty line"), NULL);
-	filename = "/usr/bin/";
-	command_file = malloc(ft_strlen(filename) + ft_strlen(cmd) + 1);
-	if (!command_file)
-		return (perror("error, malloc failed"), NULL);
-	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
-	ft_strlcat(command_file, cmd, ft_strlen(filename) + ft_strlen(cmd) + 1);
-	return (command_file);
+	allpath = ft_split(getenv("PATH"), ':');
+	if (!allpath)
+		return (perror("error, path variable not set"), NULL);
+	i = -1;
+	while (allpath[++i])
+	{
+		path_part = ft_strjoin(allpath[i], "/");
+		exec = ft_strjoin(path_part, cmd);
+		free(path_part);
+		if (access(exec, F_OK | X_OK) == 0)
+		{
+			free_array(allpath);
+			return (exec);
+		}
+		free(exec);
+	}
+	free_array(allpath);
+	return (perror("error, can't get cmd path"), NULL);
 }
+
+// char	*get_command_path(const char *cmd, t_env *env)
+// {
+// 	const char	*filename;
+// 	char		*command_file;
+
+// 	if (!cmd | !env)
+// 		return (perror("error, can't get cmd path"), NULL);
+// 	filename = "/usr/bin/";
+// 	command_file = malloc(ft_strlen(filename) + ft_strlen(cmd) + 1);
+// 	if (!command_file)
+// 		return (perror("error, malloc failed"), NULL);
+// 	ft_strlcpy(command_file, filename, ft_strlen(filename) + 1);
+// 	ft_strlcat(command_file, cmd, ft_strlen(filename) + ft_strlen(cmd) + 1);
+// 	return (command_file);
+// }
 
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
@@ -93,7 +117,7 @@ void	execute_command(char *cmd, char **env, t_global *global)
 
 	if (!cmd)
 		return (perror("error, no command entered"));
-	command_path = get_command_path(cmd, global);
+	command_path = get_command_path(cmd);
 	pid = fork();
 	if (pid == -1)
 	{

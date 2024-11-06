@@ -51,7 +51,6 @@ int	main(int ac, char **av, char **env)
 	t_global	*global;
 	char		*line;
 
-	(void)env;
 	(void)ac;
 	(void)av;
 	while (1)
