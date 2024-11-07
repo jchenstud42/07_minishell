@@ -6,10 +6,11 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 12:28:56 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/07 18:05:44 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// QUAND TU FAIS CD TOUT SEUL, CA DOIT TE RAMENER A $HOME (/home/rbouquet)
 #include "../../inc/minishell.h"
 
 void	cd_print_error_message(char *error_msg)

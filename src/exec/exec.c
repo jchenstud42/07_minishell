@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 15:59:31 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/07 15:20:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,36 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
+// Remplie un double tableau de string d'arguments
+// qui seront utilises par execve()
+void	fill_cmd_double_array(t_token *token_list, t_cmd *cmd_list)
+{
+	t_token	*current_token;
+	int		i;
+
+	if (!token_list || !cmd_list)
+		return (perror("error, empty array"));
+	i = -1;
+	current_token = token_list;
+	while (current_token)
+	{
+		if (current_token->type == CMD)
+			cmd_list->cmd_arrays[++i] = fill_execve_arg_array(current_token);
+		current_token = current_token->next;
+	}
+}
+
 // Interprete et lance le prompt
 void	launch_line(t_global *global, char **env)
 {
 	if (!global)
 		return (perror("erreur, empty global struct"));
 	if (pipe_inside_token_list(global))
-		execute_pipe(global->line, env, global);
+	{
+		init_cmd_double_array(global);
+		fill_cmd_double_array(global->token_list, global->cmd_list);
+		execute_pipe(global->cmd_list->cmd_arrays, env, global);
+	}
 	else
 	{
 		while (global->token_list)

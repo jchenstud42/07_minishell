@@ -48,22 +48,23 @@ void	free_array(char **array)
 }
 
 // Libere la memoire allouee a un tableau de tableau de string
-void	free_double_array(char ***array_array)
+void	free_cmd_list(t_cmd *cmd_list)
 {
 	int	i;
 	int	j;
 
-	if (!array_array)
+	if (!cmd_list->cmd_arrays)
 		return (perror("error, empty double array"));
 	i = -1;
-	while (array_array[++i])
+	while (cmd_list->cmd_arrays[++i])
 	{
 		j = -1;
-		while (array_array[i][++j])
-			free(array_array[i][j]);
-		free(array_array[i]);
+		while (cmd_list->cmd_arrays[i][++j])
+			free(cmd_list->cmd_arrays[i][j]);
+		free(cmd_list->cmd_arrays[i]);
 	}
-	free(array_array);
+	free(cmd_list->cmd_arrays);
+	free(cmd_list);
 }
 
 void	free_env_list(t_env *env)
@@ -84,6 +85,8 @@ void	free_env_list(t_env *env)
 // Libere toute la memoire allouee
 void	free_all(t_global *global_data)
 {
+	if (global_data->cmd_list)
+		free_cmd_list(global_data->cmd_list);
 	if (global_data->token_list)
 		free_token_list(&global_data->token_list);
 	if (global_data->line)

@@ -62,6 +62,15 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
+typedef struct s_cmd
+{
+	char			***cmd_arrays;
+	char			*cmd_path;
+	int				cmd_number;
+	int				infile;
+	int				outfile;
+}					t_cmd;
+
 typedef struct global
 {
 	char			*line;
@@ -69,6 +78,7 @@ typedef struct global
 	int				cmd_number;
 	t_token			*token_list;
 	t_env			*env_list;
+	t_cmd			*cmd_list;
 }					t_global;
 
 // BUILTINS_UTILS.C
@@ -118,6 +128,9 @@ char				**get_env(t_env *env);
 
 // EXEC.c
 bool				pipe_inside_token_list(t_global *global);
+// char				***fill_cmd_double_array(t_token *token_list,
+// 						char ***cmd_arrays);
+void				fill_cmd_double_array(t_token *token_list, t_cmd *cmd_list);
 void				launch_line(t_global *global, char **env);
 
 // EXECVE.c
@@ -129,16 +142,13 @@ void				execute_command(char *cmd, char **env, t_global *global);
 // PIPE.c
 void				child_process(char ***cmd, int *fds, t_global *global,
 						char **env, int backup_fd);
-void				parent_process(int *fds, int *backup_fd, pid_t pid);
-void				pipeline(char ***cmd, char **env, t_global *global);
-char				***fill_cmd_double_array(t_token *token_list,
-						char ***cmd_arrays);
-void				execute_pipe(char *line, char **env, t_global *global);
+void				parent_process(int *fds, int *backup_fd);
+void				execute_pipe(char ***cmd, char **env, t_global *global);
 
 // FREE.c
 void				free_token_list(t_token **token_list);
 void				free_array(char **array);
-void				free_double_array(char ***array_array);
+void				free_cmd_list(t_cmd *cmd_list);
 void				free_env_list(t_env *env);
 void				free_all(t_global *global_data);
 
@@ -178,7 +188,7 @@ void				error_handler(int nb, t_global *global_data);
 
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
-char				***init_cmd_double_array(t_global *global);
+void				init_cmd_double_array(t_global *global);
 void				init_env(t_env **env_to_add, char **env);
 
 char				**fill_arg_after_cmd(t_token *token_list);

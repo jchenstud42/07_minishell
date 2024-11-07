@@ -26,21 +26,20 @@ void	calloc_global_struct(t_global **global_data)
 }
 
 // Initialise notre tableau de tableau de commandes (char ***)
-char	***init_cmd_double_array(t_global *global)
+void	init_cmd_double_array(t_global *global)
 {
-	int		nbr_cmd;
-	char	***cmd_arrays;
+	int	nbr_cmd;
 
-	if (!global)
-		return (perror("error, struct not initialized"), NULL);
-	nbr_cmd = count_cmd_token(global->token_list);
-	cmd_arrays = ft_calloc((nbr_cmd + 1), sizeof(char **));
-	if (!cmd_arrays)
+	global->cmd_list = ft_calloc(1, sizeof(t_cmd));
+	if (!global || !global->cmd_list)
 	{
-		free(cmd_arrays);
-		return (perror("error, double array malloc failed"), NULL);
+		perror("error, struct not initialized");
+		return ;
 	}
-	return (cmd_arrays);
+	nbr_cmd = count_cmd_token(global->token_list);
+	global->cmd_list->cmd_arrays = ft_calloc((nbr_cmd + 1), sizeof(char **));
+	if (!global->cmd_list->cmd_arrays)
+		return (perror("error, double array malloc failed"));
 }
 
 char	**fill_arg_after_cmd(t_token *token_list)
