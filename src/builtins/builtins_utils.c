@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:32:46 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/08 10:55:46 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:10:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	execute_builtin(char *cmd, t_global *global)
 	char	**cmd_list;
 
 	cmd_list = fill_arg_after_cmd(global->token_list);
-	if (ft_strcmp(cmd, "cd") == 0)
-		ft_cd(global, cmd_list);
+	// if (ft_strcmp(cmd, "cd") == 0)
+	// 	ft_cd(global, cmd_list);
 	if (ft_strcmp(cmd, "echo") == 0)
 		ft_echo(cmd_list, 1);
 	else if (ft_strcmp(cmd, "env") == 0)

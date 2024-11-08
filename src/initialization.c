@@ -82,28 +82,12 @@ char	**fill_arg_after_cmd(t_token *token_list)
 	return (execve_args);
 }
 
-int	nbr_arg_after_cmd2(t_token *token_list)
-{
-	int		nbr_arg;
-	t_token	*current_token;
-
-	nbr_arg = 0;
-	if (!token_list)
-		return (perror("error, empty token list"), 0);
-	current_token = token_list->next;
-	while (current_token && current_token->type == ARG)
-	{
-		current_token = current_token->next;
-		nbr_arg++;
-	}
-	return (nbr_arg);
-}
-
-void	init_env(t_env **env_to_add, char **env)
+void	init_env_list(t_env **env_to_add, char **env)
 {
 	int	i;
 
 	i = 0;
+	// init_env(env_to_add);
 	if (!env || !*env)
 		return (perror("error, empty env list"));
 	while (env[i])
@@ -112,3 +96,9 @@ void	init_env(t_env **env_to_add, char **env)
 		i++;
 	}
 }
+
+// void	init_env(t_env **env)
+// {
+// 	env->value = ft_strch_env_value(ft_strchr(env->env, '='));
+// 	env->name = ft_strchr_env_name(env->name, env->env);
+// }

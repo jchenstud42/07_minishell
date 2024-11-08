@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **env)
 	{
 		calloc_global_struct(&global);
 		init_signals();
-		init_env(&global->env_list, env);
+		init_env_list(&global->env_list, env);
 		line = readline("\033[1;032mMinishell > \033[m");
 		// "exit" + Ctrl D
 		if (!line || ft_strcmp(line, "exit") == 0)

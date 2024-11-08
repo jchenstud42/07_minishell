@@ -121,6 +121,9 @@ int					env_add_node(t_env **env, char *value);
 t_env				*find_last_node_env(t_env *env);
 int					check_env_line(t_env *env, char *line);
 int					update_env(t_env **env, char *line);
+
+// ENV_UTILS2.c
+char				*ft_strchr_env_name(char *src, char *dest);
 char				*get_env_name(t_env *find_env, char *name_env);
 
 // GET_ENV.c
@@ -189,7 +192,8 @@ void				error_handler(int nb, t_global *global_data);
 // INITIALIZATION.c
 void				calloc_global_struct(t_global **global_data);
 void				init_cmd_double_array(t_global *global);
-void				init_env(t_env **env_to_add, char **env);
+void				init_env_list(t_env **env_to_add, char **env);
+void				init_env(t_env **env);
 
 char				**fill_arg_after_cmd(t_token *token_list);
 #endif

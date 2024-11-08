@@ -40,7 +40,8 @@ SRC			=	minishell.c \
 				builtins/unset.c \
 				signal/signal.c \
 				env/get_env.c \
-				env/env_utils.c
+				env/env_utils.c \
+				env/env_utils2.c
 
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 

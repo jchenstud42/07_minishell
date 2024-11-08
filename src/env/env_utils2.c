@@ -1,41 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/08 13:50:23 by rbouquet         ###   ########.fr       */
+/*   Created: 2024/11/08 13:49:36 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/11/08 14:53:07 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**get_env(t_env *env)
+char	*ft_strchr_env(char *src, char *dest)
 {
-	t_env	*env_size;
-	char	**env_tab;
-	int		i;
+	int	i;
 
 	i = 0;
-	env_size = env;
-	while (env_size)
-	{
+	while (src[i] && src[i] != '=')
 		i++;
-		env_size = env_size->next;
-	}
-	env_tab = malloc(sizeof(char *) * (i + 1));
-	if (!env_tab)
+	dest = malloc(sizeof(char *) * (i + 1));
+	if (!dest)
 		return (NULL);
-	env_size = env;
 	i = 0;
-	while (env_size)
+	while (src[i] && src[i] != '=')
 	{
-		env_tab[i] = env_size->env;
-		env_size = env_size->next;
+		dest[i] = src[i];
 		i++;
 	}
-	env_tab[i] = NULL;
-	return (env_tab);
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*get_env_name(t_env *find_env, char *name_env)
+{
+	while (find_env)
+	{
+		if (ft_strcmp(find_env->name, name_env) == 0)
+			return (find_env->value);
+		find_env = find_env->next;
+	}
+	return (NULL);
 }
