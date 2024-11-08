@@ -2,164 +2,102 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 16:17:35 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/08 10:45:36 by rbouquet         ###   ########.fr       */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
+/*   Created: 2024/11/08 15:44:41 by jchen             #+#    #+#             */
+/*   Updated: 2024/11/08 15:44:41 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	handle_redirections(int backup_fd, int *fds, char ***cmd,
-		t_global *global)
+
+// Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
+void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
 {
-	(void)*global;
-	if (backup_fd != STDIN_FILENO)
+	if (input_fd != STDIN_FILENO)
 	{
-		if (dup2(backup_fd, STDIN_FILENO) == -1)
+		if (dup2(input_fd, STDIN_FILENO) == -1)
 			exit(1);
-		close(backup_fd);
+		close(input_fd);
 	}
-	if (*(cmd + 1))
+	if (cmd->next)
 	{
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
 			exit(1);
+		close(fds[1]);
 	}
 	close(fds[0]);
-	if (global->cmd_list->cmd_number != 0)
+	if (cmd->infile != -1)
 	{
-		if (dup2(1, STDIN_FILENO) == -1)
+		if (dup2(cmd->infile, STDIN_FILENO) == -1)
 			exit(1);
-		close(1);
+		close(cmd->infile);
 	}
-	if (global->cmd_list->cmd_number != 1)
+	if (cmd->outfile != -1)
 	{
-		if (dup2(0, STDOUT_FILENO) == -1)
+		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
 			exit(1);
-		close(0);
+		close(cmd->outfile);
 	}
-	global->cmd_list->cmd_number++;
-}
-
-// Processus enfant
-// void	child_process(char ***cmd, int *fds, t_global *global, char **env,
-// 		int backup_fd)
-// {
-// 	if (dup2(backup_fd, STDOUT_FILENO) == -1)
-// 		return (perror("error, dup failed"));
-// 	handle_redirections(backup_fd, fds, cmd, global);
-// 	close(fds[1]);
-// 	if (is_builtin((*cmd)[0]) == 0)
-// 	{
-// 		execute_builtin((*cmd)[0], global);
-// 		exit(0);
-// 	}
-// 	global->cmd_list->cmd_path = get_command_path((*cmd)[0]);
-// 	execve(global->cmd_list->cmd_path, *cmd, env);
-// }
-
-void	child_process(char ***cmd, int *fds, t_global *global, char **env,
-		int backup_fd)
-{
-	char	*cmd_path;
-
-	if (backup_fd != 0)
-	{
-		if (dup2(backup_fd, 0) == -1)
-			return ;
-	}
-	if (*(cmd + 1) != NULL)
-	{
-		if (dup2(fds[1], 1) == -1)
-			return (perror("error, dup failed"));
-	}
-	close(fds[1]);
-	close(fds[0]);
-	cmd_path = get_command_path((*cmd)[0]);
-	if (is_builtin((*cmd)[0]) == 0)
-		execute_builtin((*cmd)[0], global);
-	else
-		execve(cmd_path, *cmd, env);
-	free(cmd_path);
-	exit(1);
 }
 
 // Processus parent
-void	parent_process(int *fds, int *backup_fd)
+void	parent_process(int *fds, int *input_fd, pid_t pid)
 {
+	(void)pid;
 	close(fds[1]);
-	if (*backup_fd != STDIN_FILENO)
-		close(*backup_fd);
-	*backup_fd = fds[0];
+	if (*input_fd != STDIN_FILENO)
+		close(*input_fd);
+	*input_fd = fds[0];
 }
 
-void	execute_pipe(char ***cmd, char **env, t_global *global)
+// Processus enfant
+void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
+		int input_fd)
 {
-	int		fds[2];
-	pid_t	pid;
-	int		backup_fd;
+	char *command_path;
 
-	backup_fd = STDIN_FILENO;
-	while (*cmd)
+	command_path = get_command_path(cmd->cmd);
+	handle_redirections(cmd, input_fd, fds);
+	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
-		if (pipe(fds) == -1)
+		execute_builtin(cmd, global);
+		exit(0);
+	}
+	execve(command_path, cmd->cmd_args, env);
+	free(command_path);
+	perror("error, execve failed\n");
+	exit(1);
+}
+
+// Simule l'execution des pipes.
+void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
+{
+	int fds[2];
+	pid_t pid;
+	int input_fd;
+
+	input_fd = STDIN_FILENO;
+	while (cmd)
+	{
+		if (cmd->next && pipe(fds) == -1)
 			exit(1);
 		pid = fork();
-		if (pid <= -1)
+		if (pid < 0)
 			exit(1);
 		if (pid == 0)
-			child_process(cmd, fds, global, env, backup_fd);
+			child_process(cmd, fds, global, env, input_fd);
 		else
-			parent_process(fds, &backup_fd);
-		cmd++;
+			parent_process(fds, &input_fd, pid);
+		cmd = cmd->next;
 	}
 	while (wait(NULL) > 0)
 	{
 	}
 	signal(SIGINT, SIG_DFL);
 }
-
-// void	pipeline(char ***cmd, char **env, t_global *global)
-// {
-// 	int		fds[2];
-// 	pid_t	pid;
-// 	int		backup_fd;
-
-// 	backup_fd = STDIN_FILENO;
-// 	while (*cmd)
-// 	{
-// 		if (pipe(fds) == -1)
-// 			return (perror("error, pipe failed"));
-// 		pid = fork();
-// 		if (pid == -1)
-// 			return (perror("error, fork failed"));
-// 		else if (pid == 0)
-// 		{
-// 			if (dup2(backup_fd, 0) == -1)
-// 				return (perror("error, dup failed"));
-// 			child_process(cmd, fds, global, env, backup_fd);
-// 		}
-// 		else
-// 			parent_process(fds, &backup_fd, pid);
-// 		cmd++;
-// 	}
-// }
-
-//// TEST POUR PRINT - A ENLEVER PLUS TARD
-// void	print_cmd_array(char *line, char **env, t_global *global,
-// 		char ***cmd_array)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = -1;
-// 	while (cmd_array[++i])
-// 	{
-// 		j = -1;
-// 		while (cmd_array[i][++j])
-// 			printf("[%d - %d] : %s\n", i, j, cmd_array[i][j]);
-// 		printf("\n");
-// 	}
-// }

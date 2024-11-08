@@ -15,11 +15,25 @@
 
 #include "../../inc/minishell.h"
 
+
+// Libere la memoire allouee a un tableau de string
+void	free_array(char **array)
+{
+	int i;
+
+	if (!array)
+		return (perror("error, array"));
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+}
+
 // Libere la memoire allouee a la token_list
 void	free_token_list(t_token **token_list)
 {
-	t_token	*temp;
-	t_token	*current;
+	t_token *temp;
+	t_token *current;
 
 	if (!token_list)
 		return (perror("error, empty token list"));
@@ -34,42 +48,29 @@ void	free_token_list(t_token **token_list)
 	*token_list = NULL;
 }
 
-// Libere la memoire allouee a un tableau de string
-void	free_array(char **array)
+// Libere la memoire allouee a la structure t_cmd
+void	free_cmd_list(t_cmd **cmd_list)
 {
-	int	i;
+	t_cmd *temp;
+	t_cmd *current;
 
-	if (!array)
-		return (perror("error, array"));
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
-}
-
-// Libere la memoire allouee a un tableau de tableau de string
-void	free_cmd_list(t_cmd *cmd_list)
-{
-	int	i;
-	int	j;
-
-	if (!cmd_list->cmd_arrays)
-		return (perror("error, empty double array"));
-	i = -1;
-	while (cmd_list->cmd_arrays[++i])
+	if (!cmd_list)
+		return (perror("error, empty cmd struct"));
+	current = *cmd_list;
+	while (current)
 	{
-		j = -1;
-		while (cmd_list->cmd_arrays[i][++j])
-			free(cmd_list->cmd_arrays[i][j]);
-		free(cmd_list->cmd_arrays[i]);
+		temp = current->next;
+		free(current->cmd);
+		free_array(current->cmd_args);
+		free(current);
+		current = temp;
 	}
-	free(cmd_list->cmd_arrays);
-	free(cmd_list);
+	*cmd_list = NULL;
 }
 
 void	free_env_list(t_env *env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	if (!env)
 		return (perror("error, empty env list"));
@@ -86,7 +87,7 @@ void	free_env_list(t_env *env)
 void	free_all(t_global *global_data)
 {
 	if (global_data->cmd_list)
-		free_cmd_list(global_data->cmd_list);
+		free_cmd_list(&global_data->cmd_list);
 	if (global_data->token_list)
 		free_token_list(&global_data->token_list);
 	if (global_data->line)

@@ -15,6 +15,7 @@
 
 #include "../inc/minishell.h"
 
+
 // int	main(int ac, char **av, char **env)
 // {
 // 	t_global	*global;
@@ -48,8 +49,8 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_global	*global;
-	char		*line;
+	t_global *global;
+	char *line;
 
 	(void)ac;
 	(void)av;
@@ -68,6 +69,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(line);
 		line_tokenization(&global, line);
+		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
 		{
 			launch_line(global, env);
