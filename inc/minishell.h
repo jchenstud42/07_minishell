@@ -90,12 +90,12 @@ void				execute_builtin(char *cmd, t_global *global);
 void				cd_print_error_message(char *error_msg);
 int					update_oldpwd(t_global *global);
 void				update_pwd(t_global *global);
-int					ft_cd(t_global *global, char **av);
+int					ft_cd(t_global *global, char **cmd_list);
 int					cd_home(t_global *global);
 
 // ECHO.C
-void				print_echo(int nbr_caract, char **av);
-void				ft_echo(char **av);
+void				print_echo(int nbr_caract, char **cmd_list, int fd);
+int					ft_echo(char **cmd_list, int fd);
 int					check_n(char *line);
 
 // ENV.C

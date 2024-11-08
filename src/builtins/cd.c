@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/07 18:05:44 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/08 11:57:59 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,28 +72,29 @@ void	update_pwd(t_global *global)
 	free(pwd);
 }
 
-int	ft_cd(t_global *global, char **av)
+int	ft_cd(t_global *global, char **cmd_list)
 {
 	int	i;
 	int	new_path;
 
 	i = 0;
-	while (av[i])
+	while (cmd_list[i])
 		i++;
 	if (i == 1)
-		cd_home(global);
+		return (cd_home(global));
 	else if (i == 2)
 	{
-		new_path = chdir(av[1]);
-		if (!new_path)
-			return (cd_print_error_message(av[1]), 1);
+		new_path = chdir(cmd_list[1]);
+		if (new_path == -1)
+			return (cd_print_error_message(cmd_list[1]), 1);
 		else
 		{
 			update_pwd(global);
 			return (0);
 		}
 	}
-	return (ft_putstr_fd("bash: cd: too many arguments\n", 2), 1);
+	else
+		return (ft_putstr_fd("bash: cd: too many arguments\n", 2), 1);
 }
 
 int	cd_home(t_global *global)
@@ -101,13 +102,14 @@ int	cd_home(t_global *global)
 	char	*home;
 	int		home_path;
 
+	ft_printf("AAAA");
 	home = get_env_name(global->env_list, "HOME");
 	if (!home)
 		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);
 	else
 	{
 		home_path = chdir(home);
-		if (!home_path)
+		if (home_path == -1)
 			return (cd_print_error_message(home), 1);
 		else
 			update_pwd(global);

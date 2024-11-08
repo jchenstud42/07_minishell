@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:07:37 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/07 19:12:45 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/08 10:11:31 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_n(char *line)
 
 // il faudra modifier le write, pour qu'il redirige vers un fd
 // precis, car on peut write dans un fichier par exemple
-void	print_echo(int nbr_caract, char **cmd_list)
+void	print_echo(int nbr_caract, char **cmd_list, int fd)
 {
 	int	i;
 	int	add_line;
@@ -46,7 +46,7 @@ void	print_echo(int nbr_caract, char **cmd_list)
 	}
 	while (i < nbr_caract)
 	{
-		write(1, cmd_list[i], ft_strlen(cmd_list[i]));
+		write(fd, cmd_list[i], ft_strlen(cmd_list[i]));
 		if (i != nbr_caract - 1)
 			write(1, " ", 1);
 		i++;
@@ -55,13 +55,13 @@ void	print_echo(int nbr_caract, char **cmd_list)
 		write(1, "\n", 1);
 }
 
-// IL FAUT QUE TOUS LES BUILTINS SOIENT EN INT POUR L'EXIT VALUE
-void	ft_echo(char **cmd_list)
+int	ft_echo(char **cmd_list, int fd)
 {
 	int	nbr_caract;
 
 	nbr_caract = 0;
 	while (cmd_list[nbr_caract])
 		nbr_caract++;
-	print_echo(nbr_caract, cmd_list);
+	print_echo(nbr_caract, cmd_list, fd);
+	return (0);
 }

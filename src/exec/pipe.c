@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:17:35 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/07 19:41:57 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/08 10:45:36 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,47 +44,47 @@ void	handle_redirections(int backup_fd, int *fds, char ***cmd,
 }
 
 // Processus enfant
-void	child_process(char ***cmd, int *fds, t_global *global, char **env,
-		int backup_fd)
-{
-	if (dup2(backup_fd, 0) == -1)
-		return (perror("error, dup failed"));
-	handle_redirections(backup_fd, fds, cmd, global);
-	close(fds[1]);
-	if (is_builtin((*cmd)[0]) == 0)
-	{
-		execute_builtin((*cmd)[0], global);
-		exit(0);
-	}
-	global->cmd_list->cmd_path = get_command_path((*cmd)[0]);
-	execve(global->cmd_list->cmd_path, *cmd, env);
-}
-
 // void	child_process(char ***cmd, int *fds, t_global *global, char **env,
 // 		int backup_fd)
 // {
-// 	char	*cmd_path;
-
-// 	if (backup_fd != 0)
-// 	{
-// 		if (dup2(backup_fd, 0) == -1)
-// 			return ;
-// 	}
-// 	if (*(cmd + 1) != NULL)
-// 	{
-// 		if (dup2(fds[1], 1) == -1)
-// 			return (perror("error, dup failed"));
-// 	}
+// 	if (dup2(backup_fd, STDOUT_FILENO) == -1)
+// 		return (perror("error, dup failed"));
+// 	handle_redirections(backup_fd, fds, cmd, global);
 // 	close(fds[1]);
-// 	close(fds[0]);
-// 	cmd_path = get_command_path((*cmd)[0]);
 // 	if (is_builtin((*cmd)[0]) == 0)
+// 	{
 // 		execute_builtin((*cmd)[0], global);
-// 	else
-// 		execve(cmd_path, *cmd, env);
-// 	free(cmd_path);
-// 	exit(1);
+// 		exit(0);
+// 	}
+// 	global->cmd_list->cmd_path = get_command_path((*cmd)[0]);
+// 	execve(global->cmd_list->cmd_path, *cmd, env);
 // }
+
+void	child_process(char ***cmd, int *fds, t_global *global, char **env,
+		int backup_fd)
+{
+	char	*cmd_path;
+
+	if (backup_fd != 0)
+	{
+		if (dup2(backup_fd, 0) == -1)
+			return ;
+	}
+	if (*(cmd + 1) != NULL)
+	{
+		if (dup2(fds[1], 1) == -1)
+			return (perror("error, dup failed"));
+	}
+	close(fds[1]);
+	close(fds[0]);
+	cmd_path = get_command_path((*cmd)[0]);
+	if (is_builtin((*cmd)[0]) == 0)
+		execute_builtin((*cmd)[0], global);
+	else
+		execve(cmd_path, *cmd, env);
+	free(cmd_path);
+	exit(1);
+}
 
 // Processus parent
 void	parent_process(int *fds, int *backup_fd)
