@@ -96,8 +96,8 @@ int	cd_home(t_global *global);
 
 // ECHO.C
 int	check_n(char *line);
-void	print_echo(int nbr_caract, int i, char **cmd_list, int fd);
-int	ft_echo(char **cmd_list, int fd);
+void	print_echo(int nbr_caract, int i, char **cmd_list);
+int	ft_echo(char **cmd_list);
 
 // ENV.C
 int	ft_env(t_env *env);

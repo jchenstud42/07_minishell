@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/08 13:18:16 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/09 18:32:15 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	update_oldpwd(t_global *global)
 
 	i = 0;
 	tmp = global->env_list;
+	stock_oldpwd = NULL;
 	if (!tmp)
 		return (1);
 	while (global->env_list)
@@ -39,16 +40,13 @@ int	update_oldpwd(t_global *global)
 	}
 	while (i--)
 	{
-		if (ft_strcmp(tmp->env, "OLDPWD=") == 0)
+		if (ft_strcmp(tmp->env, "PWD=") == 0)
 			stock_oldpwd = tmp->env;
 		tmp = tmp->next;
 	}
 	if (!stock_oldpwd)
-	{
-		if (!stock_oldpwd)
 			update_env(&global->env_list, "OLDPWD");
-	}
-	else if (stock_oldpwd)
+	else
 	{
 		stock_oldpwd = ft_strjoin("OLD", stock_oldpwd);
 		update_env(&global->env_list, stock_oldpwd);

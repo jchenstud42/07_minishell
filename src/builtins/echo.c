@@ -36,7 +36,7 @@ int	check_n(char *line)
 
 // il faudra modifier le write, pour qu'il redirige vers un fd
 // precis, car on peut write dans un fichier par exemple
-void	print_echo(int nbr_caract, int i, char **cmd_list, int fd)
+void	print_echo(int nbr_caract, int i, char **cmd_list)
 {
 	int add_line;
 
@@ -48,16 +48,16 @@ void	print_echo(int nbr_caract, int i, char **cmd_list, int fd)
 	}
 	while (i < nbr_caract)
 	{
-		write(fd, cmd_list[i], ft_strlen(cmd_list[i]));
+		write(1, cmd_list[i], ft_strlen(cmd_list[i]));
 		if (i != nbr_caract - 1)
 			write(1, " ", 1);
 		i++;
 	}
 	if (add_line == 1)
-		write(fd, "\n", 1);
+		write(1, "\n", 1);
 }
 
-int	ft_echo(char **cmd_list, int fd)
+int	ft_echo(char **cmd_list)
 {
 	int nbr_caract;
 	int i;
@@ -66,6 +66,6 @@ int	ft_echo(char **cmd_list, int fd)
 	nbr_caract = 0;
 	while (cmd_list[nbr_caract])
 		nbr_caract++;
-	print_echo(nbr_caract, i, cmd_list, fd);
+	print_echo(nbr_caract, i, cmd_list);
 	return (0);
 }
