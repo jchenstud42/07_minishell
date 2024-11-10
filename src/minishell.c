@@ -16,60 +16,33 @@
 #include "../inc/minishell.h"
 
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_global	*global;
-// 	char		*line;
+void	minishell_initialization(t_global *global, int ac, char **av,
+		char **env)
+{
+	(void)ac;
+	(void)av;
 
-// 	(void)ac;
-// 	(void)av;
-// 	while (1)
-// 	{
-// 		calloc_global_struct(&global);
-// 		init_signals();
-// 		line = readline("\033[1;032mMinishell > \033[m");
-// 		// "exit" + Ctrl D
-// 		if (!line || ft_strcmp(line, "exit") == 0)
-// 		{
-// 			ft_printf("exit\n");
-// 			free(line);
-// 			break ;
-// 		}
-// 		add_history(line);
-// 		line_tokenization(&global, line);
-// 		if (!check_line(global, global->token_list))
-// 		{
-// 			launch_line(global, env);
-// 		}
-// 	}
-// 	rl_clear_history();
-// 	free_all(global);
-// 	return (0);
-// }
+	init_signals();
+	init_env_list(&global->env_list, env);
+	// init_env(global->env_list);
+}
 
 int	main(int ac, char **av, char **env)
 {
 	t_global *global;
-	char *line;
 
-	(void)ac;
-	(void)av;
 	while (1)
 	{
 		calloc_global_struct(&global);
-		init_signals();
-		init_env_list(&global->env_list, env);
-		// init_env(global->env_list);
-		line = readline("\033[1;032mMinishell > \033[m");
-		// "exit" + Ctrl D
-		if (!line || ft_strcmp(line, "exit") == 0)
+		minishell_initialization(global, ac, av, env);
+		global->line = readline(GREEN "Minishell > " RESET);
+		if (!global->line || ft_strcmp(global->line, "exit") == 0)
 		{
 			ft_printf("exit\n");
-			free(line);
 			break ;
 		}
-		add_history(line);
-		line_tokenization(&global, line);
+		add_history(global->line);
+		line_tokenization(&global, global->line);
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
 		{

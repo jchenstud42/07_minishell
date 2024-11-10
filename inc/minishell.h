@@ -44,6 +44,9 @@ enum e_token_list
 # define FALSE 0
 # define ERROR -1
 
+# define GREEN "\001\033[1;32m\002"
+# define RESET "\001\033[0m\002"
+
 typedef struct s_token
 {
 	char *token;
@@ -169,10 +172,11 @@ int	check_line(t_global *global, t_token *token_list);
 int	count_pipe(char *line);
 int	count_cmd_token(t_token *token_list);
 
-// IS_SPECIAL_TOKEN.c
+// SPECIAL_TOKEN.c
 int	is_builtin(char *cmd);
+int	is_special_token(char *token);
 int	is_redirection(char *str);
-int	is_pipe(char *str);
+int	is_pipe(char c);
 
 // SIGNAL.c
 void	sig_c(int sig);

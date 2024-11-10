@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   is_special_token.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/25 14:18:10 by rbouquet          #+#    #+#             */
 /*   Updated: 2024/11/07 18:06:10 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 // Verifie si c'est un builtin
 int	is_builtin(char *cmd)
@@ -24,6 +28,24 @@ int	is_builtin(char *cmd)
 	return (1);
 }
 
+// Verifie si le token est autre chose qu'un ARG
+int	is_special_token(char *token)
+{
+	if (!token)
+		return (0);
+	if (token[0] == '|')
+		return (PIPE);
+	else if (token[0] == '<' && token[1] != '<')
+		return (INPUT);
+	else if (token[0] == '<' && token[1] == '<')
+		return (HEREDOC);
+	else if (token[0] == '>' && token[1] != '>')
+		return (TRUNC);
+	else if (token[0] == '>' && token[1] == '>')
+		return (APPEND);
+	return (0);
+}
+
 // Verifie si l'element est une redirection (INPUT, HEREDOC, TRUNC, APPEND)
 int	is_redirection(char *str)
 {
@@ -34,22 +56,9 @@ int	is_redirection(char *str)
 }
 
 // Verifie si l'element est une PIPE
-int	is_pipe(char *str)
+int	is_pipe(char c)
 {
-	if (!ft_strcmp(str, "|"))
+	if (c == '|')
 		return (1);
 	return (0);
 }
-
-// TEST
-// int	main(int ac, char **av)
-// {
-// 	if (ac == 2)
-// 	{
-// 		if (is_redirection(av[1]) || is_pipe(av[1]))
-// 			ft_printf("ok\n");
-// 		else
-// 			ft_printf("error\n");
-// 	}
-// 	return (0);
-// }
