@@ -23,7 +23,7 @@ PRINTF		=	ft_printf.c ft_printchar.c ft_printstr.c ft_printnbr.c ft_printunsigne
 
 GNL			=	get_next_line.c get_next_line_fds.c get_next_line_utils.c
 
-AUTRE		=	ft_strcmp.c ft_strstr.c
+AUTRE		=	ft_strcmp.c ft_strstr.c ft_chardup.c
 
 # Includes
 INC			=	-I .

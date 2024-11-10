@@ -69,9 +69,11 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 		execute_builtin(cmd, global);
 		exit(0);
 	}
+	if (!access(cmd->cmd, X_OK))
+		execve(cmd->cmd, cmd->cmd_args, env);
 	execve(command_path, cmd->cmd_args, env);
 	free(command_path);
-	perror("error, execve failed\n");
+	slash_in_cmd_token(cmd->cmd, true);
 	exit(1);
 }
 

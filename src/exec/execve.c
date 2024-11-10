@@ -60,7 +60,9 @@ void	execute_command(t_cmd *cmd_list, char **env)
 	}
 	else if (pid == 0)
 	{
-		if (execve(command_path, cmd_list->cmd_args, env) == -1)
+		if (!access(cmd_list->cmd, X_OK))
+			execve(cmd_list->cmd, cmd_list->cmd_args, env);
+		else if (execve(command_path, cmd_list->cmd_args, env) == -1)
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
@@ -72,3 +74,32 @@ void	execute_command(t_cmd *cmd_list, char **env)
 		waitpid(pid, NULL, 0);
 	free(command_path);
 }
+
+// void	execute_command(t_cmd *cmd_list, char **env)
+// {
+// 	char *command_path;
+// 	pid_t pid;
+
+// 	if (!cmd_list->cmd)
+// 		return (perror("error, no command entered"));
+// 	command_path = get_command_path(cmd_list->cmd);
+// 	pid = fork();
+// 	if (pid == -1)
+// 	{
+// 		free(command_path);
+// 		return (perror("error, fork failed"));
+// 	}
+// 	else if (pid == 0)
+// 	{
+// 		if (execve(command_path, cmd_list->cmd_args, env) == -1)
+// 		{
+// 			ft_putstr_fd(cmd_list->cmd, 2);
+// 			ft_putstr_fd(": command not found\n", 2);
+// 		}
+// 		free(command_path);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	else
+// 		waitpid(pid, NULL, 0);
+// 	free(command_path);
+// }

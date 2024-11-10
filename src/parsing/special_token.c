@@ -31,18 +31,24 @@ int	is_builtin(char *cmd)
 // Verifie si le token est autre chose qu'un ARG
 int	is_special_token(char *token)
 {
-	if (!token)
+	if (!token || !token[0])
 		return (0);
 	if (token[0] == '|')
 		return (PIPE);
-	else if (token[0] == '<' && token[1] != '<')
-		return (INPUT);
-	else if (token[0] == '<' && token[1] == '<')
-		return (HEREDOC);
-	else if (token[0] == '>' && token[1] != '>')
-		return (TRUNC);
-	else if (token[0] == '>' && token[1] == '>')
-		return (APPEND);
+	else if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HEREDOC);
+		else
+			return (INPUT);
+	}
+	else if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APPEND);
+		else
+			return (TRUNC);
+	}
 	return (0);
 }
 

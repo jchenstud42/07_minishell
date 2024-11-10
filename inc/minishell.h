@@ -164,8 +164,9 @@ void	free_all(t_global *global_data);
 
 // CHECK_LINE.c
 bool	quote_are_closed(char *line);
-int	first_token_pipe(t_token *token_list);
-int	last_token_redirection(t_token *token_list);
+bool	first_token_pipe(t_token *token_list);
+bool	last_token_redirection(t_token *token_list);
+bool	slash_in_cmd_token(char *token, bool print_msg);
 int	check_line(t_global *global, t_token *token_list);
 
 // COUNT.c
@@ -193,6 +194,7 @@ int	nbr_arg_after_cmd(t_token *token_list);
 
 // TOKENIZE_LINE.c
 void	stock_line(t_global **global, char *line);
+void	add_special_token(t_global *global, int *end);
 void	line_tokenization(t_global **global, char *line);
 
 // ERROR_HANDLER.c //////// A RETIRER

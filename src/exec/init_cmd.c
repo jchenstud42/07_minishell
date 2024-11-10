@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:45 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/08 18:24:28 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/10 17:01:04 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**fill_cmd_args(t_token *token_list)
 	int		nbr_arg;
 	int		i;
 
-	// int y;
+	// int		y;
 	i = -1;
 	current_token = token_list;
 	nbr_arg = nbr_arg_after_cmd(token_list);

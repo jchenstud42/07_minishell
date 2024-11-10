@@ -42,17 +42,33 @@ static void	skip_beginning_white_space(int *end, char *line)
 	*end += i;
 }
 
-void	add_special_token(t_global *global, int beginning, int *end)
+// Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
+void	add_special_token(t_global *global, int *end)
 {
 	char *token;
 
-	(void)beginning;
-	if (is_pipe(global->line[*end]))
+	if (is_special_token(&global->line[*end]) == PIPE
+		|| is_special_token(&global->line[*end]) == INPUT
+		|| is_special_token(&global->line[*end]) == TRUNC)
 	{
-		token = ft_strdup("|");
+		token = ft_chardup(global->line[*end]);
 		append_node_to_token_list(&global, token);
 		free(token);
 		(*end)++;
+	}
+	else if (is_special_token(&global->line[*end]) == HEREDOC)
+	{
+		token = ft_strdup("<<");
+		append_node_to_token_list(&global, token);
+		free(token);
+		*end += 2;
+	}
+	else if (is_special_token(&global->line[*end]) == APPEND)
+	{
+		token = ft_strdup(">>");
+		append_node_to_token_list(&global, token);
+		free(token);
+		*end += 2;
 	}
 }
 
@@ -65,61 +81,23 @@ void	line_tokenization(t_global **global, char *line)
 
 	free_token_list(&(*global)->token_list);
 	skip_beginning_white_space(&end, line);
-	while ((*global)->line[end])
+	while (line[end])
 	{
-		while (is_white_space((*global)->line[end]))
+		while (is_white_space(line[end]))
 			end++;
 		beginning = end;
-		while ((*global)->line[end] && !is_white_space((*global)->line[end])
-			&& !is_pipe((*global)->line[end]))
+		while (line[end] && !is_white_space(line[end])
+			&& !is_special_token(&line[end]))
 			end++;
 		if (beginning != end)
 		{
 			token = malloc((end - beginning + 1) * sizeof(char));
 			if (!token)
 				return (perror("error, line tokenization malloc failed"));
-			ft_strlcpy(token, &(*global)->line[beginning], end - beginning
-				+ 1);
-			token[end - beginning] = '\0';
+			ft_strlcpy(token, &line[beginning], end - beginning + 1);
 			append_node_to_token_list(global, token);
 			free(token);
 		}
-		add_special_token(*global, beginning, &end);
-		// if (is_pipe((*global)->line[end]))
-		// {
-		// 	token = ft_strdup("|");
-		// 	append_node_to_token_list(global, token);
-		// 	free(token);
-		// 	end++;
-		// }
+		add_special_token(*global, &end);
 	}
 }
-
-// void	line_tokenization(t_global **global, char *line)
-// {
-// 	char *token;
-// 	int beginning;
-// 	int end;
-
-// 	free_token_list(&(*global)->token_list);
-// 	skip_beginning_white_space(&end, line);
-// 	while ((*global)->line[end])
-// 	{
-// 		while (is_white_space((*global)->line[end]))
-// 			end++;
-// 		beginning = end;
-// 		while ((*global)->line[end] && !is_white_space((*global)->line[end]))
-// 			end++;
-// 		if (beginning != end)
-// 		{
-// 			token = malloc((end - beginning + 1) * sizeof(char));
-// 			if (!token)
-// 				return (perror("error, malloc failed"));
-// 			ft_strlcpy(token, &(*global)->line[beginning], end - beginning
-// 				+ 1);
-// 			token[end - beginning] = '\0';
-// 			append_node_to_token_list(global, token);
-// 			free(token);
-// 		}
-// 	}
-// }

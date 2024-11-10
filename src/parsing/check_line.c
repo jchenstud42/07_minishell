@@ -15,11 +15,12 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie si les guillemet sont bien fermees
 bool	quote_are_closed(char *line)
 {
-	int	i;
-	int	quote_count;
+	int i;
+	int quote_count;
 
 	if (!line)
 		return (false);
@@ -36,39 +37,64 @@ bool	quote_are_closed(char *line)
 	return (false);
 }
 
-int	first_token_pipe(t_token *token_list)
+bool	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
-		return (1);
+		return (false);
 	if (token_list->type == PIPE)
-		return (PIPE);
-	return (0);
+		return (true);
+	return (false);
 }
 
-int	last_token_redirection(t_token *token_list)
+bool	last_token_redirection(t_token *token_list)
 {
-	t_token	*last_node;
+	t_token *last_node;
 
 	if (!token_list)
-		return (1);
+		return (false);
 	last_node = last_element_of_list(token_list);
 	if (last_node->type == INPUT || last_node->type == HEREDOC
 		|| last_node->type == TRUNC || last_node->type == APPEND)
-		return (0);
-	return (1);
+		return (true);
+	return (false);
+}
+
+// Verifie s'il y a un '/' dans notre token CMD, si oui
+// on verifie si c'est le chemin absolu d'une commande, ou sinon
+// c'est considéré comme une erreur
+bool	slash_in_cmd_token(char *token, bool print_msg)
+{
+	if (ft_strchr(token, '/'))
+	{
+		if (!access(token, X_OK))
+			return (false);
+		if (print_msg == true)
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(token, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+		}
+		return (true);
+	}
+	return (false);
 }
 
 int	check_line(t_global *global, t_token *token_list)
 {
-	if (quote_are_closed(global->line) == false)
-		return (perror("error, quotes are open"), 1);
-	if (first_token_pipe(token_list) == PIPE)
+	(void)*global;
+	// if (quote_are_closed(global->line) == false)
+	// 	return (perror("error, quotes are open"), 1);
+	if (first_token_pipe(token_list))
 		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
 				2), 1);
-	else if (last_token_redirection(token_list) == 0)
+	else if (last_token_redirection(token_list))
+		return (ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
+				2), 1);
+	else if (slash_in_cmd_token(token_list->token, false))
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-		return (1);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(token_list->token, 2);
+		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
 	}
 	else
 		return (0);
