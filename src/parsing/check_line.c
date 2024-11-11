@@ -15,28 +15,7 @@
 
 #include "../../inc/minishell.h"
 
-
-// Verifie si les guillemet sont bien fermees
-bool	quote_are_closed(char *line)
-{
-	int i;
-	int quote_count;
-
-	if (!line)
-		return (false);
-	i = 0;
-	quote_count = 0;
-	while (line[i])
-	{
-		if (line[i] == '"')
-			quote_count++;
-		i++;
-	}
-	if (quote_count % 2 == 0)
-		return (true);
-	return (false);
-}
-
+// Verifie sur le premier token de notre liste est une pipe
 bool	first_token_pipe(t_token *token_list)
 {
 	if (!token_list)
@@ -46,9 +25,10 @@ bool	first_token_pipe(t_token *token_list)
 	return (false);
 }
 
+// Verifie si le dernier token de notre liste est une redirection
 bool	last_token_redirection(t_token *token_list)
 {
-	t_token *last_node;
+	t_token	*last_node;
 
 	if (!token_list)
 		return (false);
@@ -81,9 +61,10 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 
 int	check_line(t_global *global, t_token *token_list)
 {
-	(void)*global;
-	// if (quote_are_closed(global->line) == false)
-	// 	return (perror("error, quotes are open"), 1);
+	if (!global | !token_list)
+		return (1);
+	if (are_all_quotes_closed(global->line) == false)
+		return (ft_putstr_fd("bash: error, quotes are open\n", 2), 1);
 	if (first_token_pipe(token_list))
 		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
 				2), 1);
@@ -99,17 +80,3 @@ int	check_line(t_global *global, t_token *token_list)
 	else
 		return (0);
 }
-
-// TEST
-// int	main(int ac, char **av)
-// {
-// 	if (ac > 1)
-// 	{
-// 		ft_printf("pipe number : %d\n", count_pipe(av[1]));
-// 		if (quote_are_closed(av[1]))
-// 			ft_printf("quotes are closed\n");
-// 		else if (!quote_are_closed(av[1]))
-// 			ft_printf("quotes aren't closed\n");
-// 	}
-// 	return (0);
-// }
