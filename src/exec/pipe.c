@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
 {
@@ -60,10 +59,11 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 		int input_fd)
 {
-	char *command_path;
+	char	*command_path;
 
 	command_path = get_command_path(cmd->cmd);
 	handle_redirections(cmd, input_fd, fds);
+	signal(SIGINT, SIG_DFL);
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
 		execute_builtin(cmd, global);
@@ -80,9 +80,9 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int input_fd;
+	int		fds[2];
+	pid_t	pid;
+	int		input_fd;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)
@@ -98,8 +98,9 @@ void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
 			parent_process(fds, &input_fd, pid);
 		cmd = cmd->next;
 	}
+	signal(SIGINT, SIG_IGN);
 	while (wait(NULL) > 0)
 	{
 	}
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, sig_c);
 }
