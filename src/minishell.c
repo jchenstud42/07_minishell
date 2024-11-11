@@ -24,7 +24,7 @@ void	minishell_initialization(t_global *global, int ac, char **av,
 
 	init_signals();
 	init_env_list(&global->env_list, env);
-	// init_env(global->env_list);
+	init_env(global->env_list);
 }
 
 int	main(int ac, char **av, char **env)

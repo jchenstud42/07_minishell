@@ -6,7 +6,7 @@
 /*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/09 18:32:15 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/11 17:35:17 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	cd_home(t_global *global)
 	int		home_path;
 
 	ft_printf("AAAA");
-	home = get_env_name(global->env_list, "HOME");
+	home = get_env_value(global->env_list, "HOME");
 	if (!home)
 		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);
 	else

@@ -79,8 +79,14 @@ void	init_env_list(t_env **env_to_add, char **env)
 	}
 }
 
-// void	init_env(t_env **env)
-// {
-// 	env->value = ft_strch_env_value(ft_strchr(env->env, '='));
-// 	env->name = ft_strchr_env_name(env->name, env->env);
-// }
+void	init_env(t_env *env_list)
+{
+	char	*test;
+
+	env_list->name = NULL;
+	env_list->value = NULL;
+	env_list->name = ft_strchr_env_name(env_list->env, env_list->name);
+	test = ft_strchr(env_list->env, '=');
+	if (test)
+		env_list->value = ft_strdup(test + 1);
+}
