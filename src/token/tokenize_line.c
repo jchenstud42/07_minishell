@@ -8,8 +8,8 @@
 	+#+        */
 /*                                                +#+#+#+#+#+
 	+#+           */
-/*   Created: 2024/10/22 15:47:59 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/01 12:54:35 by jchen            ###   ########.fr       */
+/*   Created: 2024/11/12 14:34:39 by jchen             #+#    #+#             */
+/*   Updated: 2024/11/12 14:34:39 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,27 @@ static void	skip_beginning_white_space(int *end, char *line)
 }
 
 // Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
-void	add_special_token(t_global *global, int *end)
+void	add_special_token(t_global *global, char *line, int *end)
 {
 	char *token;
 
-	if (is_special_token(&global->line[*end]) == PIPE
-		|| is_special_token(&global->line[*end]) == INPUT
-		|| is_special_token(&global->line[*end]) == TRUNC)
+	if (is_special_token(&line[*end]) == PIPE
+		|| is_special_token(&line[*end]) == INPUT
+		|| is_special_token(&line[*end]) == TRUNC)
 	{
-		token = ft_chardup(global->line[*end]);
+		token = ft_chardup(line[*end]);
 		append_node_to_token_list(&global, token);
 		free(token);
 		(*end)++;
 	}
-	else if (is_special_token(&global->line[*end]) == HEREDOC)
+	else if (is_special_token(&line[*end]) == HEREDOC)
 	{
 		token = ft_strdup("<<");
 		append_node_to_token_list(&global, token);
 		free(token);
 		*end += 2;
 	}
-	else if (is_special_token(&global->line[*end]) == APPEND)
+	else if (is_special_token(&line[*end]) == APPEND)
 	{
 		token = ft_strdup(">>");
 		append_node_to_token_list(&global, token);
@@ -91,7 +91,7 @@ char	*line_quote_manager(char *line)
 		return (ft_putstr_fd("bash: error, quotes are not closed\n", 2), NULL);
 	}
 	result[j] = '\0';
-	///// A RETIRER PLUS TARD ////////////////////////////////////////////
+	///// A RETIRER PLUS TARD ///////////////////////////////////////////////
 	// printf("quote manager : %s\n", result);
 	return (result);
 }
@@ -124,6 +124,7 @@ void	line_tokenization(t_global **global, char *line)
 			append_node_to_token_list(global, token);
 			free(token);
 		}
-		add_special_token(*global, &end);
+		add_special_token(*global, line, &end);
 	}
+	free(line);
 }

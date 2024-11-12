@@ -193,7 +193,7 @@ int	nbr_arg_after_cmd(t_token *token_list);
 
 // TOKENIZE_LINE.c
 char	*line_quote_manager(char *line);
-void	add_special_token(t_global *global, int *end);
+void	add_special_token(t_global *global, char *line, int *end);
 void	line_tokenization(t_global **global, char *line);
 
 // ERROR_HANDLER.c //////// A RETIRER
