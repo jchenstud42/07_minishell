@@ -99,9 +99,10 @@ void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
 			parent_process(fds, &input_fd, pid);
 		cmd = cmd->next;
 	}
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_nl);
+	signal(SIGQUIT, handle_nl);
 	while (wait(NULL) > 0)
-	{
-	}
-	signal(SIGINT, sig_c);
+		;
+	signal(SIGINT, SIG_DFL);
 }

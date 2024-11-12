@@ -163,7 +163,7 @@ void	free_env_list(t_env *env);
 void	free_all(t_global *global_data);
 
 // CHECK_LINE.c
-bool	first_token_pipe(t_token *token_list);
+bool	invalid_first_token(t_token *token_list);
 bool	last_token_redirection(t_token *token_list);
 bool	slash_in_cmd_token(char *token, bool print_msg);
 int	check_line(t_global *global, t_token *token_list);
@@ -180,6 +180,7 @@ int	is_pipe(char c);
 
 // SIGNAL.c
 void	sig_c(int sig);
+void	handle_nl(int sig);
 void	init_signals(void);
 
 // INIT_TOKEN_LIST.c

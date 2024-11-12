@@ -16,12 +16,17 @@
 #include "../../inc/minishell.h"
 
 
-// Verifie sur le premier token de notre liste est une pipe
-bool	first_token_pipe(t_token *token_list)
+// Verifie si le premier token est valide
+// EN VRAI PAS OBLIGATOIRE, A FINIR SI BESOIN
+bool	invalid_first_token(t_token *token_list)
 {
 	if (!token_list)
 		return (false);
 	if (token_list->type == PIPE)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
+				2), true);
+	else if (!ft_strcmp(token_list->token, ":") || !ft_strcmp(token_list->token,
+			"!"))
 		return (true);
 	return (false);
 }
@@ -64,9 +69,8 @@ int	check_line(t_global *global, t_token *token_list)
 {
 	if (!global | !token_list)
 		return (1);
-	if (first_token_pipe(token_list))
-		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
-				2), 1);
+	if (invalid_first_token(token_list))
+		return (1);
 	else if (last_token_redirection(token_list))
 		return (ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
 				2), 1);
