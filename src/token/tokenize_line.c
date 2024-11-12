@@ -15,22 +15,11 @@
 
 #include "../../inc/minishell.h"
 
-// Permet de stocker la ligne de commande dans notre structure
-void	stock_line(t_global **global, char *line)
-{
-	if (!line)
-		return (perror("error, empty line"));
-	if ((*global)->line)
-		free((*global)->line);
-	(*global)->line = ft_strdup(line);
-	if (!(*global)->line)
-		return (perror("error, malloc failed"));
-}
 
 // Passe les espaces au debut de la phrase s'il y en a
 static void	skip_beginning_white_space(int *end, char *line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!line)
@@ -44,7 +33,7 @@ static void	skip_beginning_white_space(int *end, char *line)
 // Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
 void	add_special_token(t_global *global, int *end)
 {
-	char	*token;
+	char *token;
 
 	if (is_special_token(&global->line[*end]) == PIPE
 		|| is_special_token(&global->line[*end]) == INPUT
@@ -71,14 +60,52 @@ void	add_special_token(t_global *global, int *end)
 	}
 }
 
-// // Tokenise la phrase entree apres le prompt
+char	*line_quote_manager(char *line)
+{
+	int i;
+	int j;
+	char *result;
+	bool single_quotes;
+	bool double_quotes;
+
+	i = 0;
+	j = 0;
+	single_quotes = false;
+	double_quotes = false;
+	result = malloc(ft_strlen(line) + 1);
+	if (!result)
+		return (perror("error, line quote malloc failed"), NULL);
+	while (line[i])
+	{
+		if (line[i] == '\'' && !double_quotes)
+			single_quotes = !single_quotes;
+		else if (line[i] == '"' && !single_quotes)
+			double_quotes = !double_quotes;
+		else
+			result[j++] = line[i];
+		i++;
+	}
+	if (single_quotes || double_quotes)
+	{
+		free(result);
+		return (ft_putstr_fd("bash: error, quotes are not closed\n", 2), NULL);
+	}
+	result[j] = '\0';
+	///// A RETIRER PLUS TARD ////////////////////////////////////////////
+	// printf("quote manager : %s\n", result);
+	return (result);
+}
+
+// Tokenise la phrase entree apres le prompt
 void	line_tokenization(t_global **global, char *line)
 {
-	char	*token;
-	int		beginning;
-	int		end;
+	char *token;
+	int beginning;
+	int end;
 
 	free_token_list(&(*global)->token_list);
+	if ((line = line_quote_manager(line)) == NULL)
+		return ;
 	skip_beginning_white_space(&end, line);
 	while (line[end])
 	{

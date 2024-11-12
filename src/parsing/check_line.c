@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie sur le premier token de notre liste est une pipe
 bool	first_token_pipe(t_token *token_list)
 {
@@ -28,7 +29,7 @@ bool	first_token_pipe(t_token *token_list)
 // Verifie si le dernier token de notre liste est une redirection
 bool	last_token_redirection(t_token *token_list)
 {
-	t_token	*last_node;
+	t_token *last_node;
 
 	if (!token_list)
 		return (false);
@@ -63,8 +64,6 @@ int	check_line(t_global *global, t_token *token_list)
 {
 	if (!global | !token_list)
 		return (1);
-	if (are_all_quotes_closed(global->line) == false)
-		return (ft_putstr_fd("bash: error, quotes are open\n", 2), 1);
 	if (first_token_pipe(token_list))
 		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
 				2), 1);
