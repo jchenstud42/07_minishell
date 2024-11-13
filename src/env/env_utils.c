@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/08 13:50:44 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:07:06 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	env_add_node(t_env **env, char *value)
 		free(new_node);
 		return (1);
 	}
+	init_env(new_node);
 	new_node->next = NULL;
 	if (*env)
 	{
@@ -81,19 +82,22 @@ int	update_env(t_env **env, char *line)
 	int		i;
 	t_env	*tmp;
 
-	if (!line)
+	if (!line || !env || !*env)
 		return (1);
 	index = check_env_line(*env, line);
 	if (index >= 0)
 	{
 		tmp = *env;
 		i = 0;
-		while (i++ < index)
+		while (i++ < index && tmp)
 			tmp = tmp->next;
-		free(tmp->env);
-		tmp->env = ft_strdup(line);
-		if (!tmp->env)
-			return (1);
+		if (tmp)
+		{
+			free(tmp->env);
+			tmp->env = ft_strdup(line);
+			if (!tmp->env)
+				return (1);
+		}
 	}
 	else if (index == -1)
 	{

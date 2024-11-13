@@ -3,11 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:00 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 11:21:55 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/13 12:34:44 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// int	ft_exit(t_global *global, char **av)
+// {
+// }

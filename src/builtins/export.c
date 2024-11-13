@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 11:21:56 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/13 14:00:08 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_export(t_env **env, char **line)
 			ft_putstr_fd("': invalid identifier\n", 2);
 			return (1);
 		}
-		else if (!update_env(env, line[i]))
+		if (update_env(env, line[i]))
 			return (1);
 		i++;
 	}

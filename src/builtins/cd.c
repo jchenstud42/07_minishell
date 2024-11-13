@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/11 17:35:17 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/13 10:08:52 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	update_oldpwd(t_global *global)
 		tmp = tmp->next;
 	}
 	if (!stock_oldpwd)
-			update_env(&global->env_list, "OLDPWD");
+		update_env(&global->env_list, "OLDPWD");
 	else
 	{
 		stock_oldpwd = ft_strjoin("OLD", stock_oldpwd);
@@ -100,7 +100,6 @@ int	cd_home(t_global *global)
 	char	*home;
 	int		home_path;
 
-	ft_printf("AAAA");
 	home = get_env_value(global->env_list, "HOME");
 	if (!home)
 		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);

@@ -15,10 +15,9 @@
 
 #include "../../inc/minishell.h"
 
-
 void	ft_swap_tab(int i, int j, char **tab)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = tab[i];
 	tab[i] = tab[j];
@@ -27,7 +26,7 @@ void	ft_swap_tab(int i, int j, char **tab)
 
 int	env_len(t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!env)

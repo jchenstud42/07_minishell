@@ -15,21 +15,18 @@
 
 #include "../inc/minishell.h"
 
-
 void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
 {
 	(void)ac;
 	(void)av;
-
 	init_signals();
 	init_env_list(&global->env_list, env);
-	init_env(global->env_list);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
+	t_global	*global;
 
 	while (1)
 	{
