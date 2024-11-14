@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/13 10:08:52 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:13:07 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,25 @@ void	cd_print_error_message(char *error_msg)
 int	update_oldpwd(t_global *global)
 {
 	t_env	*tmp;
-	int		i;
 	char	*stock_oldpwd;
 
-	i = 0;
 	tmp = global->env_list;
 	stock_oldpwd = NULL;
-	if (!tmp)
+	if (!tmp || !global)
 		return (1);
-	while (global->env_list)
+	while(tmp)	
 	{
-		i++;
-		global->env_list = global->env_list->next;
-	}
-	while (i--)
-	{
-		if (ft_strcmp(tmp->env, "PWD=") == 0)
-			stock_oldpwd = tmp->env;
+		if (ft_strncmp(tmp->env, "PWD=", 4) == 0)
+		{
+			stock_oldpwd = ft_strjoin("OLD", tmp->env);
+			break;
+		}
 		tmp = tmp->next;
 	}
-	if (!stock_oldpwd)
-		update_env(&global->env_list, "OLDPWD");
-	else
-	{
-		stock_oldpwd = ft_strjoin("OLD", stock_oldpwd);
+	if (stock_oldpwd)
 		update_env(&global->env_list, stock_oldpwd);
-	}
+	else
+		update_env(&global->env_list, "OLDPWD");
 	free(stock_oldpwd);
 	return (0);
 }

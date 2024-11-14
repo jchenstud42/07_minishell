@@ -31,7 +31,7 @@ int	env_len(t_env *env)
 	i = 0;
 	if (!env)
 		return (0);
-	while (env->next == NULL)
+	while (env)
 	{
 		i++;
 		env = env->next;
