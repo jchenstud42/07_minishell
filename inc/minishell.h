@@ -79,7 +79,7 @@ typedef struct global
 {
 	char			*line;
 	char			*arg;
-	int				cmd_number;
+	int				exit_value;
 	t_token			*token_list;
 	t_env			*env_list;
 	t_cmd			*cmd_list;
