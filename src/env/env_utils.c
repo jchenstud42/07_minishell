@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/14 17:24:49 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/15 11:28:00 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	env_add_node(t_env **env, char *value)
 	t_env	*new_node;
 	t_env	*tmp;
 
+	if (!env || !value)
+		return (1);
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (1);
@@ -77,9 +79,8 @@ t_env	*find_last_node_env(t_env *env)
 // 	return (-1);
 // }
 
-
-//TEST
-int	check_env_line(t_env *env, char *line)
+// TEST
+int	check_env_line_exist(t_env *env, char *line)
 {
 	int		i;
 	int		j;
@@ -90,21 +91,16 @@ int	check_env_line(t_env *env, char *line)
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
-	j = 0;
 	tmp = env;
-    while (line[i] && line[i] != '=')
-        i++;
-    
-    tmp = env;
-    j = 0;
-    while (tmp)
-    {
-        if (!ft_strncmp(tmp->env, line, i) && tmp->env[i] == '=')
-            return (j);
-        tmp = tmp->next;
-        j++;
-    }
-    return (-1);
+	j = 0;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->env, line, i) && tmp->env[i] == '=')
+			return (j);
+		tmp = tmp->next;
+		j++;
+	}
+	return (-1);
 }
 
 int	update_env(t_env **env, char *line)
@@ -116,7 +112,8 @@ int	update_env(t_env **env, char *line)
 
 	if (!line || !env || !*env)
 		return (1);
-	index = check_env_line(*env, line);
+	index = check_env_line_exist(*env, line);
+	new_value = ft_strdup(line);
 	if (index >= 0)
 	{
 		tmp = *env;
@@ -125,17 +122,15 @@ int	update_env(t_env **env, char *line)
 			tmp = tmp->next;
 		if (tmp)
 		{
-			new_value = ft_strdup(line);
 			if (!new_value)
 				return (1);
 			free(tmp->env);
 			tmp->env = new_value;
 		}
 	}
-	else if (index == -1)
-	{
-		if (env_add_node(env, line) != 0)
-			return (1);
-	}
+	else if (env_add_node(env, new_value))
+		return (free(new_value), 0);
+	else
+		return (free(new_value), 1);
 	return (0);
 }

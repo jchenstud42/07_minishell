@@ -52,7 +52,7 @@ char	**fill_arg_after_cmd(t_token *token_list)
 		current_token = current_token->next;
 	}
 	cmd_args[i] = NULL;
-	/// TESTS A ENLEVER PLUS TARD ///////////////////////////////
+	/// valueS A ENLEVER PLUS TARD ///////////////////////////////
 	// y = 0;
 	// while (cmd_args[y])
 	// {
@@ -79,7 +79,7 @@ void	init_env_list(t_env **env_to_add, char **env)
 
 void	init_env(t_env *env_list)
 {
-	char	*test;
+	char	*value;
 
 	env_list->name = NULL;
 	env_list->value = NULL;
@@ -88,7 +88,7 @@ void	init_env(t_env *env_list)
 	{
 		return ;
 	}
-	test = ft_strchr(env_list->env, '=');
-	if (test)
-		env_list->value = ft_strdup(test + 1);
+	value = ft_strchr(env_list->env, '=');
+	if (value)
+		env_list->value = ft_strdup(value + 1);
 }

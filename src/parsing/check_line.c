@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 // Verifie si le premier token est valide
 // EN VRAI PAS OBLIGATOIRE, A FINIR SI BESOIN
 bool	invalid_first_token(t_token *token_list)
@@ -34,7 +33,7 @@ bool	invalid_first_token(t_token *token_list)
 // Verifie si le dernier token de notre liste est une redirection
 bool	last_token_redirection(t_token *token_list)
 {
-	t_token *last_node;
+	t_token	*last_node;
 
 	if (!token_list)
 		return (false);

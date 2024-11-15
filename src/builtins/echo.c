@@ -15,10 +15,9 @@
 
 #include "../../inc/minishell.h"
 
-
 int	check_n(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
@@ -38,7 +37,7 @@ int	check_n(char *line)
 // precis, car on peut write dans un fichier par exemple
 void	print_echo(int nbr_caract, int i, char **cmd_list)
 {
-	int add_line;
+	int	add_line;
 
 	add_line = 1;
 	while (i < nbr_caract && check_n(cmd_list[i]))
@@ -59,8 +58,8 @@ void	print_echo(int nbr_caract, int i, char **cmd_list)
 
 int	ft_echo(char **cmd_list)
 {
-	int nbr_caract;
-	int i;
+	int	nbr_caract;
+	int	i;
 
 	i = 1;
 	nbr_caract = 0;

@@ -15,11 +15,10 @@
 
 #include "../../inc/minishell.h"
 
-
 // Verifie s'il y a un token de type PIPE dans notre liste
 bool	pipe_inside_token_list(t_global *global)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	if (!global | !global->token_list)
 		return (false);

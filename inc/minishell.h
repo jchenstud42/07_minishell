@@ -123,7 +123,7 @@ int					unset_syntaxe(char *av);
 // ENV_UTILS.c
 int					env_add_node(t_env **env, char *value);
 t_env				*find_last_node_env(t_env *env);
-int					check_env_line(t_env *env, char *line);
+int					check_env_line_exist(t_env *env, char *line);
 int					update_env(t_env **env, char *line);
 
 // ENV_UTILS2.c
