@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/15 11:28:00 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:28:13 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	update_env(t_env **env, char *line)
 			if (!new_value)
 				return (1);
 			free(tmp->env);
+			ft_printf("AAAA");
 			tmp->env = new_value;
 		}
 	}

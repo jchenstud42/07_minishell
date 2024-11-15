@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/15 11:28:09 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:08:57 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	unset_syntaxe(char *line)
 		return (1);
 	while (line[i])
 	{
-		if (line[i] == '_' || ft_isalnum(line[i]))
+		if (line[i] != '_' && !ft_isalnum(line[i]))
 			return (1);
 		i++;
 	}

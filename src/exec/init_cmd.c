@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:45 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/15 11:27:53 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:49:14 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	append_node_to_cmd_list(t_cmd **cmd, char *cmd_token)
 	t_cmd	*cmd_to_append;
 	t_cmd	*last_node;
 
-	cmd_to_append = ft_calloc(1, sizeof(t_token));
+	cmd_to_append = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd_to_append)
 		return (perror("error, cmd list malloc failed"));
 	cmd_to_append->cmd = cmd_token;
@@ -55,7 +55,6 @@ char	**fill_cmd_args(t_token *token_list)
 	int		nbr_arg;
 	int		i;
 
-	// int		y;
 	i = -1;
 	current_token = token_list;
 	nbr_arg = nbr_arg_after_cmd(token_list);
