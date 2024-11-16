@@ -24,27 +24,29 @@ void	minishell_initialization(t_global *global, int ac, char **av,
 	init_env_list(&global->env_list, env);
 }
 
+void	exit_function(t_global *global, int exit_value)
+{
+	free_all(global);
+	ft_printf("exit\n");
+	exit(exit_value);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_global	*global;
 
+	calloc_global_struct(&global);
+	minishell_initialization(global, ac, av, env);
 	while (1)
 	{
-		calloc_global_struct(&global);
-		minishell_initialization(global, ac, av, env);
 		global->line = readline(GREEN "Minishell > " RESET);
 		if (!global->line || ft_strcmp(global->line, "exit") == 0)
-		{
-			ft_printf("exit\n");
-			break ;
-		}
+			exit_function(global, global->exit_value);
 		add_history(global->line);
 		line_tokenization(&global, global->line);
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
-		{
 			launch_line(global, env);
-		}
 	}
 	rl_clear_history();
 	free_all(global);

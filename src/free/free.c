@@ -21,7 +21,7 @@ void	free_array(char **array)
 	int	i;
 
 	if (!array)
-		return (perror("error, array"));
+		return ;
 	i = -1;
 	while (array[++i])
 		free(array[i]);
@@ -59,8 +59,10 @@ void	free_cmd_list(t_cmd **cmd_list)
 	while (current)
 	{
 		temp = current->next;
-		free(current->cmd);
-		free_array(current->cmd_args);
+		if (current->cmd)
+			free(current->cmd);
+		if (current->cmd_args)
+			free_array(current->cmd_args);
 		free(current);
 		current = temp;
 	}
@@ -77,6 +79,8 @@ void	free_env_list(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
+		free(tmp->name);
+		free(tmp->value);
 		free(tmp->env);
 		free(tmp);
 	}

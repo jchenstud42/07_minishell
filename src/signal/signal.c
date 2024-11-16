@@ -28,10 +28,10 @@ void	sig_c(int sig)
 
 void	handle_nl(int sig)
 {
-	if (sig == SIGINT || sig == SIGQUIT)
-	{
+	if (sig == SIGINT)
 		write(STDOUT_FILENO, "\n", 1);
-	}
+	else if (sig == SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 void	init_signals(void)

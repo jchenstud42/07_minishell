@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/15 14:18:55 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/16 14:34:57 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// QUAND TU FAIS CD TOUT SEUL, CA DOIT TE RAMENER A $HOME (/home/rbouquet)
 #include "../../inc/minishell.h"
 
 void	cd_print_error_message(char *error_msg)
@@ -20,8 +19,6 @@ void	cd_print_error_message(char *error_msg)
 	ft_putstr_fd(": No such file or directory\n", 2);
 }
 
-// TU ME DIRAS QUAND TU AURAS FINI CETTE FONCTION POUR QUE JE LA DECOUPE!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int	update_oldpwd(t_global *global)
 {
 	t_env	*tmp;

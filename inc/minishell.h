@@ -144,7 +144,7 @@ void				execute_command(t_cmd *cmd_list, char **env);
 
 // INIT_CMD.c
 t_cmd				*last_element_of_cmd_list(t_cmd *cmd_list);
-void				append_node_to_cmd_list(t_cmd **cmd, char *cmd_token);
+void				append_node_to_cmd_list(t_cmd **cmd);
 char				**fill_cmd_args(t_token *token_list);
 void				fill_cmd_node(t_cmd **cmd, t_token *current_token);
 void				init_cmd_list(t_cmd **cmd, t_token **token);

@@ -59,20 +59,14 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 		int input_fd)
 {
-	char	*command_path;
-
-	command_path = get_command_path(cmd->cmd);
 	handle_redirections(cmd, input_fd, fds);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
 		execute_builtin(cmd, global);
 		exit(0);
 	}
-	if (!access(cmd->cmd, X_OK))
-		execve(cmd->cmd, cmd->cmd_args, env);
-	execve(command_path, cmd->cmd_args, env);
-	free(command_path);
+	execute_command(cmd, env);
 	slash_in_cmd_token(cmd->cmd, true);
 	exit(1);
 }

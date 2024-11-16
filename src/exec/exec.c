@@ -35,19 +35,22 @@ bool	pipe_inside_token_list(t_global *global)
 // Interprete et lance le prompt
 void	launch_line(t_global *global, char **env)
 {
+	t_cmd	*current_cmd;
+
 	if (!global)
 		return (perror("erreur, empty global struct"));
+	current_cmd = (global->cmd_list);
 	if (pipe_inside_token_list(global))
-		execute_pipe(global->cmd_list, env, global);
+		execute_pipe(current_cmd, env, global);
 	else
 	{
-		while (global->cmd_list)
+		while (current_cmd)
 		{
-			if (is_builtin(global->cmd_list->cmd) == 0)
-				execute_builtin(global->cmd_list, global);
+			if (is_builtin(current_cmd->cmd) == 0)
+				execute_builtin(current_cmd, global);
 			else
-				execute_command(global->cmd_list, env);
-			global->cmd_list = global->cmd_list->next;
+				execute_command(current_cmd, env);
+			current_cmd = current_cmd->next;
 		}
 	}
 }

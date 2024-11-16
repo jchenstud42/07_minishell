@@ -77,8 +77,6 @@ void	execute_command(t_cmd *cmd_list, char **env)
 		signal(SIGINT, handle_nl);
 		signal(SIGQUIT, handle_nl);
 		waitpid(pid, NULL, 0);
-		// signal(SIGINT, sig_c);
-		// signal(SIGTSTP, sig_c);
 	}
 	free(command_path);
 }
