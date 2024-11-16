@@ -119,6 +119,7 @@ int					ft_pwd(void);
 
 // UNSET.c
 int					unset_syntaxe(char *av);
+int					env_exist(t_env *env, char *line);
 
 // ENV_UTILS.c
 int					env_add_node(t_env **env, char *value);
