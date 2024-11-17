@@ -15,10 +15,11 @@
 
 #include "../../inc/minishell.h"
 
+
 // Libere la memoire allouee a un tableau de string
 void	free_array(char **array)
 {
-	int	i;
+	int i;
 
 	if (!array)
 		return ;
@@ -31,11 +32,11 @@ void	free_array(char **array)
 // Libere la memoire allouee a la token_list
 void	free_token_list(t_token **token_list)
 {
-	t_token	*temp;
-	t_token	*current;
+	t_token *temp;
+	t_token *current;
 
 	if (!token_list)
-		return (perror("error, empty token list"));
+		return ;
 	current = *token_list;
 	while (current)
 	{
@@ -50,17 +51,19 @@ void	free_token_list(t_token **token_list)
 // Libere la memoire allouee a la structure t_cmd
 void	free_cmd_list(t_cmd **cmd_list)
 {
-	t_cmd	*temp;
-	t_cmd	*current;
+	t_cmd *temp;
+	t_cmd *current;
 
 	if (!cmd_list)
-		return (perror("error, empty cmd struct"));
+		return ;
 	current = *cmd_list;
 	while (current)
 	{
 		temp = current->next;
 		if (current->cmd)
 			free(current->cmd);
+		if (current->cmd_path)
+			free(current->cmd_path);
 		if (current->cmd_args)
 			free_array(current->cmd_args);
 		free(current);
@@ -71,10 +74,10 @@ void	free_cmd_list(t_cmd **cmd_list)
 
 void	free_env_list(t_env *env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	if (!env)
-		return (perror("error, empty env list"));
+		return ;
 	while (env)
 	{
 		tmp = env;
@@ -89,6 +92,9 @@ void	free_env_list(t_env *env)
 // Libere toute la memoire allouee
 void	free_all(t_global *global_data)
 {
+	int e_value;
+
+	e_value = global_data->exit_value;
 	if (global_data->cmd_list)
 		free_cmd_list(&global_data->cmd_list);
 	if (global_data->token_list)
@@ -99,4 +105,7 @@ void	free_all(t_global *global_data)
 		free_env_list(global_data->env_list);
 	if (global_data)
 		free(global_data);
+	rl_clear_history();
+	// printf("exit value : %d\n", e_value);
+	exit(e_value);
 }

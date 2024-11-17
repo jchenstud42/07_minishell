@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/11/08 16:12:45 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/16 18:39:01 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 // Renvoie le dernier noeud de la structure de commandes.
 t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
@@ -25,8 +29,8 @@ t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
 // Ajoute un noeud a la fin de notre structure de commandes.
 void	append_node_to_cmd_list(t_cmd **cmd)
 {
-	t_cmd	*cmd_to_append;
-	t_cmd	*last_node;
+	t_cmd *cmd_to_append;
+	t_cmd *last_node;
 
 	cmd_to_append = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd_to_append)
@@ -49,10 +53,10 @@ void	append_node_to_cmd_list(t_cmd **cmd)
 // Remplie le <cmd_args> de notre structure de commande.
 char	**fill_cmd_args(t_token *token_list)
 {
-	t_token	*current_token;
-	char	**cmd_args;
-	int		nbr_arg;
-	int		i;
+	t_token *current_token;
+	char **cmd_args;
+	int nbr_arg;
+	int i;
 
 	i = -1;
 	current_token = token_list;
@@ -89,7 +93,7 @@ char	**fill_cmd_args(t_token *token_list)
 // de la structure de commandes.
 void	fill_cmd_node(t_cmd **cmd, t_token *current_token)
 {
-	t_cmd	*last_cmd;
+	t_cmd *last_cmd;
 
 	last_cmd = last_element_of_cmd_list(*cmd);
 	if (last_cmd->cmd == NULL)
@@ -109,7 +113,7 @@ void	fill_cmd_node(t_cmd **cmd, t_token *current_token)
 // Initialise notre structure de commandes.
 void	init_cmd_list(t_cmd **cmd, t_token **token)
 {
-	t_token	*current_token;
+	t_token *current_token;
 
 	if (cmd && *cmd)
 		free_cmd_list(cmd);
@@ -144,9 +148,14 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 // 	{
 // 		if (current_token->type == CMD)
 // 			fill_cmd_node(cmd, current_token);
-// 		// else if (current_token->type == INPUT || current_token->type == TRUNC
-// 		// 	|| current_token->type == HEREDOC || current_token->type == APPEND)
-// 		// 	handle_input_output(last_cmd_in_list, current_token, global);
+// 		// else if (current_token->type == INPUT
+// ||
+// current_token->type ==
+// TRUNC
+// 		// 	|| current_token->type == HEREDOC
+// || current_token->type == APPEND)
+// 		// 	handle_input_output(last_cmd_in_list, current_token,
+// global);
 // 		else if (current_token->type == PIPE)
 // 			append_node_to_cmd_list(cmd);
 // 		current_token = current_token->next;

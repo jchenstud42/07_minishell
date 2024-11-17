@@ -15,6 +15,35 @@
 
 #include "../../inc/minishell.h"
 
+
+static void	execute_command_in_pipe(t_cmd *cmd_list, char **env)
+{
+	pid_t pid;
+
+	if (!cmd_list->cmd)
+		return (perror("error, no command entered"));
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("error, fork failed");
+		exit(1);
+	}
+	else if (pid == 0)
+	{
+		if (!access(cmd_list->cmd, X_OK))
+			execve(cmd_list->cmd, cmd_list->cmd_args, env);
+		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env) == -1)
+		{
+			ft_putstr_fd(cmd_list->cmd, 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
+		exit(EXIT_FAILURE);
+	}
+	else
+		waitpid(pid, NULL, 0);
+}
+
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
 {
@@ -66,7 +95,7 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 		execute_builtin(cmd, global);
 		exit(0);
 	}
-	execute_command(cmd, env);
+	execute_command_in_pipe(cmd, env);
 	slash_in_cmd_token(cmd->cmd, true);
 	exit(1);
 }
@@ -74,9 +103,9 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
 {
-	int		fds[2];
-	pid_t	pid;
-	int		input_fd;
+	int fds[2];
+	pid_t pid;
+	int input_fd;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)
