@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 static void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
 {
@@ -27,7 +26,7 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
+	t_global	*global;
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);
@@ -40,7 +39,7 @@ int	main(int ac, char **av, char **env)
 		line_tokenization(&global, global->line);
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
-			launch_line(global, env);
+			launch_line(global, &global->env_list);
 	}
 	free_all(global);
 }

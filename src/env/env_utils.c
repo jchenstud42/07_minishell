@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/15 14:28:13 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:08:41 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	update_env(t_env **env, char *line)
 			if (!new_value)
 				return (1);
 			free(tmp->env);
-			ft_printf("AAAA");
 			tmp->env = new_value;
 		}
 	}
@@ -134,4 +133,33 @@ int	update_env(t_env **env, char *line)
 	else
 		return (free(new_value), 1);
 	return (0);
+}
+
+char	**ft_env_cpy(t_env *env)
+{
+	t_env	*current_env;
+	int		i;
+	int		len;
+	char	**env_tab;
+
+	len = 0;
+	current_env = env;
+	while (current_env)
+	{
+		len++;
+		current_env = current_env->next;
+	}
+	current_env = env;
+	i = 0;
+	env_tab = malloc(sizeof(char *) * (len + 1));
+	if (!env_tab)
+		return (NULL);
+	while (current_env)
+	{
+		env_tab[i] = current_env->env;
+		current_env = current_env->next;
+		i++;
+	}
+	env_tab[i] = NULL;
+	return (env_tab);
 }

@@ -15,11 +15,12 @@
 
 #include "../../inc/minishell.h"
 
-
-static void	execute_command_in_pipe(t_cmd *cmd_list, char **env)
+static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 {
-	pid_t pid;
+	pid_t	pid;
+	char	**env_cpy;
 
+	env_cpy = ft_env_cpy(*env);
 	if (!cmd_list->cmd)
 		return (perror("error, no command entered"));
 	pid = fork();
@@ -31,9 +32,9 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, char **env)
 	else if (pid == 0)
 	{
 		if (!access(cmd_list->cmd, X_OK))
-			execve(cmd_list->cmd, cmd_list->cmd_args, env);
+			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env) == -1)
+		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
@@ -85,7 +86,7 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 }
 
 // Processus enfant
-void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
+void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 		int input_fd)
 {
 	handle_redirections(cmd, input_fd, fds);
@@ -101,11 +102,11 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, char **env,
 }
 
 // Simule l'execution des pipes.
-void	execute_pipe(t_cmd *cmd, char **env, t_global *global)
+void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int input_fd;
+	int		fds[2];
+	pid_t	pid;
+	int		input_fd;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)

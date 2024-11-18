@@ -33,7 +33,7 @@ bool	pipe_inside_token_list(t_global *global)
 }
 
 // Interprete et lance le prompt
-void	launch_line(t_global *global, char **env)
+void	launch_line(t_global *global, t_env **env)
 {
 	t_cmd	*current_cmd;
 

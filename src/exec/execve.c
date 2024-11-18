@@ -15,14 +15,13 @@
 
 #include "../../inc/minishell.h"
 
-
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int i;
-	char *exec;
-	char **allpath;
-	char *path_part;
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -44,10 +43,12 @@ char	*get_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	execute_command(t_cmd *cmd_list, char **env)
+void	execute_command(t_cmd *cmd_list, t_env **env)
 {
-	pid_t pid;
+	pid_t	pid;
+	char	**env_cpy;
 
+	env_cpy = ft_env_cpy(*env);
 	if (!cmd_list->cmd)
 		return (perror("error, no command entered"));
 	pid = fork();
@@ -60,9 +61,9 @@ void	execute_command(t_cmd *cmd_list, char **env)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		if (!access(cmd_list->cmd, X_OK))
-			execve(cmd_list->cmd, cmd_list->cmd_args, env);
+			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env) == -1)
+		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
