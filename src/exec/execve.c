@@ -61,6 +61,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 	else if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		if (!access(cmd_list->cmd, X_OK))
 			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
@@ -74,7 +75,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 	}
 	else
 	{
-		signal(SIGQUIT, SIG_IGN);
+		// signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handle_nl);
 		signal(SIGQUIT, handle_nl);
 		(void)global;
@@ -84,5 +85,6 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 		// 	global->exit_value = 135;
 		waitpid(pid, NULL, 0);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
