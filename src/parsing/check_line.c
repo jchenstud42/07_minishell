@@ -17,16 +17,18 @@
 
 // Verifie si le premier token est valide
 // EN VRAI PAS OBLIGATOIRE, A FINIR SI BESOIN
-bool	invalid_first_token(t_token *token_list)
+bool	invalid_first_token(t_global *global, t_token *token_list)
 {
 	if (!token_list)
-		return (false);
+		return (true);
 	if (token_list->type == PIPE)
 		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
-				2), true);
+				2), global->exit_value = 2, true);
 	else if (!ft_strcmp(token_list->token, ":") || !ft_strcmp(token_list->token,
-			"!"))
-		return (true);
+			"#"))
+		return (global->exit_value = 0, true);
+	else if (!ft_strcmp(token_list->token, "!"))
+		return (global->exit_value = 1, true);
 	return (false);
 }
 
@@ -68,7 +70,7 @@ int	check_line(t_global *global, t_token *token_list)
 {
 	if (!global | !token_list)
 		return (1);
-	if (invalid_first_token(token_list))
+	if (invalid_first_token(global, token_list))
 		return (1);
 	else if (last_token_redirection(token_list))
 		return (ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",

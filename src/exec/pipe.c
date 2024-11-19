@@ -15,10 +15,23 @@
 
 #include "../../inc/minishell.h"
 
+
+// void	status_child(t_global *global, pid_t pid)
+// {
+// 	if (WIFEXITED(pid))
+// 		global->exit_value = WEXITSTATUS(pid);
+// 	if (WIFSIGNALED(pid))
+// 	{
+// 		global->exit_value = WTERMSIG(pid);
+// 		if (global->exit_value != 131)
+// 			global->exit_value += 128;
+// 	}
+// }
+
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 {
-	pid_t	pid;
-	char	**env_cpy;
+	pid_t pid;
+	char **env_cpy;
 
 	env_cpy = ft_env_cpy(*env);
 	if (!cmd_list->cmd)
@@ -89,24 +102,22 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 		int input_fd)
 {
-	handle_redirections(cmd, input_fd, fds);
 	signal(SIGQUIT, SIG_DFL);
+	handle_redirections(cmd, input_fd, fds);
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
 		execute_builtin(cmd, global);
 		exit(0);
 	}
 	execute_command_in_pipe(cmd, env);
-	slash_in_cmd_token(cmd->cmd, true);
-	exit(1);
 }
 
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 {
-	int		fds[2];
-	pid_t	pid;
-	int		input_fd;
+	int fds[2];
+	pid_t pid;
+	int input_fd;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)
@@ -127,5 +138,6 @@ void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 	signal(SIGQUIT, handle_nl);
 	while (wait(NULL) > 0)
 		;
+	// status_child(global, pid);
 	signal(SIGINT, SIG_DFL);
 }

@@ -106,6 +106,6 @@ void	free_all(t_global *global_data)
 	if (global_data)
 		free(global_data);
 	rl_clear_history();
-	// printf("exit value : %d\n", e_value);
+	printf("exit value : %d\n", e_value);
 	exit(e_value);
 }
