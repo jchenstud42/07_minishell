@@ -21,7 +21,6 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 {
 	(void)ac;
 	(void)av;
-	init_signals(global);
 	init_env_list(&global->env_list, env);
 }
 
@@ -33,6 +32,7 @@ int	main(int ac, char **av, char **env)
 	minishell_initialization(global, ac, av, env);
 	while (1)
 	{
+		init_signals(global);
 		global->line = readline(GREEN "Minishell > " RESET);
 		if (!global->line)
 			exit_function(global, true);

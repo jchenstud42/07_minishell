@@ -16,48 +16,76 @@
 #include "../../inc/minishell.h"
 
 
-// void	status_child(t_global *global, pid_t pid)
-// {
-// 	if (WIFEXITED(pid))
-// 		global->exit_value = WEXITSTATUS(pid);
-// 	if (WIFSIGNALED(pid))
-// 	{
-// 		global->exit_value = WTERMSIG(pid);
-// 		if (global->exit_value != 131)
-// 			global->exit_value += 128;
-// 	}
-// }
+// WIFSIGNALED : retourne vrai si un signal a causé la terminaison
+// WTERMSIG :renvoie le numero du signal qui a cause la terminaison
+// WIFEXITED : retoune vrai si le child s'est terminé normalement
+// WIFEXITSATUS : code de sortie du processus
+void	status_child(t_global *global, pid_t pid)
+{
+	int signal;
+
+	signal = WTERMSIG(pid);
+	if (WIFEXITED(pid))
+		global->exit_value = WEXITSTATUS(pid);
+	else if (WIFSIGNALED(pid))
+	{
+		if (signal == SIGPIPE)
+			global->exit_value = 0;
+		else
+			global->exit_value = WTERMSIG(pid) + 128;
+	}
+}
 
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 {
-	pid_t pid;
 	char **env_cpy;
 
 	env_cpy = ft_env_cpy(*env);
 	if (!cmd_list->cmd)
-		return (perror("error, no command entered"));
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("error, fork failed");
 		exit(1);
-	}
-	else if (pid == 0)
+	if (!access(cmd_list->cmd, X_OK))
+		execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
+	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+	if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
+		&& !slash_in_cmd_token(cmd_list->cmd, true))
 	{
-		if (!access(cmd_list->cmd, X_OK))
-			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
-		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
-			&& !slash_in_cmd_token(cmd_list->cmd, true))
-		{
-			ft_putstr_fd(cmd_list->cmd, 2);
-			ft_putstr_fd(": command not found\n", 2);
-		}
-		exit(EXIT_FAILURE);
+		ft_putstr_fd(cmd_list->cmd, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
 	}
-	else
-		waitpid(pid, NULL, 0);
+	exit(1);
 }
+
+// static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
+// {
+// 	pid_t pid;
+// 	char **env_cpy;
+
+// 	env_cpy = ft_env_cpy(*env);
+// 	if (!cmd_list->cmd)
+// 		return (perror("error, no command entered"));
+// 	pid = fork();
+// 	if (pid == -1)
+// 	{
+// 		perror("error, fork failed");
+// 		exit(1);
+// 	}
+// 	else if (pid == 0)
+// 	{
+// 		if (!access(cmd_list->cmd, X_OK))
+// 			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
+// 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+// 		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
+// 			&& !slash_in_cmd_token(cmd_list->cmd, true))
+// 		{
+// 			ft_putstr_fd(cmd_list->cmd, 2);
+// 			ft_putstr_fd(": command not found\n", 2);
+// 			exit(127);
+// 		}
+// 	}
+// 	else
+// 		waitpid(pid, NULL, 0);
+// }
 
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
@@ -111,7 +139,6 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 		exit(0);
 	}
 	execute_command_in_pipe(cmd, env);
-	exit(1);
 }
 
 // Simule l'execution des pipes.
@@ -120,6 +147,7 @@ void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 	int fds[2];
 	pid_t pid;
 	int input_fd;
+	int status;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)
@@ -138,8 +166,8 @@ void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_nl);
 	signal(SIGQUIT, handle_nl);
-	while (wait(NULL) > 0)
+	while (wait(&status) > 0)
 		;
-	// status_child(global, pid);
+	status_child(global, status);
 	signal(SIGINT, SIG_DFL);
 }
