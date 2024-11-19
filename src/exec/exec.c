@@ -54,17 +54,3 @@ void	launch_line(t_global *global, t_env **env)
 		}
 	}
 }
-
-// int	ft_heredeoc(t_global *global, t_env *env, int fd)
-// {
-// 	char	*heredoc;
-// 	char	*word;
-
-// 	while (1)
-// 	{
-// 		heredoc = readline("> ");
-// 		if (!heredoc)
-// 			exit_function(global, true);
-// 		if (!ft_strcmp())
-// 	}
-// }
