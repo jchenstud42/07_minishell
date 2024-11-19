@@ -145,7 +145,8 @@ void	launch_line(t_global *global, t_env **env);
 
 // EXECVE.c
 char	*get_command_path(const char *cmd);
-void	execute_command(t_cmd *cmd_list, t_env **env);
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env);
+// void	execute_command(t_cmd *cmd_list, t_env **env);
 
 // INIT_CMD.c
 t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list);
@@ -187,7 +188,7 @@ int	is_pipe(char c);
 // SIGNAL.c
 void	sig_c(int sig);
 void	handle_nl(int sig);
-void	init_signals(void);
+void	init_signals(t_global *global);
 
 // INIT_TOKEN_LIST.c
 t_token	*last_element_of_list(t_token *token_list);

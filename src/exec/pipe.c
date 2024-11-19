@@ -47,7 +47,8 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 		if (!access(cmd_list->cmd, X_OK))
 			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-		if (execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
+		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
+			&& !slash_in_cmd_token(cmd_list->cmd, true))
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
@@ -110,6 +111,7 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 		exit(0);
 	}
 	execute_command_in_pipe(cmd, env);
+	exit(1);
 }
 
 // Simule l'execution des pipes.

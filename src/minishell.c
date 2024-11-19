@@ -15,18 +15,19 @@
 
 #include "../inc/minishell.h"
 
+
 static void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
 {
 	(void)ac;
 	(void)av;
-	init_signals();
+	init_signals(global);
 	init_env_list(&global->env_list, env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_global	*global;
+	t_global *global;
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);

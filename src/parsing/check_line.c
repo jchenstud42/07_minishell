@@ -15,12 +15,13 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie si le premier token est valide
 // EN VRAI PAS OBLIGATOIRE, A FINIR SI BESOIN
 bool	invalid_first_token(t_global *global, t_token *token_list)
 {
 	if (!token_list)
-		return (true);
+		return (false);
 	if (token_list->type == PIPE)
 		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
 				2), global->exit_value = 2, true);
@@ -35,7 +36,7 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 // Verifie si le dernier token de notre liste est une redirection
 bool	last_token_redirection(t_token *token_list)
 {
-	t_token	*last_node;
+	t_token *last_node;
 
 	if (!token_list)
 		return (false);

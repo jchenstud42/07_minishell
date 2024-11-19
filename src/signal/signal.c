@@ -35,9 +35,12 @@ void	handle_nl(int sig)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
-void	init_signals(void)
+void	init_signals(t_global *global)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, sig_c);
+	(void)global;
+	// if (signal(SIGINT, sig_c) != SIG_ERR)
+	// 	global->exit_value = 130;
 }
