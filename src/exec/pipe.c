@@ -55,37 +55,6 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 	exit(1);
 }
 
-// static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
-// {
-// 	pid_t pid;
-// 	char **env_cpy;
-
-// 	env_cpy = ft_env_cpy(*env);
-// 	if (!cmd_list->cmd)
-// 		return (perror("error, no command entered"));
-// 	pid = fork();
-// 	if (pid == -1)
-// 	{
-// 		perror("error, fork failed");
-// 		exit(1);
-// 	}
-// 	else if (pid == 0)
-// 	{
-// 		if (!access(cmd_list->cmd, X_OK))
-// 			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
-// 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-// 		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
-// 			&& !slash_in_cmd_token(cmd_list->cmd, true))
-// 		{
-// 			ft_putstr_fd(cmd_list->cmd, 2);
-// 			ft_putstr_fd(": command not found\n", 2);
-// 			exit(127);
-// 		}
-// 	}
-// 	else
-// 		waitpid(pid, NULL, 0);
-// }
-
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
 {
@@ -102,17 +71,17 @@ void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
 		close(fds[1]);
 	}
 	close(fds[0]);
-	if (cmd->infile != -1)
+	if (cmd->infile_cmd != -1)
 	{
-		if (dup2(cmd->infile, STDIN_FILENO) == -1)
+		if (dup2(cmd->infile_cmd, STDIN_FILENO) == -1)
 			exit(1);
-		close(cmd->infile);
+		close(cmd->infile_cmd);
 	}
-	if (cmd->outfile != -1)
+	if (cmd->outfile_cmd != -1)
 	{
-		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+		if (dup2(cmd->outfile_cmd, STDOUT_FILENO) == -1)
 			exit(1);
-		close(cmd->outfile);
+		close(cmd->outfile_cmd);
 	}
 }
 

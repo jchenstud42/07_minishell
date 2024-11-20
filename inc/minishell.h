@@ -70,8 +70,8 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**cmd_args;
 	char			*cmd_path;
-	int				infile;
-	int				outfile;
+	int				infile_cmd;
+	int				outfile_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
