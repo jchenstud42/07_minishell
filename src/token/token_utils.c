@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie si le caractere est un espace blanc ou un guillement
 // int	is_white_space_or_quotes(char c)
 // {
@@ -29,8 +30,8 @@ int	is_white_space(char c)
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
 {
-	int		nbr_arg;
-	t_token	*current_token;
+	int nbr_arg;
+	t_token *current_token;
 
 	nbr_arg = 1;
 	if (!token_list)

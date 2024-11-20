@@ -121,9 +121,12 @@ int					ft_export(t_env **env, char **line);
 int					ft_pwd(void);
 
 // UNSET.c
-int					unset_syntaxe(char *av);
-int					env_exist(t_env *env, char *line);
-int					ft_unset(t_env **env, char **args);
+int					validate_unset_cmd(char *cmd);
+int					env_exist(t_env *env, char *cmd);
+void				remove_env_entry(t_env **env, int exist);
+// int					unset_syntaxe(char *cmd);
+int					unset(t_env **env, char *cmd);
+int					ft_unset(t_env **env, char **cmd);
 
 // ENV_UTILS.c
 int					env_add_node(t_env **env, char *value);
