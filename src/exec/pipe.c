@@ -96,8 +96,7 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 }
 
 // Processus enfant
-void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
-		int input_fd)
+void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 {
 	signal(SIGQUIT, SIG_DFL);
 	handle_redirections(cmd, input_fd, fds);
@@ -106,11 +105,11 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 		execute_builtin(cmd, global);
 		exit(0);
 	}
-	execute_command_in_pipe(cmd, env);
+	execute_command_in_pipe(cmd, &global->env_list);
 }
 
 // Simule l'execution des pipes.
-void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
+void	execute_pipe(t_cmd *cmd, t_global *global)
 {
 	int		fds[2];
 	pid_t	pid;
@@ -126,7 +125,7 @@ void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 		if (pid < 0)
 			exit(1);
 		if (pid == 0)
-			child_process(cmd, fds, global, env, input_fd);
+			child_process(cmd, fds, global, input_fd);
 		else
 			parent_process(fds, &input_fd, pid);
 		cmd = cmd->next;

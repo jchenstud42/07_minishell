@@ -103,7 +103,8 @@ void	line_tokenization(t_global **global, char *line)
 	int		end;
 
 	free_token_list(&(*global)->token_list);
-	if ((line = line_quote_manager(line)) == NULL)
+	line = line_quote_manager(line);
+	if (!line)
 		return ;
 	skip_beginning_white_space(&end, line);
 	while (line[end])

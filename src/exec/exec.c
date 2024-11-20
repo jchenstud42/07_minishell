@@ -15,11 +15,10 @@
 
 #include "../../inc/minishell.h"
 
-
 // Verifie s'il y a un token de type PIPE dans notre liste
 bool	pipe_inside_token_list(t_global *global)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	if (!global | !global->token_list)
 		return (false);
@@ -36,13 +35,13 @@ bool	pipe_inside_token_list(t_global *global)
 // Interprete et lance le prompt
 void	launch_line(t_global *global, t_env **env)
 {
-	t_cmd *current_cmd;
+	t_cmd	*current_cmd;
 
 	if (!global)
 		return (perror("erreur, empty global struct"));
 	current_cmd = (global->cmd_list);
 	if (pipe_inside_token_list(global))
-		execute_pipe(current_cmd, env, global);
+		execute_pipe(current_cmd, global);
 	else
 	{
 		while (current_cmd)

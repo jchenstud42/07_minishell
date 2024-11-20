@@ -159,8 +159,8 @@ void				init_cmd_list(t_cmd **cmd, t_token **token);
 void				handle_redirections(t_cmd *cmd, int input_fd, int *fds);
 void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				child_process(t_cmd *cmd, int *fds, t_global *global,
-						t_env **env, int input_fd);
-void				execute_pipe(t_cmd *cmd, t_env **env, t_global *global);
+						int input_fd);
+void				execute_pipe(t_cmd *cmd, t_global *global);
 
 // FREE.c
 void				free_array(char **array);
