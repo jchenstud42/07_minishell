@@ -15,14 +15,13 @@
 
 #include "../../inc/minishell.h"
 
-
 // WIFSIGNALED : retourne vrai si un signal a causé la terminaison
 // WTERMSIG :renvoie le numero du signal qui a cause la terminaison
 // WIFEXITED : retoune vrai si le child s'est terminé normalement
 // WIFEXITSATUS : code de sortie du processus
 void	status_child(t_global *global, pid_t pid)
 {
-	int signal;
+	int	signal;
 
 	signal = WTERMSIG(pid);
 	if (WIFEXITED(pid))
@@ -38,9 +37,9 @@ void	status_child(t_global *global, pid_t pid)
 
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 {
-	char **env_cpy;
+	char	**env_cpy;
 
-	env_cpy = ft_env_cpy(*env);
+	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
 		exit(1);
 	if (!access(cmd_list->cmd, X_OK))
@@ -144,10 +143,10 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, t_env **env,
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, t_env **env, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int input_fd;
-	int status;
+	int		fds[2];
+	pid_t	pid;
+	int		input_fd;
+	int		status;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)

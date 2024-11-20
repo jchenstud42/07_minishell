@@ -27,39 +27,6 @@ int	is_builtin(char *cmd)
 	return (1);
 }
 
-// Verifie si le token est autre chose qu'un ARG
-int	is_special_token(char *token)
-{
-	if (!token || !token[0])
-		return (0);
-	if (token[0] == '|')
-		return (PIPE);
-	else if (token[0] == '<')
-	{
-		if (token[1] == '<')
-			return (HEREDOC);
-		else
-			return (INPUT);
-	}
-	else if (token[0] == '>')
-	{
-		if (token[1] == '>')
-			return (APPEND);
-		else
-			return (TRUNC);
-	}
-	return (0);
-}
-
-// Verifie si l'element est une redirection (INPUT, HEREDOC, TRUNC, APPEND)
-int	is_redirection(char *str)
-{
-	if (!ft_strcmp(str, "<") || !ft_strcmp(str, "<<") || !ft_strcmp(str, ">")
-		|| !ft_strcmp(str, ">>"))
-		return (0);
-	return (1);
-}
-
 // Verifie si l'element est une PIPE
 int	is_pipe(char c)
 {

@@ -15,14 +15,13 @@
 
 #include "../../inc/minishell.h"
 
-
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int i;
-	char *exec;
-	char **allpath;
-	char *path_part;
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -46,10 +45,10 @@ char	*get_command_path(const char *cmd)
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
-	pid_t pid;
-	char **env_cpy;
+	pid_t	pid;
+	char	**env_cpy;
 
-	env_cpy = ft_env_cpy(*env);
+	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
 		return (perror("error, no command entered"));
 	pid = fork();
