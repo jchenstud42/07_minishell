@@ -6,27 +6,28 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/16 14:34:57 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:26:51 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	cd_print_error_message(char *error_msg)
+void	cd_print_error_message(char *error_msg, t_global *global)
 {
-	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(error_msg, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
+	global->exit_value = 1;
 }
 
-int	update_oldpwd(t_global *global)
+void	update_oldpwd(t_global *global)
 {
 	t_env	*tmp;
 	char	*stock_oldpwd;
 
 	tmp = global->env_list;
 	if (!tmp || !global)
-		return (1);
+		return ;
 	stock_oldpwd = NULL;
 	while (tmp)
 	{
@@ -34,7 +35,7 @@ int	update_oldpwd(t_global *global)
 		{
 			stock_oldpwd = ft_strjoin("OLD", tmp->env);
 			if (!stock_oldpwd)
-				return (perror("malloc failed"), 1);
+				return (perror("malloc failed"));
 			break ;
 		}
 		tmp = tmp->next;
@@ -46,7 +47,6 @@ int	update_oldpwd(t_global *global)
 	}
 	else
 		update_env(&global->env_list, "PWD=");
-	return (0);
 }
 
 void	update_pwd(t_global *global)
@@ -82,12 +82,16 @@ int	ft_cd(t_global *global, char **cmd_list)
 	{
 		new_path = chdir(cmd_list[1]);
 		if (new_path == -1)
-			return (cd_print_error_message(cmd_list[1]), 1);
+			return (cd_print_error_message(cmd_list[1], global), 1);
 		update_pwd(global);
+		global->exit_value = 0;
 		return (0);
 	}
 	else
-		return (ft_putstr_fd("bash: cd: too many arguments\n", 2), 1);
+	{
+		global->exit_value = 1;
+		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
+	}
 }
 
 int	cd_home(t_global *global)
@@ -99,14 +103,18 @@ int	cd_home(t_global *global)
 		return (1);
 	home = get_env_value(global->env_list, "HOME");
 	if (!home)
-		return (ft_putstr_fd("bash: cd: HOME not set\n", 2), 1);
+	{
+		global->exit_value = 1;
+		return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
+	}
 	else
 	{
 		home_path = chdir(home);
 		if (home_path == -1)
-			return (cd_print_error_message(home), 1);
+			return (cd_print_error_message(home, global), 1);
 		else
 			update_pwd(global);
 	}
+	global->exit_value = 0;
 	return (0);
 }

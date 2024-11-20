@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/20 15:35:18 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:55:30 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,12 @@ int	unset(t_env **env, char *cmd)
 	return (0);
 }
 
-int	ft_unset(t_env **env, char **cmd)
+int	ft_unset(t_global *global, t_env **env, char **cmd)
 {
 	int	i;
 
 	i = 1;
+	global->exit_value = 0;
 	while (cmd[i])
 	{
 		if (unset(env, cmd[i]))

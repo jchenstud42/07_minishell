@@ -26,6 +26,7 @@ SRC			=	minishell.c \
 				parsing/check_line.c \
 				parsing/special_token.c \
 				parsing/count.c \
+				parsing/dollar.c \
 				parsing/redirection.c \
 				free/free.c \
 				exec/init_cmd.c \

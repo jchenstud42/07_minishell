@@ -56,7 +56,7 @@ void	print_echo(int nbr_caract, int i, char **cmd_list)
 		write(1, "\n", 1);
 }
 
-int	ft_echo(char **cmd_list)
+int	ft_echo(t_global *global, char **cmd_list)
 {
 	int	nbr_caract;
 	int	i;
@@ -66,5 +66,6 @@ int	ft_echo(char **cmd_list)
 	while (cmd_list[nbr_caract])
 		nbr_caract++;
 	print_echo(nbr_caract, i, cmd_list);
+	global->exit_value = 0;
 	return (0);
 }

@@ -47,6 +47,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
 	pid_t	pid;
 	char	**env_cpy;
+	int		status;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -68,20 +69,20 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
+			exit(127);
 		}
-		exit(EXIT_FAILURE);
+		// exit(0);
 	}
 	else
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handle_nl);
 		signal(SIGQUIT, handle_nl);
-		(void)global;
-		// if (signal(SIGINT, handle_nl) != SIG_ERR)
-		// 	global->exit_value = 130;
-		// if (signal(SIGQUIT, handle_nl) != SIG_ERR)
-		// 	global->exit_value = 135;
-		waitpid(pid, NULL, 0);
+		// waitpid(pid, NULL, 0);
+		while (wait(&status) > 0)
+			;
+		status_child(global, status);
 		signal(SIGINT, SIG_DFL);
 	}
+	// free_array(env_cpy);
 }

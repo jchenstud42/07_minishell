@@ -87,7 +87,8 @@ char	*line_quote_manager(char *line)
 	if (single_quotes || double_quotes)
 	{
 		free(result);
-		return (ft_putstr_fd("bash: error, quotes are not closed\n", 2), NULL);
+		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
+				NULL);
 	}
 	result[j] = '\0';
 	///// A RETIRER PLUS TARD ///////////////////////////////////////////////

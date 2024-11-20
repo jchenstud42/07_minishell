@@ -92,8 +92,8 @@ int					env_len(t_env *env);
 void				execute_builtin(t_cmd *cmd_list, t_global *global);
 
 // CD.C
-void				cd_print_error_message(char *error_msg);
-int					update_oldpwd(t_global *global);
+void				cd_print_error_message(char *error_msg, t_global *global);
+void				update_oldpwd(t_global *global);
 void				update_pwd(t_global *global);
 int					ft_cd(t_global *global, char **cmd_list);
 int					cd_home(t_global *global);
@@ -101,10 +101,10 @@ int					cd_home(t_global *global);
 // ECHO.C
 int					check_n(char *line);
 void				print_echo(int nbr_caract, int i, char **cmd_list);
-int					ft_echo(char **cmd_list);
+int					ft_echo(t_global *global, char **cmd_list);
 
 // ENV.C
-int					ft_env(t_env *env);
+int					ft_env(t_global *global, t_env *env);
 void				check_env(t_env **env, t_env *tmp);
 void				sort_env(char **tab, int len);
 
@@ -115,10 +115,10 @@ void				exit_function(t_global *global, bool write_exit);
 // EXPORT.c
 int					export_no_arg(t_env *env);
 int					export_syntaxe(char *line);
-int					ft_export(t_env **env, char **line);
+int					ft_export(t_global *global, t_env **env, char **line);
 
 // PWD.c
-int					ft_pwd(void);
+int					ft_pwd(t_global *global);
 
 // UNSET.c
 int					validate_unset_cmd(char *cmd);
@@ -126,7 +126,7 @@ int					env_exist(t_env *env, char *cmd);
 void				remove_env_entry(t_env **env, int exist);
 // int					unset_syntaxe(char *cmd);
 int					unset(t_env **env, char *cmd);
-int					ft_unset(t_env **env, char **cmd);
+int					ft_unset(t_global *global, t_env **env, char **cmd);
 
 // ENV_UTILS.c
 int					env_add_node(t_env **env, char *value);
@@ -159,6 +159,7 @@ void				fill_cmd_node(t_cmd **cmd, t_token *current_token);
 void				init_cmd_list(t_cmd **cmd, t_token **token);
 
 // PIPE.c
+void				status_child(t_global *global, pid_t pid);
 void				handle_redirections(t_cmd *cmd, int input_fd, int *fds);
 void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				child_process(t_cmd *cmd, int *fds, t_global *global,
@@ -181,6 +182,9 @@ int					check_line(t_global *global, t_token *token_list);
 // COUNT.c
 int					count_pipe(char *line);
 int					count_cmd_token(t_token *token_list);
+
+// DOLLAR.c
+void				ft_dollar_sign(t_global *global);
 
 // SPECIAL_TOKEN.c
 int					is_builtin(char *cmd);

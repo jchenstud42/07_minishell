@@ -28,14 +28,16 @@ void	status_child(t_global *global, pid_t pid)
 		global->exit_value = WEXITSTATUS(pid);
 	else if (WIFSIGNALED(pid))
 	{
-		if (signal == SIGPIPE)
-			global->exit_value = 0;
-		else
-			global->exit_value = WTERMSIG(pid) + 128;
+		// if (signal == SIGPIPE)
+		// 	global->exit_value = 666;
+		// else
+		// global->exit_value = WTERMSIG(pid) + 128;
+		global->exit_value = WTERMSIG(pid);
 	}
 }
 
-static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
+static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
+		t_global *global)
 {
 	char	**env_cpy;
 
@@ -50,6 +52,8 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env)
 	{
 		ft_putstr_fd(cmd_list->cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
+		// free_array(env_cpy);
+		free_all(global);
 		exit(127);
 	}
 	exit(1);
@@ -105,7 +109,7 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 		execute_builtin(cmd, global);
 		exit(0);
 	}
-	execute_command_in_pipe(cmd, &global->env_list);
+	execute_command_in_pipe(cmd, &global->env_list, global);
 }
 
 // Simule l'execution des pipes.

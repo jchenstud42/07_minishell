@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 10:05:06 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/18 10:57:48 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:35:41 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_env(t_env *env)
+int	ft_env(t_global *global, t_env *env)
 {
 	t_env	*tmp;
 
@@ -25,6 +25,7 @@ int	ft_env(t_env *env)
 			ft_printf("%s\n", tmp->env);
 		tmp = tmp->next;
 	}
+	global->exit_value = 0;
 	return (0);
 }
 

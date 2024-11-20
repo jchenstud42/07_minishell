@@ -39,7 +39,7 @@ void	init_signals(t_global *global)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, sig_c);
-	// (void)global;
-	if (signal(SIGINT, sig_c) != SIG_ERR)
-		global->exit_value = 130;
+	(void)global;
+	// if (signal(SIGINT, sig_c) != SIG_ERR)
+	// 	global->exit_value = 130;
 }

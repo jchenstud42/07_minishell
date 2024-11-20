@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:51:45 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/20 11:56:59 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:20:31 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 	if (token_list->type == PIPE)
 	{
 		global->exit_value = 2;
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (true);
 	}
 	else if (!ft_strcmp(token_list->token, ":"))
@@ -32,7 +32,7 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 		return (global->exit_value = 1, true);
 	else if (!ft_strcmp(token_list->token, "&"))
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `&'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `&'\n", 2);
 		return (true);
 	}
 	return (false);
@@ -49,7 +49,7 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 			return (false);
 		if (print_msg == true)
 		{
-			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(token, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 		}
@@ -66,12 +66,12 @@ int	check_line(t_global *global, t_token *token_list)
 		return (1);
 	else if (last_token_redirection(token_list))
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-		return (1);
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		return (global->exit_value = 2, 1);
 	}
 	else if (slash_in_cmd_token(token_list->token, false))
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(token_list->token, 2);
 		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
 	}

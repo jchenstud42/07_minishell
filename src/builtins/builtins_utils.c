@@ -44,15 +44,19 @@ void	execute_builtin(t_cmd *cmd_list, t_global *global)
 	if (ft_strcmp(cmd_list->cmd, "cd") == 0)
 		ft_cd(global, cmd_list->cmd_args);
 	else if (ft_strcmp(cmd_list->cmd, "echo") == 0)
-		ft_echo(cmd_list->cmd_args);
+		ft_echo(global, cmd_list->cmd_args);
 	else if (ft_strcmp(cmd_list->cmd, "env") == 0)
-		ft_env(global->env_list);
-	else if (ft_strcmp(cmd_list->cmd, "export") == 0)
-		ft_export(&global->env_list, cmd_list->cmd_args);
-	else if (ft_strcmp(cmd_list->cmd, "pwd") == 0)
-		ft_pwd();
-	else if (ft_strcmp(cmd_list->cmd, "unset") == 0)
-		ft_unset(&global->env_list, cmd_list->cmd_args);
+		ft_env(global, global->env_list);
 	else if (ft_strcmp(cmd_list->cmd, "exit") == 0)
 		ft_exit(global, cmd_list->cmd_args);
+	else if (ft_strcmp(cmd_list->cmd, "export") == 0)
+		ft_export(global, &global->env_list, cmd_list->cmd_args);
+	else if (ft_strcmp(cmd_list->cmd, "pwd") == 0)
+		ft_pwd(global);
+	else if (ft_strcmp(cmd_list->cmd, "unset") == 0)
+		ft_unset(global, &global->env_list, cmd_list->cmd_args);
+	else if (ft_strcmp(cmd_list->cmd, "$?") == 0)
+	{
+		ft_dollar_sign(global);
+	}
 }

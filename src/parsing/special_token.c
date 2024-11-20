@@ -22,7 +22,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (!ft_strcmp("echo", cmd) || !ft_strcmp("cd", cmd) || !ft_strcmp("pwd",
 			cmd) || !ft_strcmp("export", cmd) || !ft_strcmp("unset", cmd)
-		|| !ft_strcmp("env", cmd) || !ft_strcmp("exit", cmd))
+		|| !ft_strcmp("env", cmd) || !ft_strcmp("exit", cmd) || !ft_strcmp("$?",
+			cmd))
 		return (0);
 	return (1);
 }
