@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/20 17:55:30 by jchen            ###   ########.fr       */
+/*   Updated: 2024/11/22 12:33:02 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	validate_unset_cmd(char *cmd)
 		return (1);
 	}
 	i = 0;
-	while (cmd[i])
+	while (cmd[i] && cmd[i] != '=')
 	{
 		if (cmd[i] != '_' && !ft_isalnum(cmd[i]))
 		{
@@ -52,9 +52,9 @@ int	env_exist(t_env *env, char *cmd)
 	j = 0;
 	while (cmd[i])
 		i++;
-	while (tmp)
+	while (tmp != NULL)
 	{
-		if (!ft_strncmp(tmp->env, cmd, i) && tmp->env[i] == '=')
+		if (!ft_strncmp(tmp->env, cmd, i) && (tmp->env[i] == '=' || tmp->env[i] == '\0'))
 			return (j);
 		tmp = tmp->next;
 		j++;
@@ -65,13 +65,25 @@ int	env_exist(t_env *env, char *cmd)
 void	remove_env_entry(t_env **env, int exist)
 {
 	t_env	*tmp;
+	t_env	*next_env;
+	t_env	*prev_env;
 	int		j;
 
 	tmp = *env;
+	prev_env = NULL;
 	j = 0;
 	while (j++ < exist)
+	{
+		prev_env = tmp;
 		tmp = tmp->next;
+	}
+	next_env = tmp->next;
 	free(tmp->env);
+	free(tmp);
+	if (prev_env)
+		prev_env->next = next_env;
+	else
+		*env = next_env;
 }
 
 int	unset(t_env **env, char *cmd)
@@ -84,10 +96,7 @@ int	unset(t_env **env, char *cmd)
 		return (1);
 	exist = env_exist(*env, cmd);
 	if (exist == -1)
-	{
-		ft_printf("AAAA");
 		return (1);
-	}
 	remove_env_entry(env, exist);
 	i++;
 	return (0);

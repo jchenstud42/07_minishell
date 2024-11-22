@@ -21,9 +21,9 @@
 // WIFEXITSATUS : code de sortie du processus
 void	status_child(t_global *global, pid_t pid)
 {
-	int	signal;
+	// int	signal;
 
-	signal = WTERMSIG(pid);
+	// signal = WTERMSIG(pid);
 	if (WIFEXITED(pid))
 		global->exit_value = WEXITSTATUS(pid);
 	else if (WIFSIGNALED(pid))
