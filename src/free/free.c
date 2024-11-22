@@ -15,24 +15,29 @@
 
 #include "../../inc/minishell.h"
 
+
 // Libere la memoire allouee a un tableau de string
 void	free_array(char **array)
 {
-	int	i;
+	int i;
 
 	if (!array)
 		return ;
 	i = -1;
 	while (array[++i])
+	{
 		free(array[i]);
+		array[i] = NULL;
+	}
 	free(array);
+	array = NULL;
 }
 
 // Libere la memoire allouee a la token_list
 void	free_token_list(t_token **token_list)
 {
-	t_token	*temp;
-	t_token	*current;
+	t_token *temp;
+	t_token *current;
 
 	if (!token_list)
 		return ;
@@ -50,8 +55,8 @@ void	free_token_list(t_token **token_list)
 // Libere la memoire allouee a la structure t_cmd
 void	free_cmd_list(t_cmd **cmd_list)
 {
-	t_cmd	*temp;
-	t_cmd	*current;
+	t_cmd *temp;
+	t_cmd *current;
 
 	if (!cmd_list)
 		return ;
@@ -73,7 +78,7 @@ void	free_cmd_list(t_cmd **cmd_list)
 
 void	free_env_list(t_env *env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	if (!env)
 		return ;
@@ -91,7 +96,7 @@ void	free_env_list(t_env *env)
 // Libere toute la memoire allouee
 void	free_all(t_global *global_data)
 {
-	int	e_value;
+	int e_value;
 
 	e_value = global_data->exit_value;
 	if (global_data->cmd_list)
@@ -105,6 +110,5 @@ void	free_all(t_global *global_data)
 	if (global_data)
 		free(global_data);
 	rl_clear_history();
-	printf("exit value : %d\n", e_value);
 	exit(e_value);
 }

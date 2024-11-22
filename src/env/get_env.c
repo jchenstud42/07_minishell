@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/15 11:28:02 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/22 23:20:04 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**get_env(t_env *env)
 	i = 0;
 	while (env_size)
 	{
-		env_tab[i] = env_size->env;
+		env_tab[i] = ft_strdup(env_size->env);
 		env_size = env_size->next;
 		i++;
 	}

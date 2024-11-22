@@ -16,12 +16,6 @@
 #include "../../inc/minishell.h"
 
 
-// Verifie si le caractere est un espace blanc ou un guillement
-// int	is_white_space_or_quotes(char c)
-// {
-// 	return (((9 <= c) && (c <= 13)) || (c == 32) || (c == '\'') || (c == '"'));
-// }
-
 int	is_white_space(char c)
 {
 	return (((9 <= c) && (c <= 13)) || (c == 32));

@@ -15,31 +15,11 @@
 
 #include "../../inc/minishell.h"
 
-// WIFSIGNALED : retourne vrai si un signal a causé la terminaison
-// WTERMSIG :renvoie le numero du signal qui a cause la terminaison
-// WIFEXITED : retoune vrai si le child s'est terminé normalement
-// WIFEXITSATUS : code de sortie du processus
-void	status_child(t_global *global, pid_t pid)
-{
-	// int	signal;
-
-	// signal = WTERMSIG(pid);
-	if (WIFEXITED(pid))
-		global->exit_value = WEXITSTATUS(pid);
-	else if (WIFSIGNALED(pid))
-	{
-		// if (signal == SIGPIPE)
-		// 	global->exit_value = 666;
-		// else
-		// global->exit_value = WTERMSIG(pid) + 128;
-		global->exit_value = WTERMSIG(pid);
-	}
-}
 
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 		t_global *global)
 {
-	char	**env_cpy;
+	char **env_cpy;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -47,16 +27,16 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 	if (!access(cmd_list->cmd, X_OK))
 		execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+	global->exit_value = 0;
 	if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
 		&& !slash_in_cmd_token(cmd_list->cmd, true))
 	{
 		ft_putstr_fd(cmd_list->cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
-		// free_array(env_cpy);
+		global->exit_value = 127;
+		free_array(env_cpy);
 		free_all(global);
-		exit(127);
 	}
-	exit(1);
 }
 
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
@@ -115,10 +95,10 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, t_global *global)
 {
-	int		fds[2];
-	pid_t	pid;
-	int		input_fd;
-	int		status;
+	int fds[2];
+	pid_t pid;
+	int input_fd;
+	int status;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)

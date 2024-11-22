@@ -18,20 +18,19 @@ INC			=	-I ./src/libft/\
 # Sources
 SRC_PATH	=	src/
 SRC			=	minishell.c \
-				error_handler.c \
 				initialization.c \
 				token/init_token_list.c \
 				token/tokenize_line.c \
 				token/token_utils.c \
 				parsing/check_line.c \
-				parsing/special_token.c \
 				parsing/count.c \
 				parsing/dollar.c \
 				parsing/redirection.c \
+				parsing/special_token.c \
 				free/free.c \
 				exec/init_cmd.c \
-				exec/exec.c \
 				exec/execve.c \
+				exec/launch_line.c \
 				exec/pipe.c \
 				builtins/builtins_utils.c \
 				builtins/cd.c \

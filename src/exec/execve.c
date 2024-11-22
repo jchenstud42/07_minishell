@@ -15,13 +15,38 @@
 
 #include "../../inc/minishell.h"
 
+
+// WIFEXITED : retoune vrai si le child s'est terminé normalement
+// WIFEXITSATUS : code de sortie du processus
+// WIFSIGNALED : retourne vrai si un signal a causé la terminaison
+// WTERMSIG :renvoie le numero du signal qui a cause la terminaison
+void	status_child(t_global *global, pid_t pid)
+{
+	int signal;
+
+	signal = WTERMSIG(pid);
+	if (WIFEXITED(pid))
+		global->exit_value = WEXITSTATUS(pid);
+	else if (WIFSIGNALED(pid))
+	{
+		if (signal == SIGPIPE)
+			global->exit_value = 0;
+		else
+		{
+			global->exit_value = WTERMSIG(pid);
+			if (global->exit_value != 131)
+				global->exit_value = WTERMSIG(pid) + 128;
+		}
+	}
+}
+
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
+	int i;
+	char *exec;
+	char **allpath;
+	char *path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -45,9 +70,9 @@ char	*get_command_path(const char *cmd)
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
-	pid_t	pid;
-	char	**env_cpy;
-	int		status;
+	pid_t pid;
+	char **env_cpy;
+	int status;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -69,20 +94,19 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 		{
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(": command not found\n", 2);
-			exit(127);
+			global->exit_value = 127;
+			free_array(env_cpy);
+			exit_function(global, false);
 		}
-		// exit(0);
 	}
 	else
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, handle_nl);
 		signal(SIGQUIT, handle_nl);
-		// waitpid(pid, NULL, 0);
 		while (wait(&status) > 0)
 			;
 		status_child(global, status);
 		signal(SIGINT, SIG_DFL);
 	}
-	// free_array(env_cpy);
 }
