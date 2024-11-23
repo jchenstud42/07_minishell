@@ -2,24 +2,20 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/20 10:42:21 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/20 12:33:01 by rbouquet         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/23 14:03:59 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/11/23 14:04:02 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
 // Verifie si le dernier token de notre liste est une redirection
 bool	last_token_redirection(t_token *token_list)
 {
-	t_token *last_node;
+	t_token	*last_node;
 
 	if (!token_list)
 		return (false);

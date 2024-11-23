@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 {
 	if (!ft_strcmp(token_list->token, "&") || !ft_strcmp(token_list->token, ";")
@@ -30,15 +29,13 @@ static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 		|| !ft_strncmp(token_list->token, ";;", 2)
 		|| !ft_strncmp(token_list->token, "))", 2))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n",
-			2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n", 2);
 		return (global->exit_value = 2, true);
 	}
 	return (false);
 }
 
 // Verifie si le premier token est valide
-// EN VRAI PAS OBLIGATOIRE, A FINIR SI BESOIN
 bool	invalid_first_token(t_global *global, t_token *token_list)
 {
 	if (!token_list)
@@ -86,7 +83,7 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 
 bool	is_point_and_slash(char *token, t_global *global)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (token[++i])
@@ -110,13 +107,15 @@ int	check_line(t_global *global, t_token *token_list)
 		|| invalid_redirection(token_list, global)
 		|| is_point_and_slash(token_list->token, global))
 		return (1);
+	// else if (slash_in_cmd_token(token_list->token, false))
+	// {
+	// 	ft_putstr_fd("minishell: ", 2);
+	// 	ft_putstr_fd(token_list->token, 2);
+	// 	global->exit_value = 127;
+	// 	return (ft_putstr_fd(": No such file or directory\n", 2), 1);
+	// }
 	else if (slash_in_cmd_token(token_list->token, false))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(token_list->token, 2);
-		global->exit_value = 127;
-		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
-	}
+		return (1);
 	else
 		return (0);
 }

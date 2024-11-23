@@ -15,14 +15,13 @@
 
 #include "../../inc/minishell.h"
 
-
 // WIFEXITED : retoune vrai si le child s'est terminé normalement
 // WIFEXITSATUS : code de sortie du processus
 // WIFSIGNALED : retourne vrai si un signal a causé la terminaison
 // WTERMSIG :renvoie le numero du signal qui a cause la terminaison
 void	status_child(t_global *global, pid_t pid)
 {
-	int signal;
+	int	signal;
 
 	signal = WTERMSIG(pid);
 	if (WIFEXITED(pid))
@@ -43,10 +42,10 @@ void	status_child(t_global *global, pid_t pid)
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int i;
-	char *exec;
-	char **allpath;
-	char *path_part;
+	int		i;
+	char	*exec;
+	char	**allpath;
+	char	*path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -70,9 +69,9 @@ char	*get_command_path(const char *cmd)
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
-	pid_t pid;
-	char **env_cpy;
-	int status;
+	pid_t	pid;
+	char	**env_cpy;
+	int		status;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -92,8 +91,9 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
 			&& !slash_in_cmd_token(cmd_list->cmd, true))
 		{
+			ft_putstr_fd("minishell: \n", 2);
 			ft_putstr_fd(cmd_list->cmd, 2);
-			ft_putstr_fd(": command not found\n", 2);
+			ft_putstr_fd(" command not found\n", 2);
 			global->exit_value = 127;
 			free_array(env_cpy);
 			exit_function(global, false);
@@ -108,5 +108,37 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 			;
 		status_child(global, status);
 		signal(SIGINT, SIG_DFL);
+	}
+}
+
+int	ft_heredoc(t_global *global, int fd, char *word)
+{
+	char	*heredoc;
+
+	while (1)
+	{
+		heredoc = readline("> ");
+		if (!heredoc)
+			exit_function(global, true);
+		if (!ft_strcmp(word, heredoc))
+			break ;
+		write(fd, heredoc, ft_strlen(heredoc));
+		write(fd, "\n", 1);
+		free(heredoc);
+	}
+	free(buf);
+	close(fd);
+	return (true);
+}
+
+int	in_heredoc(t_global *global, char *word)
+{
+	int	fd;
+
+	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		return (1);
+	if (!ft_heredoc(global, fd, word))
+	{
 	}
 }

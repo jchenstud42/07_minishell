@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/22 12:12:56 by romain           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:14:30 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_export(t_global *global, t_env **env, char **line)
 	{
 		if (!export_syntaxe(line[i]))
 		{
-			ft_putstr_fd("bash: export: '", 2);
+			ft_putstr_fd("minishell: export: '", 2);
 			ft_putstr_fd(line[i], 2);
 			ft_putstr_fd("': invalid identifier\n", 2);
 			global->exit_value = 1;
