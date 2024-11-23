@@ -26,10 +26,13 @@ static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 		return (global->exit_value = 2, true);
 	}
 	else if (!ft_strncmp(token_list->token, "&&", 2)
-		|| !ft_strncmp(token_list->token, ";;", 2)
-		|| !ft_strncmp(token_list->token, "))", 2))
+			|| !ft_strncmp(token_list->token, ";;", 2)
+			|| !ft_strncmp(token_list->token, "))", 2))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `&&'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		ft_putchar_fd(token_list->token[0], 2);
+		ft_putchar_fd(token_list->token[1], 2);
+		ft_putstr_fd("'\n", 2);
 		return (global->exit_value = 2, true);
 	}
 	return (false);
@@ -44,10 +47,10 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 	{
 		if (token_list->next && token_list->next->token[0] == '|')
 			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-				2);
+							2);
 		else
 			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-				2);
+							2);
 		return (global->exit_value = 2, true);
 	}
 	else if (!ft_strcmp(token_list->token, ":"))
@@ -112,15 +115,15 @@ int	check_line(t_global *global, t_token *token_list)
 		in_heredoc(global, &token_list->next->token[0]);
 		return (0);
 	}
-	// else if (slash_in_cmd_token(token_list->token, false))
-	// {
-	// 	ft_putstr_fd("minishell: ", 2);
-	// 	ft_putstr_fd(token_list->token, 2);
-	// 	global->exit_value = 127;
-	// 	return (ft_putstr_fd(": No such file or directory\n", 2), 1);
-	// }
 	else if (slash_in_cmd_token(token_list->token, false))
-		return (1);
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token_list->token, 2);
+		global->exit_value = 127;
+		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
+	}
+	// else if (slash_in_cmd_token(token_list->token, false))
+	// 	return (1);
 	else
 		return (0);
 }

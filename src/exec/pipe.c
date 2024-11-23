@@ -15,11 +15,10 @@
 
 #include "../../inc/minishell.h"
 
-
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 		t_global *global)
 {
-	char **env_cpy;
+	char	**env_cpy;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -95,10 +94,10 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int input_fd;
-	int status;
+	int		fds[2];
+	pid_t	pid;
+	int		input_fd;
+	int		status;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)

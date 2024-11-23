@@ -186,6 +186,8 @@ int					count_cmd_token(t_token *token_list);
 
 // DOLLAR.c
 void				ft_dollar_sign(t_global *global);
+char				*dollar_interpretation(t_global *global, t_env *env,
+						char *line);
 
 // REDIRECTION.c
 bool				last_token_redirection(t_token *token_list);
