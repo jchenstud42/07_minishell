@@ -107,6 +107,11 @@ int	check_line(t_global *global, t_token *token_list)
 		|| invalid_redirection(token_list, global)
 		|| is_point_and_slash(token_list->token, global))
 		return (1);
+	else if (token_list->token[0] == HEREDOC)
+	{
+		in_heredoc(global, &token_list->next->token[0]);
+		return (0);
+	}
 	// else if (slash_in_cmd_token(token_list->token, false))
 	// {
 	// 	ft_putstr_fd("minishell: ", 2);

@@ -91,7 +91,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
 			&& !slash_in_cmd_token(cmd_list->cmd, true))
 		{
-			ft_putstr_fd("minishell: \n", 2);
+			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd_list->cmd, 2);
 			ft_putstr_fd(" command not found\n", 2);
 			global->exit_value = 127;
@@ -126,7 +126,7 @@ int	ft_heredoc(t_global *global, int fd, char *word)
 		write(fd, "\n", 1);
 		free(heredoc);
 	}
-	free(buf);
+	free(heredoc);
 	close(fd);
 	return (true);
 }
@@ -140,5 +140,11 @@ int	in_heredoc(t_global *global, char *word)
 		return (1);
 	if (!ft_heredoc(global, fd, word))
 	{
+		unlink(".heredoc.tmp");
+		return (-1);
 	}
+	fd = open(".heredoc.tmp", O_RDONLY);
+	if (fd > 0)
+		unlink(".heredoc.tmp");
+	return (fd);
 }
