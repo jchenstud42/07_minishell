@@ -117,16 +117,21 @@ int	ft_heredoc(t_global *global, int fd, char *word)
 
 	while (1)
 	{
-		heredoc = readline("> ");
+		heredoc = readline("heredoc> ");
 		if (!heredoc)
+		{
 			exit_function(global, true);
-		if (!ft_strcmp(word, heredoc))
 			break ;
+		}
+		if (ft_strcmp(heredoc, word) == 0)
+		{
+			free(heredoc);
+			break ;
+		}
 		write(fd, heredoc, ft_strlen(heredoc));
 		write(fd, "\n", 1);
 		free(heredoc);
 	}
-	free(heredoc);
 	close(fd);
 	return (true);
 }
@@ -141,7 +146,7 @@ int	in_heredoc(t_global *global, char *word)
 	if (!ft_heredoc(global, fd, word))
 	{
 		unlink(".heredoc.tmp");
-		return (-1);
+		return (1);
 	}
 	fd = open(".heredoc.tmp", O_RDONLY);
 	if (fd > 0)

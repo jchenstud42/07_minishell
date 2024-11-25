@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:03:59 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/23 14:04:02 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:31:11 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,75 @@ int	is_redirection(char *str)
 		|| !ft_strcmp(str, ">>"))
 		return (0);
 	return (1);
+}
+
+void	redirect_append(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
+void	redirect_truncate(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
+void	redirect_input(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
+void	handle_redirection(t_token *token_list)
+{
+	while (token_list)
+	{
+		if (token_list->type == APPEND)
+			redirect_append(token_list->next->token);
+		else if (token_list->type == TRUNC)
+			redirect_truncate(token_list->next->token);
+		else if (token_list->type == INPUT)
+			redirect_input(token_list->next->token);
+		token_list = token_list->next;
+	}
 }

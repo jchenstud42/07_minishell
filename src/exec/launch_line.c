@@ -33,7 +33,7 @@ bool	pipe_inside_token_list(t_global *global)
 }
 
 // Interprete et lance le prompt
-void	launch_line(t_global *global, t_env **env)
+void	launch_line(t_global *global, t_env **env, t_token *token_list)
 {
 	t_cmd	*current_cmd;
 
@@ -42,6 +42,8 @@ void	launch_line(t_global *global, t_env **env)
 	current_cmd = (global->cmd_list);
 	if (pipe_inside_token_list(global))
 		execute_pipe(current_cmd, global);
+	else if (token_list->type == HEREDOC)
+		in_heredoc(global, &token_list->next->token[0]);
 	else
 	{
 		while (current_cmd)

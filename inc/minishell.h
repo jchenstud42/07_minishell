@@ -158,7 +158,8 @@ void				init_cmd_list(t_cmd **cmd, t_token **token);
 
 // LAUNCH_LINE.c
 bool				pipe_inside_token_list(t_global *global);
-void				launch_line(t_global *global, t_env **env);
+void				launch_line(t_global *global, t_env **env,
+						t_token *token_list);
 
 // PIPE.c
 void				handle_redirections(t_cmd *cmd, int input_fd, int *fds);
@@ -223,5 +224,10 @@ void				calloc_global_struct(t_global **global_data);
 char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
+
+void				handle_redirection(t_token *token_list);
+void				redirect_input(char *filename);
+void				redirect_truncate(char *filename);
+void				redirect_append(char *filename);
 
 #endif

@@ -26,8 +26,8 @@ static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 		return (global->exit_value = 2, true);
 	}
 	else if (!ft_strncmp(token_list->token, "&&", 2)
-			|| !ft_strncmp(token_list->token, ";;", 2)
-			|| !ft_strncmp(token_list->token, "))", 2))
+		|| !ft_strncmp(token_list->token, ";;", 2)
+		|| !ft_strncmp(token_list->token, "))", 2))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		ft_putchar_fd(token_list->token[0], 2);
@@ -47,10 +47,10 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 	{
 		if (token_list->next && token_list->next->token[0] == '|')
 			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-							2);
+				2);
 		else
 			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-							2);
+				2);
 		return (global->exit_value = 2, true);
 	}
 	else if (!ft_strcmp(token_list->token, ":"))
@@ -84,6 +84,19 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 	return (false);
 }
 
+// bool	slash_in_cmd_token(char *token)
+// {
+// 	if (ft_strchr(token, '/'))
+// 	{
+// 		if (!access(token, X_OK))
+// 			return (false);
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(token, 2);
+// 		ft_putstr_fd(": No such file or directory\n", 2);
+// 	}
+// 	return (true);
+// }
+
 bool	is_point_and_slash(char *token, t_global *global)
 {
 	int	i;
@@ -106,15 +119,10 @@ int	check_line(t_global *global, t_token *token_list)
 {
 	if (!global | !token_list)
 		return (1);
-	if (invalid_first_token(global, token_list)
+	else if (invalid_first_token(global, token_list)
 		|| invalid_redirection(token_list, global)
 		|| is_point_and_slash(token_list->token, global))
 		return (1);
-	else if (token_list->token[0] == HEREDOC)
-	{
-		in_heredoc(global, &token_list->next->token[0]);
-		return (0);
-	}
 	else if (slash_in_cmd_token(token_list->token, false))
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -122,8 +130,8 @@ int	check_line(t_global *global, t_token *token_list)
 		global->exit_value = 127;
 		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
 	}
-	// else if (slash_in_cmd_token(token_list->token, false))
-	// 	return (1);
 	else
+	{
 		return (0);
+	}
 }
