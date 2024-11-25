@@ -225,9 +225,9 @@ char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
 
-void				handle_redirection(t_token *token_list);
-void				redirect_input(char *filename);
-void				redirect_truncate(char *filename);
-void				redirect_append(char *filename);
+void				handle_redirection(t_global *global, t_token *token_list);
+int					redirect_input(char *filename);
+int					redirect_truncate(char *filename);
+int					redirect_append(char *filename);
 
 #endif

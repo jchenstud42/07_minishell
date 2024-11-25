@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:03:59 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/25 12:31:11 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:24:13 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,73 +87,84 @@ int	is_redirection(char *str)
 	return (1);
 }
 
-void	redirect_append(char *filename)
+int	redirect_append(char *filename)
 {
 	int	fd;
 
 	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("minishell:", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(" : No such file or directory\n", 2);
+		return (1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-void	redirect_truncate(char *filename)
+int	redirect_truncate(char *filename)
 {
 	int	fd;
 
 	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("minishell:", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(" : No such file or directory\n", 2);
+		return (1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-void	redirect_input(char *filename)
+int	redirect_input(char *filename)
 {
 	int	fd;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename, O_RDONLY, 0644);
 	if (fd == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("minishell:", 2);
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(" : No such file or directory\n", 2);
+		return (1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-void	handle_redirection(t_token *token_list)
+void	handle_redirection(t_global *global, t_token *token_list)
 {
 	while (token_list)
 	{
 		if (token_list->type == APPEND)
-			redirect_append(token_list->next->token);
+			redirect_append(token_list->next->token); //>>
 		else if (token_list->type == TRUNC)
-			redirect_truncate(token_list->next->token);
+			redirect_truncate(token_list->next->token); //>
 		else if (token_list->type == INPUT)
-			redirect_input(token_list->next->token);
+			redirect_input(token_list->next->token); //<
+		else if (token_list->type == HEREDOC)
+			in_heredoc(global, &token_list->next->token[0]); //<<
 		token_list = token_list->next;
 	}
 }

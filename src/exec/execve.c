@@ -75,7 +75,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
-		return (perror("error, no command entered"));
+		return (ft_putstr_fd("error, no command entered\n", 2));
 	pid = fork();
 	if (pid == -1)
 	{

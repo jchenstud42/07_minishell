@@ -37,7 +37,6 @@ int	main(int ac, char **av, char **env)
 			exit_function(global, true);
 		add_history(global->line);
 		// dollar_interpretation(global, global->env_list, global->line);
-		// handle_redirection(global->token_list);
 		line_tokenization(&global, global->line);
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))

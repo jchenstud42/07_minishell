@@ -42,8 +42,9 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 	current_cmd = (global->cmd_list);
 	if (pipe_inside_token_list(global))
 		execute_pipe(current_cmd, global);
-	else if (token_list->type == HEREDOC)
-		in_heredoc(global, &token_list->next->token[0]);
+	else if (token_list->type == INPUT || token_list->type == HEREDOC
+		|| token_list->type == TRUNC || token_list->type == APPEND)
+		handle_redirection(global, global->token_list);
 	else
 	{
 		while (current_cmd)

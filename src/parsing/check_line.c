@@ -84,19 +84,6 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 	return (false);
 }
 
-// bool	slash_in_cmd_token(char *token)
-// {
-// 	if (ft_strchr(token, '/'))
-// 	{
-// 		if (!access(token, X_OK))
-// 			return (false);
-// 		ft_putstr_fd("minishell: ", 2);
-// 		ft_putstr_fd(token, 2);
-// 		ft_putstr_fd(": No such file or directory\n", 2);
-// 	}
-// 	return (true);
-// }
-
 bool	is_point_and_slash(char *token, t_global *global)
 {
 	int	i;
@@ -131,7 +118,5 @@ int	check_line(t_global *global, t_token *token_list)
 		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
 	}
 	else
-	{
 		return (0);
-	}
 }
