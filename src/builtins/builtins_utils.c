@@ -57,6 +57,6 @@ void	execute_builtin(t_cmd *cmd_list, t_global *global)
 		ft_unset(global, &global->env_list, cmd_list->cmd_args);
 	else if (ft_strcmp(cmd_list->cmd, "$?") == 0)
 	{
-		ft_dollar_sign(global);
+		ft_dollar_question(global);
 	}
 }

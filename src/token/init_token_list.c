@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 // Recherche et renvoie le dernier élément de la liste chainee.
 t_token	*last_element_of_list(t_token *token_list)
 {
@@ -49,8 +50,8 @@ int	check_token_type(char *token, t_token *last_node)
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
 {
-	t_token	*token_to_append;
-	t_token	*last_node;
+	t_token *token_to_append;
+	t_token *last_node;
 
 	if (!global)
 		return (perror("error, empty global structure"));
@@ -59,7 +60,8 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		return (perror("error, tokenization failed"));
 	token_to_append->token = ft_strdup(prompt);
 	last_node = last_element_of_list((*global)->token_list);
-	token_to_append->type = check_token_type(token_to_append->token, last_node);
+	token_to_append->type = check_token_type(token_to_append->token,
+			last_node);
 	if (!(*global)->token_list)
 	{
 		(*global)->token_list = token_to_append;

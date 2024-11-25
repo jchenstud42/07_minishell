@@ -24,10 +24,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
+	if (s2 == NULL)
 		return (NULL);
-	// if (s1 == NULL)
-	// 	s1 = "";
+	if (s1 == NULL)
+		s1 = "";
 	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
 		return (NULL);

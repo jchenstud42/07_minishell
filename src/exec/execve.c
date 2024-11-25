@@ -15,13 +15,14 @@
 
 #include "../../inc/minishell.h"
 
+
 // WIFEXITED : retoune vrai si le child s'est terminé normalement
 // WIFEXITSATUS : code de sortie du processus
 // WIFSIGNALED : retourne vrai si un signal a causé la terminaison
 // WTERMSIG :renvoie le numero du signal qui a cause la terminaison
 void	status_child(t_global *global, pid_t pid)
 {
-	int	signal;
+	int signal;
 
 	signal = WTERMSIG(pid);
 	if (WIFEXITED(pid))
@@ -42,10 +43,10 @@ void	status_child(t_global *global, pid_t pid)
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
+	int i;
+	char *exec;
+	char **allpath;
+	char *path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -69,9 +70,9 @@ char	*get_command_path(const char *cmd)
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
-	pid_t	pid;
-	char	**env_cpy;
-	int		status;
+	pid_t pid;
+	char **env_cpy;
+	int status;
 
 	env_cpy = get_env(*env);
 	if (!cmd_list->cmd)
@@ -113,7 +114,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 
 int	ft_heredoc(t_global *global, int fd, char *word)
 {
-	char	*heredoc;
+	char *heredoc;
 
 	while (1)
 	{
@@ -133,12 +134,13 @@ int	ft_heredoc(t_global *global, int fd, char *word)
 		free(heredoc);
 	}
 	close(fd);
+	global->exit_value = 0;
 	return (true);
 }
 
 int	in_heredoc(t_global *global, char *word)
 {
-	int	fd;
+	int fd;
 
 	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)

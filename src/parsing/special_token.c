@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 // Verifie si c'est un builtin
 int	is_builtin(char *cmd)
 {
