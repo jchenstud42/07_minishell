@@ -34,12 +34,21 @@ void	handle_nl(int sig)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
+void	sig_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(STDERR_FILENO, "\n", 1);
+		exit(1);
+	}
+}
+
 void	init_signals(t_global *global)
 {
+	(void)global;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, sig_c);
-	(void)global;
 	// if (signal(SIGINT, sig_c) != SIG_ERR)
 	// 	global->exit_value = 130;
 }

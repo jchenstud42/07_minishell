@@ -200,9 +200,10 @@ int					is_redirection(char *str);
 
 // REDIRECTION_2.c
 void				handle_redirection(t_global *global, t_token *token_list);
-int					redirect_input(char *filename);
-int					redirect_truncate(char *filename);
-int					redirect_append(char *filename);
+int					redirect(char *filename, int mode, int std_fd);
+// int					redirect_input(char *filename);
+// int					redirect_truncate(char *filename);
+// int					redirect_append(char *filename);
 
 // SPECIAL_TOKEN.c
 int					is_builtin(char *cmd);
@@ -211,6 +212,7 @@ int					is_pipe(char c);
 // SIGNAL.c
 void				sig_c(int sig);
 void				handle_nl(int sig);
+void				sig_heredoc(int sig);
 void				init_signals(t_global *global);
 
 // INIT_TOKEN_LIST.c
@@ -232,7 +234,5 @@ void				calloc_global_struct(t_global **global_data);
 char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
-
-int					redirect(char *filename, int mode, int std_fd);
 
 #endif

@@ -117,7 +117,7 @@ int	ft_heredoc(t_global *global, int fd, char *word)
 
 	while (1)
 	{
-		heredoc = readline("heredoc> ");
+		heredoc = readline("> ");
 		if (!heredoc)
 		{
 			write(2, "warning: here-document delimited by end-of-file ", 48);
