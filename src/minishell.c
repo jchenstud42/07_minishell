@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 static void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
 {
@@ -26,7 +25,7 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
+	t_global	*global;
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);
