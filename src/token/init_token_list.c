@@ -75,6 +75,6 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		token_to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	// ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
-	// 	token_to_append->type, token_to_append->token);
+	ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
+		token_to_append->type, token_to_append->token);
 }

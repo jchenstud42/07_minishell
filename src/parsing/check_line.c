@@ -15,7 +15,8 @@
 
 #include "../../inc/minishell.h"
 
-static bool	invalid_first_token_2(t_global *global, t_token *token_list)
+
+static bool	invalid_first_token_2(t_token *token_list)
 {
 	if (!ft_strcmp(token_list->token, "&") || !ft_strcmp(token_list->token, ";")
 		|| !ft_strcmp(token_list->token, ")"))
@@ -23,7 +24,13 @@ static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		ft_putchar_fd(token_list->token[0], 2);
 		ft_putstr_fd("'\n", 2);
-		return (global->exit_value = 2, true);
+		return (true);
+	}
+	else if (!token_list->next && str_is_redirection(token_list->token))
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+			2);
+		return (true);
 	}
 	else if (!ft_strncmp(token_list->token, "&&", 2)
 		|| !ft_strncmp(token_list->token, ";;", 2)
@@ -33,7 +40,7 @@ static bool	invalid_first_token_2(t_global *global, t_token *token_list)
 		ft_putchar_fd(token_list->token[0], 2);
 		ft_putchar_fd(token_list->token[1], 2);
 		ft_putstr_fd("'\n", 2);
-		return (global->exit_value = 2, true);
+		return (true);
 	}
 	return (false);
 }
@@ -43,14 +50,11 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 {
 	if (!token_list)
 		return (false);
-	if (token_list->type == PIPE)
+	else if (pipe_after_pipe(global, token_list))
+		return (true);
+	else if (token_list->type == PIPE)
 	{
-		if (token_list->next && token_list->next->token[0] == '|')
-			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-				2);
-		else
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",
-				2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (global->exit_value = 2, true);
 	}
 	else if (!ft_strcmp(token_list->token, ":"))
@@ -59,64 +63,45 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 		return (global->exit_value = 0, true);
 	else if (!ft_strcmp(token_list->token, "!"))
 		return (global->exit_value = 1, true);
-	else if (invalid_first_token_2(global, token_list))
+	else if (invalid_first_token_2(token_list))
 		return (global->exit_value = 2, true);
 	return (false);
 }
 
-// Verifie s'il y a un '/' dans notre token CMD, si oui
-// on verifie si c'est le chemin absolu d'une commande, ou sinon
-// c'est considéré comme une erreur
-bool	slash_in_cmd_token(char *token, bool print_msg)
+bool	check_in_first_token(t_global *global, t_token *token_list)
 {
-	if (ft_strchr(token, '/'))
-	{
-		if (!access(token, X_OK))
-			return (false);
-		if (print_msg == true)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(token, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-		}
-		return (true);
-	}
-	return (false);
-}
-
-bool	is_point_and_slash(char *token, t_global *global)
-{
-	int	i;
-
-	i = -1;
-	while (token[++i])
-	{
-		if ((token[i] != '.' && token[i] != '/') || (token[i] == '.' && token[i
-				+ 1] == '.' && token[i + 2] == '.'))
-			return (false);
-	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd(": Is a directory\n", 2);
-	global->exit_value = 126;
-	return (true);
-}
-
-int	check_line(t_global *global, t_token *token_list)
-{
-	if (!global | !token_list)
-		return (1);
-	else if (invalid_first_token(global, token_list)
-		|| invalid_redirection(token_list, global)
+	if (invalid_first_token(global, token_list)
 		|| is_point_and_slash(token_list->token, global))
-		return (1);
+		return (true);
 	else if (slash_in_cmd_token(token_list->token, false))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(token_list->token, 2);
 		global->exit_value = 127;
-		return (ft_putstr_fd(": No such file or directory\n", 2), 1);
+		return (ft_putstr_fd(": No such file or directory\n", 2), true);
 	}
-	else
-		return (0);
+	return (false);
+}
+
+int	check_line(t_global *global, t_token *token_list)
+{
+	t_token *temp_token;
+
+	if (!global | !token_list)
+		return (1);
+	else if (check_in_first_token(global, token_list))
+		return (1);
+	temp_token = token_list;
+	while (temp_token)
+	{
+		if (token_is_special_token(temp_token))
+		{
+			if (invalid_redirection(temp_token, global))
+				return (1);
+		}
+		if (pipe_after_pipe(global, temp_token))
+			return (1);
+		temp_token = temp_token->next;
+	}
+	return (0);
 }

@@ -15,10 +15,11 @@
 
 #include "../../inc/minishell.h"
 
+
 // Passe les espaces au debut de la phrase s'il y en a
 static void	skip_beginning_white_space(int *end, char *line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!line)
@@ -32,25 +33,25 @@ static void	skip_beginning_white_space(int *end, char *line)
 // Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
 void	add_special_token(t_global *global, char *line, int *end)
 {
-	char	*token;
+	char *token;
 
-	if (is_special_token(&line[*end]) == PIPE
-		|| is_special_token(&line[*end]) == INPUT
-		|| is_special_token(&line[*end]) == TRUNC)
+	if (str_is_special_token(&line[*end]) == PIPE
+		|| str_is_special_token(&line[*end]) == INPUT
+		|| str_is_special_token(&line[*end]) == TRUNC)
 	{
 		token = ft_chardup(line[*end]);
 		append_node_to_token_list(&global, token);
 		free(token);
 		(*end)++;
 	}
-	else if (is_special_token(&line[*end]) == HEREDOC)
+	else if (str_is_special_token(&line[*end]) == HEREDOC)
 	{
 		token = ft_strdup("<<");
 		append_node_to_token_list(&global, token);
 		free(token);
 		*end += 2;
 	}
-	else if (is_special_token(&line[*end]) == APPEND)
+	else if (str_is_special_token(&line[*end]) == APPEND)
 	{
 		token = ft_strdup(">>");
 		append_node_to_token_list(&global, token);
@@ -61,11 +62,11 @@ void	add_special_token(t_global *global, char *line, int *end)
 
 char	*line_quote_manager(char *line)
 {
-	int		i;
-	int		j;
-	char	*result;
-	bool	single_quotes;
-	bool	double_quotes;
+	int i;
+	int j;
+	char *result;
+	bool single_quotes;
+	bool double_quotes;
 
 	i = 0;
 	j = 0;
@@ -96,62 +97,15 @@ char	*line_quote_manager(char *line)
 	return (result);
 }
 
-// void	line_quote_manager(char **line)
-// {
-// 	int i;
-// 	int j;
-// 	char *result;
-// 	bool single_quotes;
-// 	bool double_quotes;
-
-// 	i = 0;
-// 	j = 0;
-// 	single_quotes = false;
-// 	double_quotes = false;
-
-// 	if (!line || !*line) // Vérification des pointeurs.
-// 		return ;
-
-// 	result = malloc(ft_strlen(*line) + 1);
-// 	if (!result)
-// 	{
-// 		perror("error, line quote malloc failed");
-// 		return ;
-// 	}
-
-// 	while ((*line)[i])
-// 	{
-// 		if ((*line)[i] == '\'' && !double_quotes)
-// 			single_quotes = !single_quotes;
-// 		else if ((*line)[i] == '"' && !single_quotes)
-// 			double_quotes = !double_quotes;
-// 		else
-// 			result[j++] = (*line)[i];
-// 		i++;
-// 	}
-
-// 	if (single_quotes || double_quotes)
-// 	{
-// 		free(result);
-// 		ft_putstr_fd("minishell: error, quotes are not closed\n", 2);
-// 		*line = NULL; // Met à NULL pour signaler une erreur.
-// 		return ;
-// 	}
-
-// 	result[j] = '\0';
-// 	*line = result; // Remplace par le nouveau contenu.
-// }
-
 // Tokenise la phrase entree apres le prompt
 void	line_tokenization(t_global **global, char *line)
 {
-	char	*token;
-	int		beginning;
-	int		end;
+	char *token;
+	int beginning;
+	int end;
 
 	free_token_list(&(*global)->token_list);
 	line = dollar_parsing(*global, line);
-	// line_quote_manager(&line);
 	line = line_quote_manager(line);
 	if (!line)
 		return ;
@@ -162,7 +116,7 @@ void	line_tokenization(t_global **global, char *line)
 			end++;
 		beginning = end;
 		while (line[end] && !is_white_space(line[end])
-			&& !is_special_token(&line[end]))
+			&& !str_is_special_token(&line[end]))
 			end++;
 		if (beginning != end)
 		{

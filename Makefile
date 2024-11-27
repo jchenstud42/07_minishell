@@ -23,6 +23,7 @@ SRC			=	minishell.c \
 				token/tokenize_line.c \
 				token/token_utils.c \
 				parsing/check_line.c \
+				parsing/check_line2.c \
 				parsing/count.c \
 				parsing/dollar_utils.c \
 				parsing/dollar.c \

@@ -36,3 +36,35 @@ int	is_pipe(char c)
 		return (1);
 	return (0);
 }
+
+bool	token_is_special_token(t_token *token)
+{
+	if (token->type == APPEND || token->type == TRUNC || token->type == HEREDOC
+		|| token->type == INPUT || token->type == PIPE)
+		return (true);
+	return (false);
+}
+
+// Verifie si le token est autre chose qu'un ARG
+int	str_is_special_token(char *token)
+{
+	if (!token || !token[0])
+		return (0);
+	if (token[0] == '|')
+		return (PIPE);
+	else if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HEREDOC);
+		else
+			return (INPUT);
+	}
+	else if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APPEND);
+		else
+			return (TRUNC);
+	}
+	return (0);
+}

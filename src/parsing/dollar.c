@@ -87,6 +87,11 @@ static char	*translate_dollar_sign(t_global *global, char *result, int *i,
 		result = dollar_question(result, global, i, j);
 		return (result);
 	}
+	if (ft_isdigit(global->line[(*i) + 1]))
+	{
+		(*i) += 2;
+		return (result);
+	}
 	if (!ft_isalnum(global->line[(*i) + 1]))
 	{
 		result = ft_strcharjoin(result, '$');
