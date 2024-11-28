@@ -21,6 +21,20 @@ int	is_white_space(char c)
 	return (((9 <= c) && (c <= 13)) || (c == 32));
 }
 
+// Passe les espaces au debut de la phrase s'il y en a
+void	skip_beginning_white_space(int *end, char *line)
+{
+	int i;
+
+	i = 0;
+	if (!line)
+		return (perror("error, empty line"));
+	*end = 0;
+	while (is_white_space(line[i]))
+		i++;
+	*end += i;
+}
+
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
 {

@@ -226,12 +226,14 @@ void	append_node_to_token_list(t_global **global, char *prompt);
 
 // TOKEN_UTILS.c
 int	is_white_space(char c);
+void	skip_beginning_white_space(int *end, char *line);
 int	nbr_arg_after_cmd(t_token *token_list);
 
 // TOKENIZE_LINE.c
 char	*line_quote_manager(char *line);
 void	add_special_token(t_global *global, char *line, int *end);
-void	line_tokenization(t_global **global, char *line);
+// void	line_tokenization(t_global **global, char *line);
+void	line_tokenization(t_global **global, char **line);
 
 // INITIALIZATION.c
 void	calloc_global_struct(t_global **global_data);
