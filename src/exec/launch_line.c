@@ -33,18 +33,50 @@ bool	pipe_inside_token_list(t_global *global)
 }
 
 // Interprete et lance le prompt
+// void	launch_line(t_global *global, t_env **env, t_token *token_list)
+// {
+// 	t_cmd	*current_cmd;
+
+// 	if (!global)
+// 		return (perror("erreur, empty global struct"));
+// 	current_cmd = (global->cmd_list);
+// 	if (pipe_inside_token_list(global))
+// 		execute_pipe(current_cmd, global);
+// 	else if (token_list->type == INPUT || token_list->type == HEREDOC
+// 		|| token_list->type == TRUNC || token_list->type == APPEND)
+// 		handle_redirection(global, global->token_list);
+// 	else
+// 	{
+// 		while (current_cmd)
+// 		{
+// 			if (is_builtin(current_cmd->cmd) == 0)
+// 				execute_builtin(current_cmd, global);
+// 			else
+// 				execute_command(global, current_cmd, env);
+// 			current_cmd = current_cmd->next;
+// 		}
+// 	}
+// }
+
 void	launch_line(t_global *global, t_env **env, t_token *token_list)
 {
 	t_cmd	*current_cmd;
+	t_token	*tmp;
 
+	tmp = token_list;
 	if (!global)
 		return (perror("erreur, empty global struct"));
 	current_cmd = (global->cmd_list);
+	while (tmp)
+	{
+		if (tmp->type == INPUT || tmp->type == HEREDOC
+			|| tmp->type == TRUNC || tmp->type == APPEND)
+			handle_redirection(global, global->token_list);
+		tmp = tmp->next;
+	}
 	if (pipe_inside_token_list(global))
 		execute_pipe(current_cmd, global);
-	else if (token_list->type == INPUT || token_list->type == HEREDOC
-		|| token_list->type == TRUNC || token_list->type == APPEND)
-		handle_redirection(global, global->token_list);
+
 	else
 	{
 		while (current_cmd)
@@ -52,7 +84,7 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 			if (is_builtin(current_cmd->cmd) == 0)
 				execute_builtin(current_cmd, global);
 			else
-				execute_command(global, current_cmd, env);
+				execute_command(global, current_cmd, env, token_list);
 			current_cmd = current_cmd->next;
 		}
 	}

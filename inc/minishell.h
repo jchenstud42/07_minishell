@@ -145,7 +145,7 @@ char	**get_env(t_env *env);
 // EXECVE.c
 void	status_child(t_global *global, pid_t pid);
 char	*get_command_path(const char *cmd);
-void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env);
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env, t_token *token_list);
 int	ft_heredoc(t_global *global, int fd, char *word);
 int	in_heredoc(t_global *global, char *word);
 

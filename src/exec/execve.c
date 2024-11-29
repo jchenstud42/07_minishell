@@ -67,15 +67,25 @@ char	*get_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env, t_token *token_list)
 {
 	pid_t	pid;
+	t_token	*tmp;
 	char	**env_cpy;
 	int		status;
 
+	tmp = token_list;
 	env_cpy = get_env(*env);
-	if (!cmd_list->cmd)
-		return (ft_putstr_fd("error, no command entered\n", 2));
+	while (tmp)
+	{
+		if (tmp->type != HEREDOC && tmp->type != TRUNC && tmp->type != INPUT && tmp->type != APPEND)
+		{	
+			ft_printf("Je comprends pas");
+			if (!cmd_list->cmd) 
+				return (ft_putstr_fd("error, no command entered\n", 2));
+		}
+		tmp = tmp->next;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
