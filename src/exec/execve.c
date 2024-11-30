@@ -75,7 +75,8 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
 	char	**env_cpy;
 	int		status;
 	int		valid_type_found;
-	char	*path;
+	int		path_found;
+	int		i;
 
 	valid_type_found = 0;
 	tmp = token_list;
@@ -95,12 +96,23 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
 		if (!cmd_list->cmd)
 			return (ft_putstr_fd("error,no command entered\n", 2));
 	}
-	path = getenv("PATH");
-	ft_printf("%s", path);
-	if (path == NULL || ft_strlen(path) == 0)
+	path_found = 1;
+	i = 0;
+	while (env_cpy[i] != NULL)
 	{
-		ft_putstr_fd("error: PATH is not set\n", 2);
-		global->exit_value = 1;
+		if (ft_strncmp(env_cpy[i], "PATH=", 5) == 0)
+		{
+			path_found = 0;
+			break ;
+		}
+		i++;
+	}
+	if (path_found)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_list->cmd, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		free_array(env_cpy);
 		return ;
 	}
 	pid = fork();

@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
 			launch_line(global, &global->env_list, global->token_list);
-		// printf("exit value : %d\n", global->exit_value);
+		printf("exit value : %d\n", global->exit_value);
 	}
 	free_all(global);
 }
@@ -52,5 +52,5 @@ int	main(int ac, char **av, char **env)
 // - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;
 // - [tokenize_line] toutes les commandes echo qui sont entre guillemets
 // et qui contiennent plusieurs espaces a la suite ne marche pas (echo "      ");
-// - [parsing : quotes] "echo > <" ne fonctionne pas,
+// - [parsing : quotes] echo "> <" ne fonctionne pas,
 // car > et < sont considérés comme des redirections;
