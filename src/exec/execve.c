@@ -67,24 +67,41 @@ char	*get_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env, t_token *token_list)
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
+		t_token *token_list)
 {
 	pid_t	pid;
 	t_token	*tmp;
 	char	**env_cpy;
 	int		status;
+	int		valid_type_found;
+	char	*path;
 
+	valid_type_found = 0;
 	tmp = token_list;
 	env_cpy = get_env(*env);
 	while (tmp)
 	{
-		if (tmp->type != HEREDOC && tmp->type != TRUNC && tmp->type != INPUT && tmp->type != APPEND)
-		{	
-			ft_printf("Je comprends pas");
-			if (!cmd_list->cmd) 
-				return (ft_putstr_fd("error, no command entered\n", 2));
+		if (tmp->type == HEREDOC || tmp->type == TRUNC || tmp->type == INPUT
+			|| tmp->type == APPEND)
+		{
+			valid_type_found = 1;
+			break ;
 		}
 		tmp = tmp->next;
+	}
+	if (!valid_type_found)
+	{
+		if (!cmd_list->cmd)
+			return (ft_putstr_fd("error,no command entered\n", 2));
+	}
+	path = getenv("PATH");
+	ft_printf("%s", path);
+	if (path == NULL || ft_strlen(path) == 0)
+	{
+		ft_putstr_fd("error: PATH is not set\n", 2);
+		global->exit_value = 1;
+		return ;
 	}
 	pid = fork();
 	if (pid == -1)

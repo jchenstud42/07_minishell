@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/27 12:59:12 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:33:55 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,19 +104,16 @@ void	handle_redirection(t_global *global, t_token *token_list)
 {
 	while (token_list)
 	{
-		if (token_list->type == APPEND)
+		if (token_list->type == APPEND) // >
 			redirect(token_list->next->token, O_WRONLY | O_APPEND | O_CREAT,
 				STDOUT_FILENO);
-		//>>
-		else if (token_list->type == TRUNC)
+		else if (token_list->type == TRUNC) // >>
 			redirect(token_list->next->token, O_WRONLY | O_TRUNC | O_CREAT,
 				STDOUT_FILENO);
-		//>
-		else if (token_list->type == INPUT)
+		else if (token_list->type == INPUT) // <
 			redirect(token_list->next->token, O_RDONLY, STDIN_FILENO);
-		//<
-		else if (token_list->type == HEREDOC)
-			in_heredoc(global, token_list->next->token); //<<
+		else if (token_list->type == HEREDOC) // <<
+			in_heredoc(global, token_list->next->token);
 		token_list = token_list->next;
 	}
 }

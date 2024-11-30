@@ -69,14 +69,13 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 	current_cmd = (global->cmd_list);
 	while (tmp)
 	{
-		if (tmp->type == INPUT || tmp->type == HEREDOC
-			|| tmp->type == TRUNC || tmp->type == APPEND)
+		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
+			|| tmp->type == APPEND)
 			handle_redirection(global, global->token_list);
 		tmp = tmp->next;
 	}
 	if (pipe_inside_token_list(global))
 		execute_pipe(current_cmd, global);
-
 	else
 	{
 		while (current_cmd)

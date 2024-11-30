@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 static void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
 {
@@ -26,7 +25,7 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
+	t_global	*global;
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);
@@ -46,12 +45,12 @@ int	main(int ac, char **av, char **env)
 	free_all(global);
 }
 
-//// NOTES A NOUS MEME : /////////////////////////////////////////////////////
+//// NOTES A NOUS MEME :
+/////////////////////////////////////////////////////
 //
 // - [env] "unset PATH" puis "ls" marche, alors que normalement non;
-// - [heredoc] Ne fonctionne pas avec un arg avant ("x << FIN");
 // - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;
-// - [tokenize_line] toutes les commandes echo qui sont entre guillemets et qui
-// 				contiennent plusieurs espaces a la suite ne marche pas (echo "      ");
+// - [tokenize_line] toutes les commandes echo qui sont entre guillemets
+// et qui contiennent plusieurs espaces a la suite ne marche pas (echo "      ");
 // - [parsing : quotes] "echo > <" ne fonctionne pas,
-// 				car > et < sont considérés comme des redirections;
+// car > et < sont considérés comme des redirections;

@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/20 09:47:45 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:29:32 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,6 @@ t_env	*find_last_node_env(t_env *env)
 	return (env);
 }
 
-// int	check_env_line(t_env *env, char *line)
-// {
-// 	int		i;
-// 	int		j;
-// 	t_env	*tmp;
-
-// 	if (!env || !line)
-// 		return (-1);
-// 	i = 0;
-// 	while (line[i] && line[i] != '=')
-// 		i++;
-// 	j = 0;
-// 	tmp = env;
-// 	if (!ft_strncmp(tmp->env, line, i) && (tmp->env[i] == '\0'
-// 			|| tmp->env[i] == '='))
-// 		return (j);
-// 	tmp = tmp->next;
-// 	j++;
-// 	while (tmp != NULL)
-// 	{
-// 		if (!ft_strncmp(tmp->env, line, i) && (tmp->env[i] == '\0'
-// 				|| tmp->env[i] == '='))
-// 			return (j);
-// 		tmp = tmp->next;
-// 		j++;
-// 	}
-// 	return (-1);
-// }
-
-// TEST
 int	check_env_line_exist(t_env *env, char *line)
 {
 	int		i;

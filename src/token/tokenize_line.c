@@ -15,11 +15,10 @@
 
 #include "../../inc/minishell.h"
 
-
 // Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
 void	add_special_token(t_global *global, char *line, int *end)
 {
-	char *token;
+	char	*token;
 
 	if (str_is_special_token(&line[*end]) == PIPE
 		|| str_is_special_token(&line[*end]) == INPUT
@@ -124,58 +123,6 @@ void	add_special_token(t_global *global, char *line, int *end)
 // 	return (result);
 // }
 
-//TEST
-// char	*line_quote_manager(char *line)
-// {
-// 	int i;
-// 	char *result;
-// 	char quote_type;
-// 	bool single_quotes;
-// 	bool double_quotes;
-
-// 	i = 0;
-// 	single_quotes = false;
-// 	double_quotes = false;
-// 	result = calloc(ft_strlen(line) + 1, sizeof(char));
-// 	if (!result)
-// 		return (perror("error, line quote malloc failed"), NULL);
-// 	while (line[i])
-// 	{
-// 		if ((line[i] == '\'' && !double_quotes)|| (line[i] == '"' && !single_quotes))
-// 		{
-// 			quote_type = line[i];
-// 			if (white_space_inside_quote(line, i, quote_type))
-// 			{
-// 				result = ft_strcharjoin(result, line[i++]);
-// 				while (line[i] && line[i] != quote_type)
-// 					result = ft_strcharjoin(result, line[i++]);
-// 				if (line[i])
-// 				result = ft_strcharjoin(result, line[i]);
-// 			}
-// 			else
-// 			{
-// 				if (quote_type == '\'')
-// 					single_quotes = !single_quotes;
-// 				else
-// 					double_quotes = !double_quotes;
-// 			}
-// 		}
-// 		else
-// 			result = ft_strcharjoin(result, line[i]);
-// 		i++;
-// 	}
-// 	if (single_quotes || double_quotes)
-// 	{
-// 		free(result);
-// 		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
-// 			NULL);
-// 	}
-// 	///// A RETIRER PLUS TARD ///////////////////////////////////////////////
-// 	// printf("quote manager : %s\n", result);
-// 	free(line);
-// 	return (result);
-// }
-
 // void	line_tokenization(t_global **global, char **line)
 // {
 // 	char *token;
@@ -239,11 +186,11 @@ void	add_special_token(t_global *global, char *line, int *end)
 
 char	*line_quote_manager(char *line)
 {
-	int i;
-	int j;
-	char *result;
-	bool single_quotes;
-	bool double_quotes;
+	int		i;
+	int		j;
+	char	*result;
+	bool	single_quotes;
+	bool	double_quotes;
 
 	i = 0;
 	j = 0;
@@ -277,9 +224,9 @@ char	*line_quote_manager(char *line)
 // Tokenise la phrase entree apres le prompt
 void	line_tokenization(t_global **global, char **line)
 {
-	char *token;
-	int beginning;
-	int end;
+	char	*token;
+	int		beginning;
+	int		end;
 
 	free_token_list(&(*global)->token_list);
 	*line = dollar_parsing(*global, *line);

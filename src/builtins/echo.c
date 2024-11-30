@@ -33,8 +33,6 @@ int	check_n(char *line)
 	return (0);
 }
 
-// il faudra modifier le write, pour qu'il redirige vers un fd
-// precis, car on peut write dans un fichier par exemple
 void	print_echo(int nbr_caract, int i, char **cmd_list)
 {
 	int	add_line;
