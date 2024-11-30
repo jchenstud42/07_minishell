@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
 /*   Updated: 2024/11/23 13:14:30 by rbouquet         ###   ########.fr       */
 /*                                                                            */
@@ -12,11 +15,12 @@
 
 #include "../../inc/minishell.h"
 
+
 int	export_no_arg(t_env *env)
 {
-	char	**env_tab;
-	int		i;
-	int		j;
+	char **env_tab;
+	int i;
+	int j;
 
 	env_tab = get_env(env);
 	if (!env_tab)
@@ -30,7 +34,7 @@ int	export_no_arg(t_env *env)
 		while (env_tab[i][j] && env_tab[i][j] != '=')
 			ft_printf("%c", env_tab[i][j++]);
 		if (env_tab[i][j] && env_tab[i][j] == '=')
-			ft_printf("=\"%s\"\n", &env_tab[i][j++]);
+			ft_printf("=\"%s\"\n", &env_tab[i][j + 1]);
 		else
 			ft_printf("\n");
 		i++;
@@ -41,7 +45,7 @@ int	export_no_arg(t_env *env)
 
 int	export_syntaxe(char *line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!line[0] || (line[0] != '_' && !ft_isalpha(line[0])))
@@ -57,7 +61,7 @@ int	export_syntaxe(char *line)
 
 int	ft_export(t_global *global, t_env **env, char **line)
 {
-	int	i;
+	int i;
 
 	i = 1;
 	if (!line[i] || !line)
