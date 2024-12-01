@@ -45,94 +45,27 @@ void	add_special_token(t_global *global, char *line, int *end)
 	}
 }
 
-// WORK IN PROGRESS AAAAAHHHHHHHHHHHHHHHHHHH /////////////////////////
-
-static bool	white_space_inside_quote(char *line, int i, char quote_type)
-{
-	bool	there_is_white;
-
-	there_is_white = false;
-	if (line[i] != quote_type)
-		return (false);
-	i++;
-	while (line[i] && line[i + 1] != quote_type)
-	{
-		if (is_white_space(line[i]))
-			there_is_white = true;
-		i++;
-	}
-	if (there_is_white && line[i] == quote_type)
-		return (true);
-	return (false);
-}
-
-char	*line_quote_manager(char *line)
+bool	quotes_are_closed(char *line)
 {
 	int		i;
-	char	*result;
 	bool	single_quotes;
 	bool	double_quotes;
 
 	i = 0;
 	single_quotes = false;
 	double_quotes = false;
-	result = calloc(ft_strlen(line) + 1, sizeof(char));
-	if (!result)
-		return (perror("error, line quote malloc failed"), NULL);
-	while (line[i])
+	while (line && line[i])
 	{
-		if (line[i + 1] && ((line[i] == '\'' && line[i + 1] == '\''
-					&& !double_quotes) || (line[i] == '"' && line[i + 1] == '"'
-					&& !single_quotes)))
-			i += 1;
-		else if (line[i] == '\'' && !double_quotes)
-		{
-			if (white_space_inside_quote(line, i, '\''))
-			{
-				printf("[%d]entree : %c\n", i, line[i]);
-				result = ft_strcharjoin(result, line[i++]);
-				while (line[i] && line[i] != '\'')
-					result = ft_strcharjoin(result, line[i++]);
-				result = ft_strcharjoin(result, line[i]);
-			}
-			else
-			{
-				single_quotes = !single_quotes;
-				// printf("[%d] toggle single_quote : %s\n", i,
-				// 	single_quotes ? "true" : "false");
-			}
-		}
+		if (line[i] == '\'' && !double_quotes)
+			single_quotes = !single_quotes;
 		else if (line[i] == '"' && !single_quotes)
-		{
-			if (white_space_inside_quote(line, i, '"'))
-			{
-				result = ft_strcharjoin(result, line[i++]);
-				while (line[i] && line[i] != '"')
-					result = ft_strcharjoin(result, line[i++]);
-				result = ft_strcharjoin(result, line[i]);
-			}
-			else
-			{
-				double_quotes = !double_quotes;
-				// printf("[%d] toggle double_quote : %s\n", i,
-				// 	double_quotes ? "true" : "false");
-			}
-		}
-		else
-			result = ft_strcharjoin(result, line[i]);
+			double_quotes = !double_quotes;
 		i++;
-		// printf("result : %s\n", result);
 	}
 	if (single_quotes || double_quotes)
-	{
-		free(result);
 		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
-			NULL);
-	}
-	///// A RETIRER PLUS TARD ///////////////////////////////////////////////
-	// printf("quote manager : %s\n", result);
-	free(line);
-	return (result);
+			false);
+	return (true);
 }
 
 void	line_tokenization(t_global **global, char **line)
@@ -144,57 +77,35 @@ void	line_tokenization(t_global **global, char **line)
 
 	free_token_list(&(*global)->token_list);
 	*line = dollar_parsing(*global, *line);
-	if (!*line)
+	if (!*line || !quotes_are_closed(*line))
 		return ;
-	// printf("[after dollar parsing] %s\n", (*line));
-	*line = line_quote_manager(*line);
-	if (!*line)
-		return ;
-	// printf("[after line quote manager] %s\n", (*line));
 	skip_beginning_white_space(&end, *line);
 	while ((*line)[end])
 	{
 		while (is_white_space((*line)[end]))
 			end++;
 		beginning = end;
-		while ((*line)[end] == '\'' || (*line)[end] == '"')
+		if ((*line)[end] == '\'' || (*line)[end] == '"')
 		{
 			quote_type = (*line)[end];
-			// if (!white_space_inside_quote((*line), end, quote_type))
-			// 	break ;
-			beginning = ++end;
+			beginning = end++;
 			while ((*line)[end] && (*line)[end] != quote_type)
 				end++;
-			if (!(*line)[end])
-			{
-				free_token_list(&(*global)->token_list);
-				ft_putstr_fd("minishell: error, quotes are not closed\n", 2);
-				(*global)->exit_value = 1;
-				return ;
-			}
-			if (beginning != end)
-			{
-				token = malloc((end - beginning + 1) * sizeof(char));
-				if (!token)
-					return (perror("error, malloc failed"));
-				ft_strlcpy(token, &(*line)[beginning], end - beginning + 1);
-				// printf("token to append (guillemets) : %s\n", token);
-				append_node_to_token_list(global, token);
-				free(token);
-			}
-			end++;
+			while ((*line)[end] && !is_white_space((*line)[end]))
+				end++;
 		}
-		beginning = end;
-		while ((*line)[end] && !is_white_space((*line)[end])
-			&& !str_is_special_token(&(*line)[end]))
-			end++;
+		else
+		{
+			while ((*line)[end] && !is_white_space((*line)[end])
+				&& !str_is_special_token(&(*line)[end]))
+				end++;
+		}
 		if (beginning != end)
 		{
 			token = malloc((end - beginning + 1) * sizeof(char));
 			if (!token)
 				return (perror("error, line tokenization malloc failed"));
 			ft_strlcpy(token, &(*line)[beginning], end - beginning + 1);
-			// printf("token to append : %s\n", token);
 			append_node_to_token_list(global, token);
 			free(token);
 		}

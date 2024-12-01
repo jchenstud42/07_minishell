@@ -50,5 +50,3 @@ int	main(int ac, char **av, char **env)
 //
 // - [env] "unset PATH" puis "ls" marche, alors que normalement non;
 // - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;
-// - [tokinization] "ls ''" et autres, marchent alors que normalement non;
-// - [quotes] "'hola'" (donc quotes dans diffs quotes) marchent pas

@@ -47,34 +47,57 @@ int	check_token_type(char *token, t_token *last_node)
 		return (ARG);
 }
 
+static char	*remove_quotes(char *token)
+{
+	int i;
+	char *result;
+	char quote_type;
+
+	result = ft_calloc(ft_strlen(token) + 1, sizeof(char));
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (token && token[++i])
+	{
+		if (token[i] == '"' || token[i] == '\'')
+		{
+			quote_type = token[i++];
+			while (token[i] && token[i] != quote_type)
+				result = ft_strcharjoin(result, token[i++]);
+		}
+		else
+			result = ft_strcharjoin(result, token[i]);
+	}
+	return (result);
+}
+
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
 {
-	t_token *token_to_append;
+	t_token *to_append;
 	t_token *last_node;
 
 	if (!global)
 		return (perror("error, empty global structure"));
-	token_to_append = ft_calloc(1, sizeof(t_token));
-	if (!token_to_append)
+	to_append = ft_calloc(1, sizeof(t_token));
+	if (!to_append)
 		return (perror("error, tokenization failed"));
-	token_to_append->token = ft_strdup(prompt);
+	to_append->token = remove_quotes(prompt);
 	last_node = last_element_of_list((*global)->token_list);
-	token_to_append->type = check_token_type(token_to_append->token,
-			last_node);
+	to_append->type = check_token_type(to_append->token, last_node);
 	if (!(*global)->token_list)
 	{
-		(*global)->token_list = token_to_append;
-		token_to_append->index = 1;
-		token_to_append->prev = NULL;
+		(*global)->token_list = to_append;
+		to_append->index = 1;
+		to_append->prev = NULL;
 	}
 	else
 	{
-		last_node->next = token_to_append;
-		token_to_append->prev = last_node;
-		token_to_append->index = last_node->index + 1;
+		last_node->next = to_append;
+		to_append->prev = last_node;
+		to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	// ft_printf("[%d] Type : %d, %s\n", token_to_append->index,
-	// 	token_to_append->type, token_to_append->token);
+	ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
+		to_append->token);
 }

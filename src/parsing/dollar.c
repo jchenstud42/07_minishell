@@ -84,19 +84,19 @@ static char	*translate_dollar_sign(t_global *global, char *result, int *i,
 		result = dollar_question(result, global, i);
 	else if (ft_isdigit(global->line[(*i) + 1]))
 		(*i) += 2;
-	else if (global->line[(*i) + 1] == '\'')
+	else if (global->line[(*i) + 1] == '\'' && global->line[(*i) + 2] != '\'')
 	{
-		(*i)++;
-		while (global->line[(*i)] != '\'')
+		while (global->line[++(*i)] != '\'')
 			result = ft_strcharjoin(result, global->line[(*i)++]);
 	}
-	else if (global->line[(*i) + 1] == '"' && !double_quotes)
+	else if (global->line[(*i) + 1] == '"' && !double_quotes
+		&& global->line[(*i) + 2] != '"')
 	{
-		(*i)++;
-		while (global->line[(*i)] != '"')
+		while (global->line[++(*i)] != '"')
 			result = ft_strcharjoin(result, global->line[(*i)++]);
 	}
-	else if (!ft_isalnum(global->line[(*i) + 1]))
+	else if (!ft_isalnum(global->line[(*i) + 1]) && global->line[(*i)
+		+ 2] != '\'' && global->line[(*i) + 2] != '"')
 	{
 		result = ft_strcharjoin(result, '$');
 		(*i)++;
