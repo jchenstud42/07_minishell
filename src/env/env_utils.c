@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/30 10:29:32 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:34:11 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,19 @@ int	check_env_line_exist(t_env *env, char *line)
 	return (-1);
 }
 
+static char	*update_env_preparation(t_env **env, char *line, int *index)
+{
+	char	*temp;
+
+	if (!line || !env || !*env)
+		return (NULL);
+	*index = check_env_line_exist(*env, line);
+	temp = ft_strdup(line);
+	if (!temp)
+		return (NULL);
+	return (temp);
+}
+
 int	update_env(t_env **env, char *line)
 {
 	int		index;
@@ -80,11 +93,8 @@ int	update_env(t_env **env, char *line)
 	char	*new_value;
 	t_env	*tmp;
 
-	if (!line || !env || !*env)
-		return (1);
-	index = check_env_line_exist(*env, line);
-	new_value = ft_strdup(line);
-	if (index >= 0)
+	new_value = update_env_preparation(env, line, &index);
+	if (new_value && index >= 0)
 	{
 		tmp = *env;
 		i = 0;
@@ -98,9 +108,41 @@ int	update_env(t_env **env, char *line)
 			tmp->env = new_value;
 		}
 	}
-	else if (env_add_node(env, new_value))
+	else if (new_value && env_add_node(env, new_value))
 		return (free(new_value), 0);
-	else
+	else if (new_value)
 		return (free(new_value), 1);
 	return (0);
 }
+
+// int	update_env(t_env **env, char *line)
+// {
+// 	int		index;
+// 	int		i;
+// 	char	*new_value;
+// 	t_env	*tmp;
+
+// 	if (!line || !env || !*env)
+// 		return (1);
+// 	index = check_env_line_exist(*env, line);
+// 	new_value = ft_strdup(line);
+// 	if (new_value && index >= 0)
+// 	{
+// 		tmp = *env;
+// 		i = 0;
+// 		while (i++ < index && tmp)
+// 			tmp = tmp->next;
+// 		if (tmp)
+// 		{
+// 			if (!new_value)
+// 				return (1);
+// 			free(tmp->env);
+// 			tmp->env = new_value;
+// 		}
+// 	}
+// 	else if (new_value && env_add_node(env, new_value))
+// 		return (free(new_value), 0);
+// 	else if (new_value)
+// 		return (free(new_value), 1);
+// 	return (0);
+// }

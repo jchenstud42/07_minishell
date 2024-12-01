@@ -98,7 +98,6 @@ void	execute_pipe(t_cmd *cmd, t_global *global)
 	int fds[2];
 	pid_t pid;
 	int input_fd;
-	int status;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)
@@ -114,11 +113,5 @@ void	execute_pipe(t_cmd *cmd, t_global *global)
 			parent_process(fds, &input_fd, pid);
 		cmd = cmd->next;
 	}
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle_nl);
-	signal(SIGQUIT, handle_nl);
-	while (wait(&status) > 0)
-		;
-	status_child(global, status);
-	signal(SIGINT, SIG_DFL);
+	catch_signals(global);
 }

@@ -50,6 +50,11 @@ bool	invalid_first_token(t_global *global, t_token *token_list)
 {
 	if (!token_list)
 		return (false);
+	else if (token_list->token[0] == '\0')
+	{
+		ft_putstr_fd("minishell: : command not found\n", 2);
+		return (global->exit_value = 127, true);
+	}
 	else if (pipe_after_pipe(global, token_list))
 		return (true);
 	else if (token_list->type == PIPE)

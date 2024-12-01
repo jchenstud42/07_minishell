@@ -15,6 +15,7 @@
 
 #include "../inc/minishell.h"
 
+
 // Malloc + initilise a 0 la structure global
 void	calloc_global_struct(t_global **global_data)
 {
@@ -25,30 +26,23 @@ void	calloc_global_struct(t_global **global_data)
 
 char	**fill_arg_after_cmd(t_token *token_list)
 {
-	t_token	*current_token;
-	char	**cmd_args;
-	int		nbr_arg;
-	int		i;
+	t_token *current_token;
+	char **cmd_args;
+	int nbr_arg;
+	int i;
 
-	// int y;
 	i = -1;
 	current_token = token_list;
 	nbr_arg = nbr_arg_after_cmd(token_list);
 	cmd_args = malloc((nbr_arg + 1) * sizeof(char *));
 	if (!cmd_args)
-	{
-		free(cmd_args);
-		return (perror("error, malloc failed"), NULL);
-	}
+		return (free(cmd_args), perror("error, malloc failed"), NULL);
 	current_token = current_token->next;
 	while (++i < nbr_arg && current_token && current_token->type == ARG)
 	{
 		cmd_args[i] = ft_strdup(current_token->token);
 		if (!cmd_args[i])
-		{
-			free_array(cmd_args);
-			return (perror("error, malloc failed"), NULL);
-		}
+			return (free_array(cmd_args), perror("malloc failed"), NULL);
 		current_token = current_token->next;
 	}
 	cmd_args[i] = NULL;
@@ -65,7 +59,7 @@ char	**fill_arg_after_cmd(t_token *token_list)
 
 void	init_env_list(t_env **env_to_add, char **env)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!env || !*env)
@@ -79,15 +73,13 @@ void	init_env_list(t_env **env_to_add, char **env)
 
 void	init_env(t_env *env_list)
 {
-	char	*value;
+	char *value;
 
 	env_list->name = NULL;
 	env_list->value = NULL;
 	env_list->name = ft_strchr_env_name(env_list->name, env_list->env);
 	if (env_list->name == NULL)
-	{
 		return ;
-	}
 	value = ft_strchr(env_list->env, '=');
 	if (value)
 		env_list->value = ft_strdup(value + 1);

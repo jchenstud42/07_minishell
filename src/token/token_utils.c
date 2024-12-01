@@ -52,3 +52,26 @@ int	nbr_arg_after_cmd(t_token *token_list)
 	}
 	return (nbr_arg);
 }
+
+bool	quotes_are_closed(char *line)
+{
+	int i;
+	bool single_quotes;
+	bool double_quotes;
+
+	i = 0;
+	single_quotes = false;
+	double_quotes = false;
+	while (line && line[i])
+	{
+		if (line[i] == '\'' && !double_quotes)
+			single_quotes = !single_quotes;
+		else if (line[i] == '"' && !single_quotes)
+			double_quotes = !double_quotes;
+		i++;
+	}
+	if (single_quotes || double_quotes)
+		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
+			false);
+	return (true);
+}

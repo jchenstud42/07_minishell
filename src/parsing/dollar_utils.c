@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   dollar_utils.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/11/26 00:25:31 by jchen             #+#    #+#             */
 /*   Updated: 2024/11/26 00:29:31 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 void	ft_dollar_question(t_global *global)
 {
@@ -20,9 +24,9 @@ void	ft_dollar_question(t_global *global)
 
 char	*ft_strcharjoin(char const *str, char c)
 {
-	char	*res;
-	int		i;
-	int		j;
+	char *res;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -36,4 +40,19 @@ char	*ft_strcharjoin(char const *str, char c)
 	res[j++] = c;
 	res[j] = '\0';
 	return (res);
+}
+
+char	*free_and_strcharjoin(char **result, char c)
+{
+	char *temp;
+
+	temp = ft_strcharjoin(*result, c);
+	if (!temp)
+	{
+		free(*result);
+		return (perror("error, strcharjoin failed"), NULL);
+	}
+	free(*result);
+	*result = temp;
+	return (*result);
 }

@@ -16,7 +16,7 @@
 #include "../../inc/minishell.h"
 
 // Ajoute tous les tokens qui ne sont pas des CMD ou des ARG
-void	add_special_token(t_global *global, char *line, int *end)
+static void	add_special_token(t_global *global, char *line, int *end)
 {
 	char	*token;
 
@@ -45,27 +45,28 @@ void	add_special_token(t_global *global, char *line, int *end)
 	}
 }
 
-bool	quotes_are_closed(char *line)
+static void	browse_line(char **line, int *end, int *beginning)
 {
-	int		i;
-	bool	single_quotes;
-	bool	double_quotes;
+	char	quote_type;
 
-	i = 0;
-	single_quotes = false;
-	double_quotes = false;
-	while (line && line[i])
+	while (is_white_space((*line)[*end]))
+		(*end)++;
+	*beginning = *end;
+	if ((*line)[*end] == '\'' || (*line)[*end] == '"')
 	{
-		if (line[i] == '\'' && !double_quotes)
-			single_quotes = !single_quotes;
-		else if (line[i] == '"' && !single_quotes)
-			double_quotes = !double_quotes;
-		i++;
+		quote_type = (*line)[*end];
+		*beginning = (*end)++;
+		while ((*line)[*end] && (*line)[*end] != quote_type)
+			(*end)++;
+		while ((*line)[*end] && !is_white_space((*line)[*end]))
+			(*end)++;
 	}
-	if (single_quotes || double_quotes)
-		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
-			false);
-	return (true);
+	else
+	{
+		while ((*line)[*end] && !is_white_space((*line)[*end])
+			&& !str_is_special_token(&(*line)[*end]))
+			(*end)++;
+	}
 }
 
 void	line_tokenization(t_global **global, char **line)
@@ -73,7 +74,6 @@ void	line_tokenization(t_global **global, char **line)
 	char	*token;
 	int		beginning;
 	int		end;
-	char	quote_type;
 
 	free_token_list(&(*global)->token_list);
 	*line = dollar_parsing(*global, *line);
@@ -82,24 +82,7 @@ void	line_tokenization(t_global **global, char **line)
 	skip_beginning_white_space(&end, *line);
 	while ((*line)[end])
 	{
-		while (is_white_space((*line)[end]))
-			end++;
-		beginning = end;
-		if ((*line)[end] == '\'' || (*line)[end] == '"')
-		{
-			quote_type = (*line)[end];
-			beginning = end++;
-			while ((*line)[end] && (*line)[end] != quote_type)
-				end++;
-			while ((*line)[end] && !is_white_space((*line)[end]))
-				end++;
-		}
-		else
-		{
-			while ((*line)[end] && !is_white_space((*line)[end])
-				&& !str_is_special_token(&(*line)[end]))
-				end++;
-		}
+		browse_line(line, &end, &beginning);
 		if (beginning != end)
 		{
 			token = malloc((end - beginning + 1) * sizeof(char));

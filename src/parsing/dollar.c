@@ -55,7 +55,7 @@ static char	*search_dollar_env_value(char *result, char *dollar_token,
 	return (str);
 }
 
-static char	*dollar_env(int *i, t_global *global, char *result)
+static char	*dollar_env(int *i, t_global *global, char **result)
 {
 	char *dollar_env_name;
 	char *dollar_env_value;
@@ -70,11 +70,13 @@ static char	*dollar_env(int *i, t_global *global, char *result)
 		k++;
 	ft_strlcpy(dollar_env_name, &global->line[*i], k - (*i) + 1);
 	(*i) = k;
-	dollar_env_value = search_dollar_env_value(result, dollar_env_name,
+	dollar_env_value = search_dollar_env_value(*result, dollar_env_name,
 			global->env_list);
 	if (!dollar_env_value)
-		return (free(dollar_env_name), result);
-	return (free(result), free(dollar_env_name), dollar_env_value);
+		return (free(dollar_env_name), *result);
+	free(*result);
+	*result = dollar_env_value;
+	return (free(dollar_env_name), dollar_env_value);
 }
 
 static char	*translate_dollar_sign(t_global *global, char *result, int *i,
@@ -87,22 +89,23 @@ static char	*translate_dollar_sign(t_global *global, char *result, int *i,
 	else if (global->line[(*i) + 1] == '\'' && global->line[(*i) + 2] != '\'')
 	{
 		while (global->line[++(*i)] != '\'')
-			result = ft_strcharjoin(result, global->line[(*i)++]);
+			result = free_and_strcharjoin(&result, global->line[(*i)++]);
 	}
 	else if (global->line[(*i) + 1] == '"' && !double_quotes
 		&& global->line[(*i) + 2] != '"')
 	{
 		while (global->line[++(*i)] != '"')
-			result = ft_strcharjoin(result, global->line[(*i)++]);
+			result = free_and_strcharjoin(&result, global->line[(*i)++]);
 	}
-	else if (!ft_isalnum(global->line[(*i) + 1]) && global->line[(*i)
-		+ 2] != '\'' && global->line[(*i) + 2] != '"')
+	else if (is_white_space(global->line[(*i) + 1])
+		|| (!ft_isalnum(global->line[(*i) + 1]) && global->line[(*i)
+			+ 2] != '\'' && global->line[(*i) + 2] != '"'))
 	{
-		result = ft_strcharjoin(result, '$');
+		result = free_and_strcharjoin(&result, '$');
 		(*i)++;
 	}
 	else
-		result = dollar_env(i, global, result);
+		result = dollar_env(i, global, &result);
 	return (result);
 }
 
@@ -128,7 +131,8 @@ char	*dollar_parsing(t_global *global, char *line)
 		if (!single_quotes && line[i + 1] && line[i] == '$')
 			result = translate_dollar_sign(global, result, &i, double_quotes);
 		else
-			result = ft_strcharjoin(result, line[i++]);
+			result = free_and_strcharjoin(&result, line[i++]);
 	}
+	free(line);
 	return (result);
 }

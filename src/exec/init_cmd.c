@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 // Renvoie le dernier noeud de la structure de commandes.
 t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
 {
@@ -28,8 +29,8 @@ t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
 // Ajoute un noeud a la fin de notre structure de commandes.
 void	append_node_to_cmd_list(t_cmd **cmd)
 {
-	t_cmd	*cmd_to_append;
-	t_cmd	*last_node;
+	t_cmd *cmd_to_append;
+	t_cmd *last_node;
 
 	cmd_to_append = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd_to_append)
@@ -52,20 +53,17 @@ void	append_node_to_cmd_list(t_cmd **cmd)
 // Remplie le <cmd_args> de notre structure de commande.
 char	**fill_cmd_args(t_token *token_list)
 {
-	t_token	*current_token;
-	char	**cmd_args;
-	int		nbr_arg;
-	int		i;
+	t_token *current_token;
+	char **cmd_args;
+	int nbr_arg;
+	int i;
 
 	i = -1;
 	current_token = token_list;
 	nbr_arg = nbr_arg_after_cmd(token_list);
 	cmd_args = malloc((nbr_arg + 1) * sizeof(char *));
 	if (!cmd_args)
-	{
-		free(cmd_args);
-		return (perror("error, malloc failed"), NULL);
-	}
+		return (free(cmd_args), perror("error, malloc failed"), NULL);
 	while (++i < nbr_arg && current_token)
 	{
 		cmd_args[i] = ft_strdup(current_token->token);
@@ -92,7 +90,7 @@ char	**fill_cmd_args(t_token *token_list)
 // de la structure de commandes.
 void	fill_cmd_node(t_cmd **cmd, t_token *current_token)
 {
-	t_cmd	*last_cmd;
+	t_cmd *last_cmd;
 
 	last_cmd = last_element_of_cmd_list(*cmd);
 	if (last_cmd->cmd == NULL)
@@ -112,7 +110,7 @@ void	fill_cmd_node(t_cmd **cmd, t_token *current_token)
 // Initialise notre structure de commandes.
 void	init_cmd_list(t_cmd **cmd, t_token **token)
 {
-	t_token	*current_token;
+	t_token *current_token;
 
 	if (cmd && *cmd)
 		free_cmd_list(cmd);

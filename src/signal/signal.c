@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 void	sig_c(int sig)
 {
 	if (sig == SIGINT)
@@ -49,6 +50,4 @@ void	init_signals(t_global *global)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, sig_c);
-	// if (signal(SIGINT, sig_c) != SIG_ERR)
-	// 	global->exit_value = 130;
 }

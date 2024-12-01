@@ -63,10 +63,10 @@ static char	*remove_quotes(char *token)
 		{
 			quote_type = token[i++];
 			while (token[i] && token[i] != quote_type)
-				result = ft_strcharjoin(result, token[i++]);
+				result = free_and_strcharjoin(&result, token[i++]);
 		}
 		else
-			result = ft_strcharjoin(result, token[i]);
+			result = free_and_strcharjoin(&result, token[i]);
 	}
 	return (result);
 }
@@ -98,6 +98,6 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
-		to_append->token);
+	// ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
+	// 	to_append->token);
 }

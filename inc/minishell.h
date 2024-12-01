@@ -41,10 +41,6 @@ enum				e_token_list
 	ARG
 };
 
-# define TRUE 1
-# define FALSE 0
-# define ERROR -1
-
 # define GREEN "\001\033[1;32m\002"
 # define RESET "\001\033[0m\002"
 
@@ -143,7 +139,6 @@ char				*get_env_value(t_env *find_env, char *name_env);
 char				**get_env(t_env *env);
 
 // EXECVE.c
-void				status_child(t_global *global, pid_t pid);
 char				*get_command_path(const char *cmd);
 void				execute_command(t_global *global, t_cmd *cmd_list,
 						t_env **env, t_token *token_list);
@@ -169,6 +164,10 @@ void				child_process(t_cmd *cmd, int *fds, t_global *global,
 						int input_fd);
 void				execute_pipe(t_cmd *cmd, t_global *global);
 
+// PIPE2.c
+void				status_child(t_global *global, pid_t pid);
+void				catch_signals(t_global *global);
+
 // FREE.c
 void				free_array(char **array);
 void				free_token_list(t_token **token_list);
@@ -193,6 +192,7 @@ int					count_cmd_token(t_token *token_list);
 // DOLLAR_UTILS.c
 void				ft_dollar_question(t_global *global);
 char				*ft_strcharjoin(char const *str, char c);
+char				*free_and_strcharjoin(char **result, char c);
 
 // DOLLAR.c
 char				*dollar_parsing(t_global *global, char *line);
@@ -231,11 +231,9 @@ void				append_node_to_token_list(t_global **global, char *prompt);
 int					is_white_space(char c);
 void				skip_beginning_white_space(int *end, char *line);
 int					nbr_arg_after_cmd(t_token *token_list);
+bool				quotes_are_closed(char *line);
 
 // TOKENIZE_LINE.c
-// char				*line_quote_manager(char *line);
-bool				quotes_are_closed(char *line);
-void				add_special_token(t_global *global, char *line, int *end);
 void				line_tokenization(t_global **global, char **line);
 
 // INITIALIZATION.c

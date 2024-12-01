@@ -35,6 +35,7 @@ SRC			=	minishell.c \
 				exec/execve.c \
 				exec/launch_line.c \
 				exec/pipe.c \
+				exec/pipe2.c \
 				builtins/builtins_utils.c \
 				builtins/cd.c \
 				builtins/echo.c \
