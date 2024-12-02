@@ -15,26 +15,24 @@
 
 #include "../../inc/minishell.h"
 
-
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 		t_global *global)
 {
-	char **env_cpy;
-
-	env_cpy = get_env(*env);
-	if (!cmd_list->cmd)
-		exit(1);
+	global->env_array = get_env(*env);
+	if (!check_valid_type(global->token_list, cmd_list)
+		|| !check_env_path_exists(global, global->env_array, cmd_list))
+		free_all(global);
 	if (!access(cmd_list->cmd, X_OK))
-		execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
+		execve(cmd_list->cmd, cmd_list->cmd_args, global->env_array);
 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
 	global->exit_value = 0;
-	if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
-		&& !slash_in_cmd_token(cmd_list->cmd, true))
+	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
+					global->env_array) == -1)
+			&& !slash_in_cmd_token(cmd_list->cmd, true)))
 	{
 		ft_putstr_fd(cmd_list->cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
 		global->exit_value = 127;
-		free_array(env_cpy);
 		free_all(global);
 	}
 }
@@ -95,9 +93,9 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 // Simule l'execution des pipes.
 void	execute_pipe(t_cmd *cmd, t_global *global)
 {
-	int fds[2];
-	pid_t pid;
-	int input_fd;
+	int		fds[2];
+	pid_t	pid;
+	int		input_fd;
 
 	input_fd = STDIN_FILENO;
 	while (cmd)

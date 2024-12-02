@@ -78,6 +78,8 @@ typedef struct global
 	char			*line;
 	char			*arg;
 	int				exit_value;
+	char			**env_array;
+	char			*temp_str;
 	t_token			*token_list;
 	t_env			*env_list;
 	t_cmd			*cmd_list;
@@ -138,10 +140,19 @@ char				*get_env_value(t_env *find_env, char *name_env);
 // GET_ENV.c
 char				**get_env(t_env *env);
 
+// EXEC_UTILS.c
+void				status_child(t_global *global, pid_t pid);
+void				catch_signals(t_global *global);
+bool				check_env_path_exists(t_global *global, char **env_cpy,
+						t_cmd *cmd_list);
+bool				check_valid_type(t_token *token_list, t_cmd *cmd_list);
+
 // EXECVE.c
 char				*get_command_path(const char *cmd);
 void				execute_command(t_global *global, t_cmd *cmd_list,
-						t_env **env, t_token *token_list);
+						t_env **env);
+
+// HEREDOC.c
 int					ft_heredoc(t_global *global, int fd, char *word);
 int					in_heredoc(t_global *global, char *word);
 
@@ -163,10 +174,6 @@ void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				child_process(t_cmd *cmd, int *fds, t_global *global,
 						int input_fd);
 void				execute_pipe(t_cmd *cmd, t_global *global);
-
-// PIPE2.c
-void				status_child(t_global *global, pid_t pid);
-void				catch_signals(t_global *global);
 
 // FREE.c
 void				free_array(char **array);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/22 12:33:02 by romain           ###   ########.fr       */
+/*   Updated: 2024/12/02 16:36:38 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	env_exist(t_env *env, char *cmd)
 		i++;
 	while (tmp != NULL)
 	{
-		if (!ft_strncmp(tmp->env, cmd, i) && (tmp->env[i] == '=' || tmp->env[i] == '\0'))
+		if (!ft_strncmp(tmp->env, cmd, i) && (tmp->env[i] == '='
+				|| tmp->env[i] == '\0'))
 			return (j);
 		tmp = tmp->next;
 		j++;

@@ -15,7 +15,6 @@
 
 #include "../inc/minishell.h"
 
-
 // Malloc + initilise a 0 la structure global
 void	calloc_global_struct(t_global **global_data)
 {
@@ -26,10 +25,10 @@ void	calloc_global_struct(t_global **global_data)
 
 char	**fill_arg_after_cmd(t_token *token_list)
 {
-	t_token *current_token;
-	char **cmd_args;
-	int nbr_arg;
-	int i;
+	t_token	*current_token;
+	char	**cmd_args;
+	int		nbr_arg;
+	int		i;
 
 	i = -1;
 	current_token = token_list;
@@ -46,20 +45,12 @@ char	**fill_arg_after_cmd(t_token *token_list)
 		current_token = current_token->next;
 	}
 	cmd_args[i] = NULL;
-	/// valueS A ENLEVER PLUS TARD ///////////////////////////////
-	// y = 0;
-	// while (cmd_args[y])
-	// {
-	// 	printf("cmd_arg : %s\n", cmd_args[y]);
-	// 	y++;
-	// }
-	////////////////////////////////////////////////////////////
 	return (cmd_args);
 }
 
 void	init_env_list(t_env **env_to_add, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!env || !*env)
@@ -73,7 +64,7 @@ void	init_env_list(t_env **env_to_add, char **env)
 
 void	init_env(t_env *env_list)
 {
-	char *value;
+	char	*value;
 
 	env_list->name = NULL;
 	env_list->value = NULL;

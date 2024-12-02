@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 12:55:55 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/20 11:27:00 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/02 12:19:32 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_pipe(char *line)
 	int	pipe_count;
 
 	if (!line)
-		return (ERROR);
+		return (-1);
 	i = 0;
 	pipe_count = 0;
 	while (line[i])

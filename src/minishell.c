@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **env)
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
 			launch_line(global, &global->env_list, global->token_list);
-		// printf("exit value : %d\n", global->exit_value);
+		printf("exit value : %d\n", global->exit_value);
 	}
 	free_all(global);
 }
@@ -48,5 +48,4 @@ int	main(int ac, char **av, char **env)
 //// NOTES A NOUS MEME :
 /////////////////////////////////////////////////////
 //
-// - [env] "unset PATH" puis "ls" marche, alors que normalement non;
 // - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;

@@ -32,10 +32,11 @@ SRC			=	minishell.c \
 				parsing/special_token.c \
 				free/free.c \
 				exec/init_cmd.c \
+				exec/exec_utils.c \
 				exec/execve.c \
+				exec/heredoc.c \
 				exec/launch_line.c \
 				exec/pipe.c \
-				exec/pipe2.c \
 				builtins/builtins_utils.c \
 				builtins/cd.c \
 				builtins/echo.c \

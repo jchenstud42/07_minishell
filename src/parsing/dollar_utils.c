@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 void	ft_dollar_question(t_global *global)
 {
 	printf("minishell: %d: command not found\n", global->exit_value);
@@ -24,9 +23,9 @@ void	ft_dollar_question(t_global *global)
 
 char	*ft_strcharjoin(char const *str, char c)
 {
-	char *res;
-	int i;
-	int j;
+	char	*res;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -44,7 +43,7 @@ char	*ft_strcharjoin(char const *str, char c)
 
 char	*free_and_strcharjoin(char **result, char c)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strcharjoin(*result, c);
 	if (!temp)
@@ -52,7 +51,8 @@ char	*free_and_strcharjoin(char **result, char c)
 		free(*result);
 		return (perror("error, strcharjoin failed"), NULL);
 	}
-	free(*result);
+	if (*result)
+		free(*result);
 	*result = temp;
 	return (*result);
 }

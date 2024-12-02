@@ -15,12 +15,11 @@
 
 #include "../../inc/minishell.h"
 
-
 int	export_no_arg(t_env *env)
 {
-	char **env_tab;
-	int i;
-	int j;
+	char	**env_tab;
+	int		i;
+	int		j;
 
 	env_tab = get_env(env);
 	if (!env_tab)
@@ -45,7 +44,7 @@ int	export_no_arg(t_env *env)
 
 int	export_syntaxe(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line[0] || (line[0] != '_' && !ft_isalpha(line[0])))
@@ -61,7 +60,7 @@ int	export_syntaxe(char *line)
 
 int	ft_export(t_global *global, t_env **env, char **line)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!line[i] || !line)

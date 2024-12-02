@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 static bool	invalid_first_token_2(t_token *token_list)
 {
 	if (!ft_strcmp(token_list->token, "&") || !ft_strcmp(token_list->token, ";")
@@ -29,12 +28,12 @@ static bool	invalid_first_token_2(t_token *token_list)
 	else if (!token_list->next && str_is_redirection(token_list->token))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-			2);
+						2);
 		return (true);
 	}
 	else if (!ft_strncmp(token_list->token, "&&", 2)
-		|| !ft_strncmp(token_list->token, ";;", 2)
-		|| !ft_strncmp(token_list->token, "))", 2))
+			|| !ft_strncmp(token_list->token, ";;", 2)
+			|| !ft_strncmp(token_list->token, "))", 2))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		ft_putchar_fd(token_list->token[0], 2);
@@ -90,7 +89,7 @@ bool	check_in_first_token(t_global *global, t_token *token_list)
 
 int	check_line(t_global *global, t_token *token_list)
 {
-	t_token *temp_token;
+	t_token	*temp_token;
 
 	if (!global | !token_list)
 		return (1);

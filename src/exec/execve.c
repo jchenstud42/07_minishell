@@ -43,54 +43,35 @@ char	*get_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
-		t_token *token_list)
+static void	execute_child_process(t_cmd *cmd_list, char **env_array,
+		t_global *global)
 {
-	pid_t	pid;
-	t_token	*tmp;
-	char	**env_cpy;
-	int		status;
-	int		valid_type_found;
-	int		path_found;
-	int		i;
-
-	valid_type_found = 0;
-	tmp = token_list;
-	env_cpy = get_env(*env);
-	while (tmp)
-	{
-		if (tmp->type == HEREDOC || tmp->type == TRUNC || tmp->type == INPUT
-			|| tmp->type == APPEND)
-		{
-			valid_type_found = 1;
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	if (!valid_type_found)
-	{
-		if (!cmd_list->cmd)
-			return (ft_putstr_fd("error,no command entered\n", 2));
-	}
-	path_found = 1;
-	i = 0;
-	while (env_cpy[i] != NULL)
-	{
-		if (ft_strncmp(env_cpy[i], "PATH=", 5) == 0)
-		{
-			path_found = 0;
-			break ;
-		}
-		i++;
-	}
-	if (path_found)
+	signal(SIGQUIT, SIG_DFL);
+	if (!access(cmd_list->cmd, X_OK))
+		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
+	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
+					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
+				true)))
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd_list->cmd, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		free_array(env_cpy);
-		return ;
+		ft_putstr_fd(" command not found\n", 2);
+		global->exit_value = 127;
+		exit_function(global, false);
 	}
+}
+
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
+{
+	pid_t	pid;
+	int		i;
+
+	i = 0;
+	global->env_array = get_env(*env);
+	if (!check_valid_type(global->token_list, cmd_list)
+		|| !check_env_path_exists(global, global->env_array, cmd_list))
+		return ;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -98,77 +79,82 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
 		exit(1);
 	}
 	else if (pid == 0)
-	{
-		signal(SIGQUIT, SIG_DFL);
-		if (!access(cmd_list->cmd, X_OK))
-			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
-		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-		if ((execve(cmd_list->cmd_path, cmd_list->cmd_args, env_cpy) == -1)
-			&& !slash_in_cmd_token(cmd_list->cmd, true))
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd_list->cmd, 2);
-			ft_putstr_fd(" command not found\n", 2);
-			global->exit_value = 127;
-			free_array(env_cpy);
-			exit_function(global, false);
-		}
-	}
+		execute_child_process(cmd_list, global->env_array, global);
 	else
-	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, handle_nl);
-		signal(SIGQUIT, handle_nl);
-		while (wait(&status) > 0)
-			;
-		status_child(global, status);
-		signal(SIGINT, SIG_DFL);
-	}
+		catch_signals(global);
 }
 
-int	ft_heredoc(t_global *global, int fd, char *word)
-{
-	char	*heredoc;
+// void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
+// 		t_token *token_list)
+// {
+// 	pid_t	pid;
+// 	t_token	*tmp;
+// 	char	**env_cpy;
+// 	int		valid_type_found;
+// 	int		path_found;
+// 	int		i;
 
-	while (1)
-	{
-		heredoc = readline("> ");
-		if (!heredoc)
-		{
-			write(2, "warning: here-document delimited by end-of-file ", 48);
-			write(2, "(wanted '", 9);
-			write(2, word, ft_strlen(word));
-			write(2, "')\n", 3);
-			break ;
-		}
-		if (ft_strcmp(heredoc, word) == 0)
-		{
-			free(heredoc);
-			break ;
-		}
-		write(fd, heredoc, ft_strlen(heredoc));
-		write(fd, "\n", 1);
-		free(heredoc);
-	}
-	close(fd);
-	global->exit_value = 0;
-	return (true);
-}
-
-int	in_heredoc(t_global *global, char *word)
-{
-	int	fd;
-
-	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		return (1);
-	if (!ft_heredoc(global, fd, word))
-	{
-		unlink(".heredoc.tmp");
-		return (1);
-	}
-	fd = open(".heredoc.tmp", O_RDONLY);
-	if (fd > 0)
-		unlink(".heredoc.tmp");
-	return (fd);
-}
+// 	valid_type_found = 0;
+// 	tmp = token_list;
+// 	env_cpy = get_env(*env);
+// 	while (tmp)
+// 	{
+// 		if (tmp->type == HEREDOC || tmp->type == TRUNC || tmp->type == INPUT
+// 			|| tmp->type == APPEND)
+// 		{
+// 			valid_type_found = 1;
+// 			break ;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	if (!valid_type_found)
+// 	{
+// 		if (!cmd_list->cmd)
+// 			return (ft_putstr_fd("error, no command entered\n", 2));
+// 	}
+// 	path_found = 1;
+// 	i = 0;
+// 	while (env_cpy[i] != NULL)
+// 	{
+// 		if (ft_strncmp(env_cpy[i], "PATH=", 5) == 0)
+// 		{
+// 			path_found = 0;
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// 	if (path_found)
+// 	{
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(cmd_list->cmd, 2);
+// 		ft_putstr_fd(": No such file or directory\n", 2);
+// 		free_array(env_cpy);
+// 		return ;
+// 	}
+// 	pid = fork();
+// 	if (pid == -1)
+// 	{
+// 		perror("error, fork failed");
+// 		exit(1);
+// 	}
+// 	else if (pid == 0)
+// 	{
+// 		signal(SIGQUIT, SIG_DFL);
+// 		if (!access(cmd_list->cmd, X_OK))
+// 			execve(cmd_list->cmd, cmd_list->cmd_args, env_cpy);
+// 		cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+// 		if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path,
+// 						cmd_list->cmd_args, env_cpy) == -1)
+// 				&& !slash_in_cmd_token(cmd_list->cmd, true)))
+// 		{
+// 			ft_putstr_fd("minishell: ", 2);
+// 			ft_putstr_fd(cmd_list->cmd, 2);
+// 			ft_putstr_fd(" command not found\n", 2);
+// 			global->exit_value = 127;
+// 			free_array(env_cpy);
+// 			exit_function(global, false);
+// 		}
+// 	}
+// 	else
+// 		catch_signals(global);
+// }

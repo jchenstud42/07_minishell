@@ -76,7 +76,8 @@ void	line_tokenization(t_global **global, char **line)
 	int		end;
 
 	free_token_list(&(*global)->token_list);
-	*line = dollar_parsing(*global, *line);
+	if ((ft_strchr((*line), '$')))
+		*line = dollar_parsing(*global, *line);
 	if (!*line || !quotes_are_closed(*line))
 		return ;
 	skip_beginning_white_space(&end, *line);

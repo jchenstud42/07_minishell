@@ -2,12 +2,9 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:30:26 by jchen             #+#    #+#             */
 /*   Updated: 2024/05/27 14:03:12 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -15,10 +12,9 @@
 
 #include "libft.h"
 
-
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (n == 0)
