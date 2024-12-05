@@ -54,5 +54,6 @@ char	*free_and_strcharjoin(char **result, char c)
 	if (*result)
 		free(*result);
 	*result = temp;
+	temp = NULL;
 	return (*result);
 }

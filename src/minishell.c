@@ -49,3 +49,4 @@ int	main(int ac, char **av, char **env)
 /////////////////////////////////////////////////////
 //
 // - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;
+// - [leak : dollar.c] le dernier return leak a chaque fois.....

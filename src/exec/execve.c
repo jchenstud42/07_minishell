@@ -68,6 +68,8 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 	int		i;
 
 	i = 0;
+	if (global->env_array)
+		free_array(global->env_array);
 	global->env_array = get_env(*env);
 	if (!check_valid_type(global->token_list, cmd_list)
 		|| !check_env_path_exists(global, global->env_array, cmd_list))

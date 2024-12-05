@@ -109,10 +109,7 @@ void	free_all(t_global *global_data)
 	if (global_data->env_array)
 		free_array(global_data->env_array);
 	if (global_data->temp_str)
-	{
 		free(global_data->temp_str);
-		global_data->temp_str = NULL;
-	}
 	if (global_data)
 		free(global_data);
 	rl_clear_history();

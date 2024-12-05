@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/02 16:36:38 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/05 17:26:22 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	remove_env_entry(t_env **env, int exist)
 	}
 	next_env = tmp->next;
 	free(tmp->env);
+	free(tmp->name);
+	free(tmp->value);
 	free(tmp);
 	if (prev_env)
 		prev_env->next = next_env;
