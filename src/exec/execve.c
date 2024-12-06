@@ -65,9 +65,7 @@ static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
 	pid_t	pid;
-	int		i;
 
-	i = 0;
 	if (global->env_array)
 		free_array(global->env_array);
 	global->env_array = get_env(*env);
