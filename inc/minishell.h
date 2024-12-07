@@ -150,7 +150,7 @@ bool				check_valid_type(t_token *token_list, t_cmd *cmd_list);
 // EXECVE.c
 char				*get_command_path(const char *cmd);
 void				execute_command(t_global *global, t_cmd *cmd_list,
-						t_env **env);
+						t_env **env, t_token *token_list);
 
 // HEREDOC.c
 int					ft_heredoc(t_global *global, int fd, char *word);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/06 02:13:58 by romain           ###   ########.fr       */
+/*   Updated: 2024/12/07 11:58:56 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,11 @@ void	handle_redirection(t_global *global, t_token *token_list)
 	while (token_list)
 	{
 		if (token_list->type == APPEND) // >
+		{
+			printf("ok");
 			redirect(token_list->next->token, O_WRONLY | O_APPEND | O_CREAT,
 				STDOUT_FILENO);
+		}
 		else if (token_list->type == TRUNC) // >>
 			redirect(token_list->next->token, O_WRONLY | O_TRUNC | O_CREAT,
 				STDOUT_FILENO);

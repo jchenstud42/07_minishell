@@ -15,7 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-
 // Recherche et renvoie le dernier élément de la liste chainee.
 t_token	*last_element_of_list(t_token *token_list)
 {
@@ -38,9 +37,9 @@ int	check_token_type(char *token, t_token *last_node)
 	else if (!ft_strcmp(token, "<<"))
 		return (HEREDOC);
 	else if (!ft_strcmp(token, ">"))
-		return (TRUNC);
-	else if (!ft_strcmp(token, ">>"))
 		return (APPEND);
+	else if (!ft_strcmp(token, ">>"))
+		return (TRUNC);
 	else if (!last_node || last_node->type == PIPE)
 		return (CMD);
 	else
@@ -49,9 +48,9 @@ int	check_token_type(char *token, t_token *last_node)
 
 static char	*remove_quotes(char *token)
 {
-	int i;
-	char *result;
-	char quote_type;
+	int		i;
+	char	*result;
+	char	quote_type;
 
 	result = ft_calloc(ft_strlen(token) + 1, sizeof(char));
 	if (!result)
@@ -74,8 +73,8 @@ static char	*remove_quotes(char *token)
 // Ajoute un noeud a la fin de notre token_list.
 void	append_node_to_token_list(t_global **global, char *prompt)
 {
-	t_token *to_append;
-	t_token *last_node;
+	t_token	*to_append;
+	t_token	*last_node;
 
 	if (!global)
 		return (perror("error, empty global structure"));
@@ -98,6 +97,6 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	// ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
-	// 	to_append->token);
+	ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
+		to_append->token);
 }
