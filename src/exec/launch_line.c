@@ -65,7 +65,7 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 			if (is_builtin(current_cmd->cmd) == 0)
 				execute_builtin(current_cmd, global);
 			else
-				execute_command(global, current_cmd, env, token_list);
+				execute_command(global, current_cmd, env);
 			current_cmd = current_cmd->next;
 		}
 	}

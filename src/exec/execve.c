@@ -43,34 +43,12 @@ char	*get_command_path(const char *cmd)
 	return (NULL);
 }
 
-// static void	execute_child_process(t_cmd *cmd_list, char **env_array,
-// 		t_global *global)
-// {
-// 	signal(SIGQUIT, SIG_DFL);
-// 	if (!access(cmd_list->cmd, X_OK))
-// 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
-// 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-// 	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
-// 					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
-// 				true)))
-// 	{
-// 		ft_putstr_fd("minishell: ", 2);
-// 		ft_putstr_fd(cmd_list->cmd, 2);
-// 		ft_putstr_fd(" command not found\n", 2);
-// 		global->exit_value = 127;
-// 		exit_function(global, false);
-// 	}
-// }
-
 static void	execute_child_process(t_cmd *cmd_list, char **env_array,
-		t_global *global, t_token *token_list)
+		t_global *global)
 {
 	signal(SIGQUIT, SIG_DFL);
 	if (!access(cmd_list->cmd, X_OK))
 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
-	if (token_list->type == HEREDOC || token_list->type == TRUNC
-		|| token_list->type == INPUT || token_list->type == APPEND)
-		return ;
 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
 	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
 					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
@@ -84,8 +62,29 @@ static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 	}
 }
 
-void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
-		t_token *token_list)
+// static void	execute_child_process(t_cmd *cmd_list, char **env_array,
+// 		t_global *global, t_token *token_list)
+// {
+// 	signal(SIGQUIT, SIG_DFL);
+// 	if (!access(cmd_list->cmd, X_OK))
+// 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
+// 	if (token_list->type == HEREDOC || token_list->type == TRUNC
+// 		|| token_list->type == INPUT || token_list->type == APPEND)
+// 		return ;
+// 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
+// 	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
+// 					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
+// 				true)))
+// 	{
+// 		ft_putstr_fd("minishell: ", 2);
+// 		ft_putstr_fd(cmd_list->cmd, 2);
+// 		ft_putstr_fd(" command not found\n", 2);
+// 		global->exit_value = 127;
+// 		exit_function(global, false);
+// 	}
+// }
+
+void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
 	pid_t	pid;
 
@@ -102,7 +101,7 @@ void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env,
 		exit(1);
 	}
 	else if (pid == 0)
-		execute_child_process(cmd_list, global->env_array, global, token_list);
+		execute_child_process(cmd_list, global->env_array, global);
 	else
 		catch_signals(global);
 }
