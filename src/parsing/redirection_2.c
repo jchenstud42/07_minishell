@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/07 11:58:56 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:49:42 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,22 @@ int	redirect(char *filename, int mode, int std_fd)
 
 void	handle_redirection(t_global *global, t_token *token_list)
 {
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (saved_stdin == -1 || saved_stdout == -1)
+	{
+		perror("dup sauvegarde");
+		return ;
+	}
 	while (token_list)
 	{
-		if (token_list->type == APPEND) // >
-		{
-			printf("ok");
+		if (token_list->type == APPEND) // >>
 			redirect(token_list->next->token, O_WRONLY | O_APPEND | O_CREAT,
 				STDOUT_FILENO);
-		}
-		else if (token_list->type == TRUNC) // >>
+		else if (token_list->type == TRUNC) // >
 			redirect(token_list->next->token, O_WRONLY | O_TRUNC | O_CREAT,
 				STDOUT_FILENO);
 		else if (token_list->type == INPUT) // <
@@ -119,4 +126,10 @@ void	handle_redirection(t_global *global, t_token *token_list)
 			in_heredoc(global, token_list->next->token);
 		token_list = token_list->next;
 	}
+	if (dup2(saved_stdin, STDIN_FILENO) == -1)
+		perror("Restauration stdin");
+	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
+		perror("Restauration stdout");
+	close(saved_stdin);
+	close(saved_stdout);
 }

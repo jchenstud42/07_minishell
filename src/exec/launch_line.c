@@ -32,53 +32,11 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
-// static void	check_and_launch_redirection(t_global *global,
-// t_token *token_list)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = token_list;
-// 	while (tmp)
-// 	{
-// 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
-// 			|| tmp->type == APPEND)
-// 			handle_redirection(global, global->token_list);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// void	launch_line(t_global *global, t_env **env, t_token *token_list)
-// {
-// 	t_cmd	*current_cmd;
-
-// 	if (!global)
-// 		return (perror("erreur, empty global struct"));
-// 	current_cmd = (global->cmd_list);
-// 	check_and_launch_redirection(global, token_list);
-// 	if (pipe_inside_token_list(global))
-// 		execute_pipe(current_cmd, global);
-// 	else
-// 	{
-// 		while (current_cmd)
-// 		{
-// 			if (is_builtin(current_cmd->cmd) == 0)
-// 				execute_builtin(current_cmd, global);
-// 			else
-// 				execute_command(global, current_cmd, env, token_list);
-// 			current_cmd = current_cmd->next;
-// 		}
-// 	}
-// }
-
-void	launch_line(t_global *global, t_env **env, t_token *token_list)
+static void	check_and_launch_redirection(t_global *global, t_token *token_list)
 {
-	t_cmd	*current_cmd;
 	t_token	*tmp;
 
 	tmp = token_list;
-	if (!global)
-		return (perror("erreur, empty global struct"));
-	current_cmd = (global->cmd_list);
 	while (tmp)
 	{
 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
@@ -86,6 +44,18 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 			handle_redirection(global, global->token_list);
 		tmp = tmp->next;
 	}
+}
+
+void	launch_line(t_global *global, t_env **env, t_token *token_list)
+{
+	t_cmd	*current_cmd;
+
+	if (!global)
+		return (perror("erreur, empty global struct"));
+	check_and_launch_redirection(global, token_list);
+	if (!global->cmd_list->cmd)
+		return ;
+	current_cmd = (global->cmd_list);
 	if (pipe_inside_token_list(global))
 		execute_pipe(current_cmd, global);
 	else
@@ -100,6 +70,37 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 		}
 	}
 }
+
+// void	launch_line(t_global *global, t_env **env, t_token *token_list)
+// {
+// 	t_cmd	*current_cmd;
+// 	t_token	*tmp;
+
+// 	tmp = token_list;
+// 	if (!global)
+// 		return (perror("erreur, empty global struct"));
+// 	current_cmd = (global->cmd_list);
+// 	while (tmp)
+// 	{
+// 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
+// 			|| tmp->type == APPEND)
+// 			handle_redirection(global, global->token_list);
+// 		tmp = tmp->next;
+// 	}
+// 	if (pipe_inside_token_list(global))
+// 		execute_pipe(current_cmd, global);
+// 	else
+// 	{
+// 		while (current_cmd)
+// 		{
+// 			if (is_builtin(current_cmd->cmd) == 0)
+// 				execute_builtin(current_cmd, global);
+// 			else
+// 				execute_command(global, current_cmd, env, token_list);
+// 			current_cmd = current_cmd->next;
+// 		}
+// 	}
+// }
 
 // ANCIEN ANCIEN ANCIEN
 
