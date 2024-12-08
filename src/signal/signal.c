@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 void	sig_c(int sig)
 {
 	if (sig == SIGINT)
