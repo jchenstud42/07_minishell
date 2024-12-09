@@ -155,8 +155,8 @@ void				execute_command(t_global *global, t_cmd *cmd_list,
 						t_env **env);
 
 // HEREDOC.c
-int					ft_heredoc(t_global *global, int fd, char *word);
-int					in_heredoc(t_global *global, char *word);
+int					in_heredoc(int fd, char *word);
+int					ft_heredoc(t_global *global, char *word);
 
 // INIT_CMD.c
 t_cmd				*last_element_of_cmd_list(t_cmd *cmd_list);
@@ -209,7 +209,7 @@ char				*dollar_parsing(t_global *global, char *line);
 // REDIRECTION.c
 bool				last_token_redirection(t_token *token_list);
 bool				invalid_redirection(t_token *token_list, t_global *global);
-bool				token_is_redirection(t_token *token);
+bool				tok_is_redir(t_token *token);
 bool				str_is_redirection(char *str);
 
 // REDIRECTION_2.c
@@ -250,8 +250,7 @@ void				calloc_global_struct(t_global **global_data);
 char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
-
 void				check_and_launch_redirection(t_global *global,
-						t_token *token_list);
+						t_token *token);
 
 #endif

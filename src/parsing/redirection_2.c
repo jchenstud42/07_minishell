@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/09 15:25:19 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:53:09 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	handle_redirection(t_global *global, t_token *token_list)
 	{
 		if (token_list->type == TRUNC) // >
 			redirect(token_list->next->token, O_WRONLY | O_TRUNC | O_CREAT,
-				STDOUT_FILENO);
+					STDOUT_FILENO);
 		else if (token_list->type == APPEND) // >>
 			redirect(token_list->next->token, O_WRONLY | O_APPEND | O_CREAT,
-				STDOUT_FILENO);
+					STDOUT_FILENO);
 		else if (token_list->type == INPUT) // <
 			redirect(token_list->next->token, O_RDONLY, STDIN_FILENO);
 		else if (token_list->type == HEREDOC) // <<
-			in_heredoc(global, token_list->next->token);
+			ft_heredoc(global, token_list->next->token);
 		token_list = token_list->next;
 	}
 	if (dup2(saved_stdin, STDIN_FILENO) == -1)

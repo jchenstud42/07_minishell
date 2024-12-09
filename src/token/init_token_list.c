@@ -98,5 +98,5 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 	}
 	// A RETIRER PLUS TARD
 	ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
-		to_append->token);
+			to_append->token);
 }

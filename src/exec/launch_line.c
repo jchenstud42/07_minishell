@@ -32,16 +32,16 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
-void	check_and_launch_redirection(t_global *global, t_token *token_list)
+void	check_and_launch_redirection(t_global *global, t_token *token)
 {
 	t_token	*tmp;
 
-	tmp = token_list;
+	tmp = token;
 	while (tmp)
 	{
 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
 			|| tmp->type == APPEND)
-			handle_redirection(global, global->token_list);
+			handle_redirection(global, global->token);
 		tmp = tmp->next;
 	}
 }
