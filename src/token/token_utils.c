@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/10/23 09:30:04 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/06 11:22:21 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 16:38:46 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/09 16:41:08 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 int	is_white_space(char c)
 {
@@ -24,7 +20,7 @@ int	is_white_space(char c)
 // Passe les espaces au debut de la phrase s'il y en a
 void	skip_beginning_white_space(int *end, char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!line)
@@ -38,8 +34,8 @@ void	skip_beginning_white_space(int *end, char *line)
 // Compte le nombre d'ARG se trouvant apres une CMD
 int	nbr_arg_after_cmd(t_token *token_list)
 {
-	int nbr_arg;
-	t_token *current_token;
+	int		nbr_arg;
+	t_token	*current_token;
 
 	nbr_arg = 1;
 	if (!token_list)
@@ -55,9 +51,9 @@ int	nbr_arg_after_cmd(t_token *token_list)
 
 bool	quotes_are_closed(char *line)
 {
-	int i;
-	bool single_quotes;
-	bool double_quotes;
+	int		i;
+	bool	single_quotes;
+	bool	double_quotes;
 
 	i = 0;
 	single_quotes = false;
@@ -71,7 +67,10 @@ bool	quotes_are_closed(char *line)
 		i++;
 	}
 	if (single_quotes || double_quotes)
-		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
-			false);
+	{
+		ft_putstr_fd("minishell: error, ", 2);
+		ft_putstr_fd("quotes are not closed\n", 2);
+		return (false);
+	}
 	return (true);
 }

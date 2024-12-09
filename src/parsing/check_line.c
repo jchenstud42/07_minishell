@@ -2,18 +2,24 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/20 11:51:45 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/20 17:20:31 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 15:53:50 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/09 16:23:47 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static bool	invalid_double_special(t_token *token_list)
+{
+	if (!ft_strncmp(token_list->token, "&&", 2)
+		|| !ft_strncmp(token_list->token, ";;", 2)
+		|| !ft_strncmp(token_list->token, "))", 2))
+		return (true);
+	return (false);
+}
 
 static bool	invalid_first_token_2(t_token *token_list)
 {
@@ -27,13 +33,11 @@ static bool	invalid_first_token_2(t_token *token_list)
 	}
 	else if (!token_list->next && str_is_redirection(token_list->token))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-						2);
+		ft_putstr_fd("minishell: syntax error near unexpected ", 2);
+		ft_putstr_fd("token `newline'\n", 2);
 		return (true);
 	}
-	else if (!ft_strncmp(token_list->token, "&&", 2)
-			|| !ft_strncmp(token_list->token, ";;", 2)
-			|| !ft_strncmp(token_list->token, "))", 2))
+	else if (invalid_double_special(token_list))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		ft_putchar_fd(token_list->token[0], 2);

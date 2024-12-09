@@ -38,8 +38,7 @@ void	sig_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		// write(STDERR_FILENO, "\n", 1);
-		exit(1);
+		exit(130);
 	}
 }
 

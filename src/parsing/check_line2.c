@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 19:37:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/27 20:03:48 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/09 16:27:03 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ bool	is_point_and_slash(char *token, t_global *global)
 	i = -1;
 	while (token[++i])
 	{
-		if ((token[i] != '.' && token[i] != '/') || (token[i] == '.' && token[i
-				+ 1] == '.' && token[i + 2] == '.'))
+		if ((token[i] != '.' && token[i] != '/'))
+			return (false);
+		if ((token[i] == '.' && token[i + 1] == '.' && token[i + 2] == '.'))
 			return (false);
 	}
 	ft_putstr_fd("minishell: ", 2);
