@@ -32,7 +32,7 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
-void	check_and_launch_redirection(t_global *global, t_token *token)
+void	launch_redirection(t_global *global, t_token *token)
 {
 	t_token	*tmp;
 
@@ -52,7 +52,7 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 
 	if (!global)
 		return (perror("erreur, empty global struct"));
-	check_and_launch_redirection(global, token_list);
+	launch_redirection(global, token_list);
 	if (!global->cmd_list->cmd)
 		return ;
 	current_cmd = (global->cmd_list);
