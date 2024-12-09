@@ -32,7 +32,7 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
-static void	check_and_launch_redirection(t_global *global, t_token *token_list)
+void	check_and_launch_redirection(t_global *global, t_token *token_list)
 {
 	t_token	*tmp;
 

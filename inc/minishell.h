@@ -251,4 +251,7 @@ char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
 
+void				check_and_launch_redirection(t_global *global,
+						t_token *token_list);
+
 #endif

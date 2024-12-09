@@ -15,10 +15,9 @@
 
 #include "../../inc/minishell.h"
 
-
 int	ft_heredoc(t_global *global, int fd, char *word)
 {
-	char *heredoc;
+	char	*heredoc;
 
 	while (1)
 	{
@@ -46,7 +45,7 @@ int	ft_heredoc(t_global *global, int fd, char *word)
 
 static bool	sigint_in_heredoc(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = sig_heredoc;
 	sa.sa_flags = 0;
@@ -58,8 +57,8 @@ static bool	sigint_in_heredoc(void)
 
 int	in_heredoc(t_global *global, char *word)
 {
-	int fd;
-	pid_t pid;
+	int		fd;
+	pid_t	pid;
 
 	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
@@ -70,7 +69,7 @@ int	in_heredoc(t_global *global, char *word)
 	else if (pid == 0)
 	{
 		if (sigint_in_heredoc())
-			return (close(fd), unlink(".heredoc.tmp"), 1);
+			return (close(fd), 1);
 		if (!ft_heredoc(global, fd, word))
 			return (close(fd), unlink(".heredoc.tmp"), 1);
 		fd = open(".heredoc.tmp", O_RDONLY);
