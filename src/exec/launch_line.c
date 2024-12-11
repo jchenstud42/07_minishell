@@ -41,7 +41,7 @@ void	launch_redirection(t_global *global, t_token *token)
 	{
 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
 			|| tmp->type == APPEND)
-			handle_redirection(global, global->token);
+			handle_redirection(global, token);
 		tmp = tmp->next;
 	}
 }
