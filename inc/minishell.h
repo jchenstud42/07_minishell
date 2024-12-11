@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/08 15:59:34 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/08 15:59:34 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/11 18:54:50 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,9 +212,6 @@ bool				str_is_redirection(char *str);
 // REDIRECTION_2.c
 void				handle_redirection(t_global *global, t_token *token_list);
 int					redirect(char *filename, int mode, int std_fd);
-// int					redirect_input(char *filename);
-// int					redirect_truncate(char *filename);
-// int					redirect_append(char *filename);
 
 // SPECIAL_TOKEN.c
 int					is_builtin(char *cmd);

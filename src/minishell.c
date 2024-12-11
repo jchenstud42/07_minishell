@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:55:30 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/11 16:12:34 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:31:20 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,32 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 	(void)ac;
 	(void)av;
 	init_env_list(&global->env_list, env);
+}
+
+static void	cleaning_for_next_loop(t_global *global)
+{
+	t_cmd	*cmd;
+
+	if (global->line)
+		free(global->line);
+	cmd = global->cmd_list;
+	if (cmd)
+	{
+		while (cmd)
+		{
+			if (cmd->infile_cmd != -1)
+			{
+				close(cmd->infile_cmd)
+					cmd->infile_cmd = -1;
+			}
+			if (cmd->outfile_cmd != -1)
+			{
+				close(cmd->outfile_cmd)
+					cmd->outfile_cmd = -1;
+			}
+			cmd = cmd->next;
+		}
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -37,15 +63,8 @@ int	main(int ac, char **av, char **env)
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
 			launch_line(global, &global->env_list, global->token_list);
-		if (global->line)
-			free(global->line);
+		cleaning_for_next_loop(global);
 		printf("exit value : %d\n", global->exit_value);
 	}
 	free_all(global);
 }
-
-//// NOTES A NOUS MEME :
-/////////////////////////////////////////////////////
-//
-// - [exit_value] si seulement Ctrl+C, l'exit value ne se met pas a jour;
-// - [redirection]
