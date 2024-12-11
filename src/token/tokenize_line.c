@@ -45,26 +45,80 @@ static void	add_special_token(t_global *global, char *line, int *end)
 	}
 }
 
-static void	browse_line(char **line, int *end, int *beginning)
+// static void	browse_line(char **line, int *end, int *beginning)
+// {
+// 	char	quote_type;
+
+// 	while (is_white_space((*line)[*end]))
+// 		(*end)++;
+// 	*beginning = *end;
+// 	if ((*line)[*end] == '\'' || (*line)[*end] == '"')
+// 	{
+// 		quote_type = (*line)[*end];
+// 		*beginning = (*end)++;
+// 		while ((*line)[*end] && (*line)[*end] != quote_type)
+// 			(*end)++;
+// 		while ((*line)[*end] && !is_white_space((*line)[*end]))
+// 			(*end)++;
+// 		if ((*line)[*end] == quote_type)
+// 			(*end)++;
+// 	}
+// 	else
+// 	{
+// 		while ((*line)[*end] && !is_white_space((*line)[*end])
+// 			&& !str_is_special_token(&(*line)[*end]) && (*line)[*end] != '\''
+// 			&& (*line)[*end] != '"')
+// 			(*end)++;
+// 		if ((*line)[*end] == '\'' || (*line)[*end] == '"')
+// 		{
+// 			quote_type = (*line)[*end];
+// 			(*end)++;
+// 			while ((*line)[*end] && (*line)[*end] != quote_type)
+// 				(*end)++;
+// 			while ((*line)[*end] && !is_white_space((*line)[*end]))
+// 				(*end)++;
+// 			if ((*line)[*end] == quote_type)
+// 				(*end)++;
+// 		}
+// 		while ((*line)[*end] && !is_white_space((*line)[*end])
+// 			&& !str_is_special_token(&(*line)[*end]) && (*line)[*end] != '\''
+// 			&& (*line)[*end] != '"')
+// 			(*end)++;
+// 	}
+// }
+
+static void	process_quotes(char **line, int *end)
 {
 	char	quote_type;
 
+	quote_type = (*line)[*end];
+	(*end)++;
+	while ((*line)[*end] && (*line)[*end] != quote_type)
+		(*end)++;
+	if ((*line)[*end] == quote_type)
+		(*end)++;
+	while ((*line)[*end] && !is_white_space((*line)[*end]))
+		(*end)++;
+}
+
+static void	browse_line(char **line, int *end, int *beginning)
+{
 	while (is_white_space((*line)[*end]))
 		(*end)++;
 	*beginning = *end;
 	if ((*line)[*end] == '\'' || (*line)[*end] == '"')
-	{
-		quote_type = (*line)[*end];
-		*beginning = (*end)++;
-		while ((*line)[*end] && (*line)[*end] != quote_type)
-			(*end)++;
-		while ((*line)[*end] && !is_white_space((*line)[*end]))
-			(*end)++;
-	}
+		process_quotes(line, end);
 	else
 	{
 		while ((*line)[*end] && !is_white_space((*line)[*end])
-			&& !str_is_special_token(&(*line)[*end]))
+			&& !str_is_special_token(&(*line)[*end]) && (*line)[*end] != '\''
+			&& (*line)[*end] != '"')
+			(*end)++;
+		if ((*line)[*end] == '\'' || (*line)[*end] == '"')
+			process_quotes(line, end);
+		while ((*line)[*end] && !is_white_space((*line)[*end])
+			&& !str_is_special_token(&(*line)[*end]) && (*line)[*end] != '\''
+			&& (*line)[*end] != '"')
 			(*end)++;
 	}
 }
@@ -97,44 +151,32 @@ void	line_tokenization(t_global **global, char **line)
 	}
 }
 
-//////////////////// ANCIENNE VERSION AU CAS OU SI CEST TOUT CASSE
-
-// char	*line_quote_manager(char *line)
+// static void	browse_line(char **line, int *end, int *beginning)
 // {
-// 	int		i;
-// 	int		j;
-// 	char	*result;
-// 	bool	single_quotes;
-// 	bool	double_quotes;
+// 	char	quote_type;
 
-// 	i = 0;
-// 	j = 0;
-// 	single_quotes = false;
-// 	double_quotes = false;
-// 	result = malloc(ft_strlen(line) + 1);
-// 	if (!result)
-// 		return (perror("error, line quote malloc failed"), NULL);
-// 	while (line[i])
+// 	while (is_white_space((*line)[*end]))
+// 		(*end)++;
+// 	*beginning = *end;
+// 	if ((*line)[*end] == '\'' || (*line)[*end] == '"')
 // 	{
-// 		if (line[i] == '\'' && !double_quotes)
-// 			single_quotes = !single_quotes;
-// 		else if (line[i] == '"' && !single_quotes)
-// 			double_quotes = !double_quotes;
-// 		else
-// 			result[j++] = line[i];
-// 		i++;
+// 		quote_type = (*line)[*end];
+// 		*beginning = (*end)++;
+// 		while ((*line)[*end] && (*line)[*end] != quote_type)
+// 			(*end)++;
+// 		while ((*line)[*end] && !is_white_space((*line)[*end]))
+// 			(*end)++;
+// 		if ((*line)[*end] == quote_type)
+// 			(*end)++;
 // 	}
-// 	if (single_quotes || double_quotes)
+// 	else
 // 	{
-// 		free(result);
-// 		return (ft_putstr_fd("minishell: error, quotes are not closed\n", 2),
-// 			NULL);
+// 		while ((*line)[*end] && !is_white_space((*line)[*end])
+// 			&& !str_is_special_token(&(*line)[*end]))
+// 			(*end)++;
 // 	}
-// 	result[j] = '\0';
-// 	return (result);
 // }
 
-// // Tokenise la phrase entree apres le prompt
 // void	line_tokenization(t_global **global, char **line)
 // {
 // 	char	*token;
@@ -142,19 +184,14 @@ void	line_tokenization(t_global **global, char **line)
 // 	int		end;
 
 // 	free_token_list(&(*global)->token_list);
-// 	*line = dollar_parsing(*global, *line);
-// 	*line = line_quote_manager(*line);
-// 	if (!*line)
+// 	if ((ft_strchr((*line), '$')))
+// 		*line = dollar_parsing(*global, *line);
+// 	if (!*line || !quotes_are_closed(*line))
 // 		return ;
 // 	skip_beginning_white_space(&end, *line);
 // 	while ((*line)[end])
 // 	{
-// 		while (is_white_space((*line)[end]))
-// 			end++;
-// 		beginning = end;
-// 		while ((*line)[end] && !is_white_space((*line)[end])
-// 			&& !str_is_special_token(&(*line)[end]))
-// 			end++;
+// 		browse_line(line, &end, &beginning);
 // 		if (beginning != end)
 // 		{
 // 			token = malloc((end - beginning + 1) * sizeof(char));
