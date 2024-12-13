@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/11 16:46:29 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:27:13 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,25 @@ int	validate_unset_cmd(char *cmd)
 
 	if (!cmd || !(*cmd))
 	{
-		ft_printf("unset: invalid identifier\n");
+		ft_printf("minishell: unset: `%s': not a valid identifier\n", cmd);
 		return (1);
 	}
 	else if (cmd[0] != '_' && !ft_isalpha(cmd[0]))
 	{
-		ft_printf("unset: invalid identifier\n");
+		ft_printf("minishell: unset: `%s': not a valid identifier\n", cmd);
 		return (1);
 	}
 	i = 0;
 	while (cmd[i] && cmd[i] != '=')
 	{
-		if (cmd[i] != '_' && !ft_isalnum(cmd[i]))
-		{
-			ft_printf("unset: invalid identifier\n");
-			return (1);
-		}
+		if ((cmd[i] != '_' && !ft_isalnum(cmd[i])))
+			return (ft_printf("minishell: unset: `%s': not a valid identifier\n",
+					cmd), 1);
 		i++;
 	}
+	if (cmd[i] == '=')
+		return (ft_printf("minishell: unset: `%s': not a valid identifier\n",
+				cmd), 1);
 	return (0);
 }
 

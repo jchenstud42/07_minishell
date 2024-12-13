@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:42:28 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/11 17:46:54 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/13 11:35:55 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	execute_builtin(t_cmd *cmd_list, t_global *global)
 	if (global->cmd_list->outfile_cmd != -1)
 	{
 		printf("ok dup2(%d, %d) builtin\n", global->cmd_list->outfile_cmd,
-				STDOUT_FILENO);
+			STDOUT_FILENO);
 		dup2(global->cmd_list->outfile_cmd, STDOUT_FILENO);
 	}
 	if (global->cmd_list->infile_cmd != -1)
 	{
 		printf("ok dup2(%d, %d) builtin\n", global->cmd_list->infile_cmd,
-				STDIN_FILENO);
+			STDIN_FILENO);
 		dup2(global->cmd_list->infile_cmd, STDIN_FILENO);
 	}
 	if (ft_strcmp(cmd_list->cmd, "cd") == 0)

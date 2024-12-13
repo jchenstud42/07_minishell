@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:00 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/02 15:54:23 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/13 14:03:21 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	atoi_exit(char *cmd_arg, bool *atoi_error)
 // Fonction de sortie.
 void	exit_function(t_global *global, bool write_exit)
 {
-	if (write_exit == true)
+	if (write_exit == true && !pipe_inside_token_list(global))
 		ft_printf("exit\n");
 	free_all(global);
 }

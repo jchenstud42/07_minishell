@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:55:30 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/11 19:31:20 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/13 13:40:59 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static void	cleaning_for_next_loop(t_global *global)
 		{
 			if (cmd->infile_cmd != -1)
 			{
-				close(cmd->infile_cmd)
-					cmd->infile_cmd = -1;
+				close(cmd->infile_cmd);
+				cmd->infile_cmd = -1;
 			}
 			if (cmd->outfile_cmd != -1)
 			{
-				close(cmd->outfile_cmd)
-					cmd->outfile_cmd = -1;
+				close(cmd->outfile_cmd);
+				cmd->outfile_cmd = -1;
 			}
 			cmd = cmd->next;
 		}
@@ -52,6 +52,7 @@ int	main(int ac, char **av, char **env)
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);
+	ft_printf("soucis avec echo $PWD qui ne se met pas a jour\n");
 	while (1)
 	{
 		init_signals(global);

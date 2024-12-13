@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:20 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/20 17:51:37 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/13 13:37:40 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	ft_pwd(t_global *global)
 	else
 	{
 		global->exit_value = 1;
-		return (ft_putstr_fd("error\n", 2), 1);
+		ft_putstr_fd("pwd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		return (ft_putstr_fd("No such file or directory\n", 2), 1);
 	}
 	global->exit_value = 0;
 	return (0);
