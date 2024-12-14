@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/11 18:54:50 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 10:56:11 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ void				sort_env(char **tab, int len);
 void				ft_exit(t_global *global, char **cmd_args);
 void				exit_function(t_global *global, bool write_exit);
 
-// EXPORT.c
+// EXPORT_UTILS.c
 int					export_no_arg(t_env *env);
 int					export_syntaxe(char *line);
+
+// EXPORT.c
 int					ft_export(t_global *global, t_env **env, char **line);
 
 // PWD.c
@@ -122,7 +124,6 @@ int					ft_pwd(t_global *global);
 int					validate_unset_cmd(char *cmd);
 int					env_exist(t_env *env, char *cmd);
 void				remove_env_entry(t_env **env, int exist);
-// int					unset_syntaxe(char *cmd);
 int					unset(t_env **env, char *cmd);
 int					ft_unset(t_global *global, t_env **env, char **cmd);
 

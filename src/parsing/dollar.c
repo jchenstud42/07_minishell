@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 17:17:03 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/11 17:48:30 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 10:54:05 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ static char	*translate_dollar_sign(t_global *gl, char *result, int *i,
 			result = free_and_strcharjoin(&result, gl->line[(*i)++]);
 	}
 	else if (gl->line[(*i) + 1] == '"' && !double_quotes && gl->line[(*i)
-			+ 2] != '"')
+		+ 2] != '"')
 	{
 		while (gl->line[++(*i)] != '"')
 			result = free_and_strcharjoin(&result, gl->line[(*i)++]);
 	}
 	else if (is_white_space(gl->line[(*i) + 1]) || (!ft_isalnum(gl->line[(*i)
-					+ 1]) && gl->line[(*i) + 2] != '\'' && gl->line[(*i)
-				+ 2] != '"'))
+				+ 1]) && gl->line[(*i) + 2] != '\'' && gl->line[(*i)
+			+ 2] != '"'))
 	{
 		result = free_and_strcharjoin(&result, '$');
 		(*i)++;
