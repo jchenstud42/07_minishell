@@ -77,7 +77,7 @@ void	free_cmd_list(t_cmd **cmd_list)
 
 void	free_env_list(t_env *env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	if (!env)
 		return ;
@@ -90,28 +90,4 @@ void	free_env_list(t_env *env)
 		free(tmp->env);
 		free(tmp);
 	}
-}
-
-// Libere toute la memoire allouee
-void	free_all(t_global *global_data)
-{
-	int	e_value;
-
-	e_value = global_data->exit_value;
-	if (global_data->cmd_list)
-		free_cmd_list(&global_data->cmd_list);
-	if (global_data->token_list)
-		free_token_list(&global_data->token_list);
-	if (global_data->line)
-		free(global_data->line);
-	if (global_data->env_list)
-		free_env_list(global_data->env_list);
-	if (global_data->env_array)
-		free_array(global_data->env_array);
-	if (global_data->temp_str)
-		free(global_data->temp_str);
-	if (global_data)
-		free(global_data);
-	rl_clear_history();
-	exit(e_value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 09:44:15 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/13 11:27:13 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:52:43 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ int	validate_unset_cmd(char *cmd)
 	{
 		if ((cmd[i] != '_' && !ft_isalnum(cmd[i])))
 			return (ft_printf("minishell: unset: `%s': not a valid identifier\n",
-					cmd), 1);
+								cmd),
+					1);
 		i++;
 	}
 	if (cmd[i] == '=')
 		return (ft_printf("minishell: unset: `%s': not a valid identifier\n",
-				cmd), 1);
+							cmd),
+				1);
 	return (0);
 }
 
@@ -114,8 +116,9 @@ int	ft_unset(t_global *global, t_env **env, char **cmd)
 	global->exit_value = 0;
 	while (cmd[i])
 	{
-		if (unset(env, cmd[i]))
-			return (1);
+		// if (unset(env, cmd[i]))
+		// return (1);
+		unset(env, cmd[i]);
 		i++;
 	}
 	return (0);

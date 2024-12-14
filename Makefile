@@ -30,6 +30,7 @@ SRC			=	minishell.c \
 				parsing/redirection.c \
 				parsing/redirection_2.c \
 				parsing/special_token.c \
+				free/exit_function.c \
 				free/free.c \
 				exec/init_cmd.c \
 				exec/exec_utils.c \

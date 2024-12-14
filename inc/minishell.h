@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 10:56:11 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:34:04 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void				sort_env(char **tab, int len);
 
 // EXIT.c
 void				ft_exit(t_global *global, char **cmd_args);
-void				exit_function(t_global *global, bool write_exit);
 
 // EXPORT_UTILS.c
 int					export_no_arg(t_env *env);
@@ -175,12 +174,15 @@ void				child_process(t_cmd *cmd, int *fds, t_global *global,
 						int input_fd);
 void				execute_pipe(t_cmd *cmd, t_global *global);
 
+// EXIT_FUNCTION.c
+void				exit_function(t_global *global, bool write_exit);
+void				free_all(t_global *global_data);
+
 // FREE.c
 void				free_array(char **array);
 void				free_token_list(t_token **token_list);
 void				free_cmd_list(t_cmd **cmd_list);
 void				free_env_list(t_env *env);
-void				free_all(t_global *global_data);
 
 // CHECK_LINE.c
 bool				invalid_first_token(t_global *global, t_token *token_list);

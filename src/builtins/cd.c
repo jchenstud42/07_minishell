@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/11 12:28:05 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 13:10:53 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ void	update_pwd(t_global *global)
 		return ;
 	update_oldpwd(global);
 	if (getcwd(path, PATH_MAX) == NULL)
-		return ;
+	{
+		global->exit_value = 1;
+		ft_putstr_fd("pwd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		return (ft_putstr_fd("No such file or directory\n", 2));
+	}
 	pwd = ft_strjoin("PWD=", path);
 	if (!pwd)
 		return (perror("error, malloc failed"));

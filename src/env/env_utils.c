@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/14 12:03:07 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 12:24:36 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int	update_env(t_env **env, char *line)
 				return (1);
 			free(tmp->env);
 			tmp->env = new_value;
-			tmp->value = ;
-			tmp->name = ;
+			// tmp->value = ;
+			// tmp->name = ;
 		}
 	}
 	else if (new_value && env_add_node(env, new_value))

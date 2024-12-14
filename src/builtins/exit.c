@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:00 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/13 14:03:21 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:42:38 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,6 @@ static int	atoi_exit(char *cmd_arg, bool *atoi_error)
 	return ((int)result);
 }
 
-// Fonction de sortie.
-void	exit_function(t_global *global, bool write_exit)
-{
-	if (write_exit == true && !pipe_inside_token_list(global))
-		ft_printf("exit\n");
-	free_all(global);
-}
-
 // Provoque l'arrêt du minishell avec un code de retour ($?) égal à n.
 // Si n n'est pas précisé, le code de retour fourni est celui
 // de la dernière commande exécutée.
@@ -97,17 +89,17 @@ void	ft_exit(t_global *global, char **cmd_arg_array)
 		if (pipe_inside_token_list(global))
 			exit_function(global, false);
 	}
-	else if (arg_nbr >= 3)
-	{
-		global->exit_value = 1;
-		return (ft_putstr_fd("minishell: exit: too many arguments\n", 2));
-	}
 	else if (arg_nbr == 2)
 	{
 		only_numeric_or_not(cmd_arg_array[1], &atoi_error);
 		global->exit_value = atoi_exit(cmd_arg_array[1], &atoi_error);
 		if (atoi_error == true)
 			exit_numeric_arg(global, cmd_arg_array);
+	}
+	else if (arg_nbr >= 3)
+	{
+		global->exit_value = 1;
+		return (ft_putstr_fd("minishell: exit: too many arguments\n", 2));
 	}
 	exit_function(global, true);
 }
