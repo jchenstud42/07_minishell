@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/08 15:44:41 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/08 15:44:41 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/14 19:17:18 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +35,7 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 }
 
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
-void	handle_redirections(t_cmd *cmd, int input_fd, int *fds)
+void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 {
 	if (input_fd != STDIN_FILENO)
 	{
@@ -81,7 +78,7 @@ void	parent_process(int *fds, int *input_fd, pid_t pid)
 void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 {
 	signal(SIGQUIT, SIG_DFL);
-	handle_redirections(cmd, input_fd, fds);
+	handle_redirections_pipe(cmd, input_fd, fds);
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
 		execute_builtin(cmd, global);

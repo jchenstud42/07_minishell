@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:34:18 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/09 16:34:19 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 17:17:59 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_pipe(char c)
 
 bool	token_is_special_token(t_token *token)
 {
-	if (token->type == APPEND || token->type == TRUNC || token->type == HEREDOC
+	if (token->type == OUTPUT || token->type == APPEND || token->type == HEREDOC
 		|| token->type == INPUT || token->type == PIPE)
 		return (true);
 	return (false);
@@ -60,7 +60,7 @@ int	str_is_special_token(char *token)
 		if (token[1] == '>')
 			return (APPEND);
 		else
-			return (TRUNC);
+			return (OUTPUT);
 	}
 	return (0);
 }

@@ -74,7 +74,6 @@ SILENT		=	> /dev/null 2>&1
 
 # --------------------------------------------------------------------------------- #
 
-
 # Default target calling for the executable
 all: $(LIBFT) $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/14 12:24:36 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 16:43:16 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ int	update_env(t_env **env, char *line)
 {
 	int		index;
 	int		i;
-	char	*new_value;
+	char	*new_env;
 	t_env	*tmp;
 
-	new_value = update_env_preparation(env, line, &index);
-	if (new_value && index >= 0)
+	new_env = update_env_preparation(env, line, &index);
+	if (new_env && index >= 0)
 	{
 		tmp = *env;
 		i = 0;
@@ -102,17 +102,19 @@ int	update_env(t_env **env, char *line)
 			tmp = tmp->next;
 		if (tmp)
 		{
-			if (!new_value)
+			if (!new_env)
 				return (1);
 			free(tmp->env);
-			tmp->env = new_value;
-			// tmp->value = ;
-			// tmp->name = ;
+			tmp->env = new_env;
+			tmp->value = ft_strchr(new_env, '=') + 1;
+			tmp->name = ft_strndup(new_env, ft_strchr(new_env, '=') - new_env);
+			if (tmp->name == NULL)
+				return (1);
 		}
 	}
-	else if (new_value && env_add_node(env, new_value))
-		return (free(new_value), 0);
-	else if (new_value)
-		return (free(new_value), 1);
+	else if (new_env && env_add_node(env, new_env))
+		return (free(new_env), 0);
+	else if (new_env)
+		return (free(new_env), 1);
 	return (0);
 }

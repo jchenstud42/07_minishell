@@ -2,28 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-		+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-		+#+        */
-/*                                                +#+#+#+#+#+
-		+#+           */
-/*   Created: 2024/11/08 16:12:45 by jchen             #+#    #+#             */
-/*   Updated: 2024/11/16 18:39:01 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 17:56:51 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/14 19:22:37 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// Renvoie le dernier noeud de la structure de commandes.
-t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
-{
-	if (!cmd_list)
-		return (NULL);
-	while (cmd_list->next)
-		cmd_list = cmd_list->next;
-	return (cmd_list);
-}
 
 // Ajoute un noeud a la fin de notre structure de commandes.
 void	append_node_to_cmd_list(t_cmd **cmd)
@@ -36,6 +23,7 @@ void	append_node_to_cmd_list(t_cmd **cmd)
 		return (perror("error, cmd list malloc failed"));
 	cmd_to_append->infile_cmd = -1;
 	cmd_to_append->outfile_cmd = -1;
+	cmd_to_append->filename = NULL;
 	if (*cmd == NULL)
 	{
 		*cmd = cmd_to_append;
@@ -98,6 +86,23 @@ void	fill_cmd_node(t_cmd **cmd, t_token *current_token)
 	}
 }
 
+static void	handle_input_output(t_cmd **cmd, t_token *current_token)
+{
+	t_cmd	*last_cmd;
+
+	last_cmd = last_element_of_cmd_list(*cmd);
+	if (current_token->type == INPUT)
+		last_cmd->infile_cmd = INPUT;
+	else if (current_token->type == HEREDOC)
+		last_cmd->infile_cmd = HEREDOC;
+	else if (current_token->type == APPEND)
+		last_cmd->outfile_cmd = APPEND;
+	else if (current_token->type == OUTPUT)
+		last_cmd->outfile_cmd = OUTPUT;
+	if (current_token->next)
+		last_cmd->filename = ft_strdup(current_token->next->token);
+}
+
 // Initialise notre structure de commandes.
 void	init_cmd_list(t_cmd **cmd, t_token **token)
 {
@@ -113,11 +118,45 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 	{
 		if (current_token->type == CMD)
 			fill_cmd_node(cmd, current_token);
+		else if (1 <= current_token->type && current_token->type <= 4)
+			handle_input_output(cmd, current_token);
 		else if (current_token->type == PIPE)
 			append_node_to_cmd_list(cmd);
 		current_token = current_token->next;
 	}
+	///// TEST PRINT ///////////////////////////////////////////
+	// t_cmd	*start_cmd;
+	// start_cmd = *cmd;
+	// while (start_cmd)
+	// {
+	// 	printf("%s [in %d] [out %d] ", start_cmd->cmd, start_cmd->infile_cmd,
+	// 			start_cmd->outfile_cmd);
+	// 	printf("[file : %s\n]", start_cmd->filename);
+	// 	start_cmd = start_cmd->next;
+	// }
+	////////////////////////////////////////////////////////////
 }
+
+// // Initialise notre structure de commandes.
+// void	init_cmd_list(t_cmd **cmd, t_token **token)
+// {
+// 	t_token	*current_token;
+
+// 	if (cmd && *cmd)
+// 		free_cmd_list(cmd);
+// 	current_token = *token;
+// 	if (!current_token)
+// 		return ;
+// 	append_node_to_cmd_list(cmd);
+// 	while (current_token)
+// 	{
+// 		if (current_token->type == CMD)
+// 			fill_cmd_node(cmd, current_token);
+// 		else if (current_token->type == PIPE)
+// 			append_node_to_cmd_list(cmd);
+// 		current_token = current_token->next;
+// 	}
+// }
 
 // void	init_cmd_list(t_cmd **cmd, t_token **token)
 // {
@@ -136,14 +175,12 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 // 	{
 // 		if (current_token->type == CMD)
 // 			fill_cmd_node(cmd, current_token);
-// 		// else if (current_token->type == INPUT
-// ||
-// current_token->type ==
-// TRUNC
-// 		// 	|| current_token->type == HEREDOC
-// || current_token->type == APPEND)
-// 		// 	handle_input_output(last_cmd_in_list, current_token,
-// global);
+// 		else if (current_token->type == INPUT ||
+// 					current_token->type ==
+// 						APPEND ||
+// 					current_token->type == HEREDOC
+// 						|| current_token->type == OUTPUT)
+// 			handle_input_output(last_cmd_in_list, current_token, global);
 // 		else if (current_token->type == PIPE)
 // 			append_node_to_cmd_list(cmd);
 // 		current_token = current_token->next;

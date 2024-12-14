@@ -22,7 +22,7 @@ static void	add_special_token(t_global *global, char *line, int *end)
 
 	if (str_is_special_token(&line[*end]) == PIPE
 		|| str_is_special_token(&line[*end]) == INPUT
-		|| str_is_special_token(&line[*end]) == TRUNC)
+		|| str_is_special_token(&line[*end]) == OUTPUT)
 	{
 		token = ft_chardup(line[*end]);
 		append_node_to_token_list(&global, token);

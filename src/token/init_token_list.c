@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:47:41 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 12:39:24 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 18:15:42 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	check_token_type(char *token, t_token *last_node)
 	else if (!ft_strcmp(token, "<<"))
 		return (HEREDOC);
 	else if (!ft_strcmp(token, ">"))
-		return (APPEND);
+		return (OUTPUT);
 	else if (!ft_strcmp(token, ">>"))
-		return (TRUNC);
+		return (APPEND);
 	else if (!last_node || last_node->type == PIPE)
 		return (CMD);
 	else
@@ -94,6 +94,6 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		to_append->index = last_node->index + 1;
 	}
 	// A RETIRER PLUS TARD
-	ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
-			to_append->token);
+	// ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
+	// 		to_append->token);
 }

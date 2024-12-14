@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:55:30 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/13 13:40:59 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:10:20 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,11 @@ static void	cleaning_for_next_loop(t_global *global)
 		while (cmd)
 		{
 			if (cmd->infile_cmd != -1)
-			{
 				close(cmd->infile_cmd);
-				cmd->infile_cmd = -1;
-			}
 			if (cmd->outfile_cmd != -1)
-			{
 				close(cmd->outfile_cmd);
-				cmd->outfile_cmd = -1;
-			}
+			cmd->infile_cmd = -1;
+			cmd->outfile_cmd = -1;
 			cmd = cmd->next;
 		}
 	}
@@ -52,7 +48,6 @@ int	main(int ac, char **av, char **env)
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);
-	ft_printf("soucis avec echo $PWD qui ne se met pas a jour\n");
 	while (1)
 	{
 		init_signals(global);
@@ -63,9 +58,9 @@ int	main(int ac, char **av, char **env)
 		line_tokenization(&global, &global->line);
 		init_cmd_list(&global->cmd_list, &global->token_list);
 		if (!check_line(global, global->token_list))
-			launch_line(global, &global->env_list, global->token_list);
+			launch_line(global, &global->env_list);
 		cleaning_for_next_loop(global);
-		printf("exit value : %d\n", global->exit_value);
+		// printf("exit value : %d\n", global->exit_value);
 	}
 	free_all(global);
 }

@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:27:16 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/09 16:33:54 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 17:22:14 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	invalid_redirection(t_token *token, t_global *global)
 {
 	if (!token | !global)
 		return (false);
-	if (token->next && token->type == INPUT && token->next->type == TRUNC)
+	if (token->next && token->type == INPUT && token->next->type == OUTPUT)
 		putstr_syntax_error();
 	else if (token->next && tok_is_redir(token) && tok_is_redir(token->next))
 	{
@@ -55,13 +55,13 @@ bool	invalid_redirection(t_token *token, t_global *global)
 
 bool	tok_is_redir(t_token *token)
 {
-	if (token->type == APPEND || token->type == TRUNC || token->type == HEREDOC
+	if (token->type == OUTPUT || token->type == APPEND || token->type == HEREDOC
 		|| token->type == INPUT)
 		return (true);
 	return (false);
 }
 
-// Verifie si l'element est une redirection (INPUT, HEREDOC, TRUNC, APPEND)
+// Verifie si l'element est une redirection (INPUT, HEREDOC, APPEND, OUTPUT)
 bool	str_is_redirection(char *str)
 {
 	if (!ft_strcmp(str, "<") || !ft_strcmp(str, "<<") || !ft_strcmp(str, ">")

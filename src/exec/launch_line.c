@@ -1,15 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/10/15 14:09:49 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/07 15:20:39 by jchen            ###   ########.fr       */
+/*   launch_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 18:26:02 by jchen             #+#    #+#             */
+/*   Updated: 2024/12/14 19:02:02 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +29,27 @@ bool	pipe_inside_token_list(t_global *global)
 	return (false);
 }
 
-void	launch_redirection(t_global *global, t_token *token)
+static void	launch_redirection(t_global *global, t_cmd *cmd)
 {
-	t_token	*tmp;
+	t_cmd	*tmp;
 
-	tmp = token;
+	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
-			|| tmp->type == APPEND)
-			handle_redirection(global, token);
+		if (tmp->infile_cmd == INPUT || tmp->infile_cmd == HEREDOC
+			|| tmp->outfile_cmd == APPEND || tmp->outfile_cmd == OUTPUT)
+			handle_redirection(global, cmd);
 		tmp = tmp->next;
 	}
 }
 
-void	launch_line(t_global *global, t_env **env, t_token *token_list)
+void	launch_line(t_global *global, t_env **env)
 {
 	t_cmd	*current_cmd;
 
 	if (!global)
 		return (perror("erreur, empty global struct"));
-	launch_redirection(global, token_list);
+	launch_redirection(global, global->cmd_list);
 	if (!global->cmd_list->cmd)
 		return ;
 	current_cmd = (global->cmd_list);
@@ -71,52 +68,32 @@ void	launch_line(t_global *global, t_env **env, t_token *token_list)
 	}
 }
 
-// void	launch_line(t_global *global, t_env **env, t_token *token_list)
+// void	launch_redirection(t_global *global, t_token *token)
 // {
-// 	t_cmd	*current_cmd;
 // 	t_token	*tmp;
 
-// 	tmp = token_list;
-// 	if (!global)
-// 		return (perror("erreur, empty global struct"));
-// 	current_cmd = (global->cmd_list);
+// 	tmp = token;
 // 	while (tmp)
 // 	{
-// 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == TRUNC
-// 			|| tmp->type == APPEND)
-// 			handle_redirection(global, global->token_list);
+// 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == APPEND
+// 			|| tmp->type == OUTPUT)
+// 			handle_redirection(global, token);
 // 		tmp = tmp->next;
-// 	}
-// 	if (pipe_inside_token_list(global))
-// 		execute_pipe(current_cmd, global);
-// 	else
-// 	{
-// 		while (current_cmd)
-// 		{
-// 			if (is_builtin(current_cmd->cmd) == 0)
-// 				execute_builtin(current_cmd, global);
-// 			else
-// 				execute_command(global, current_cmd, env, token_list);
-// 			current_cmd = current_cmd->next;
-// 		}
 // 	}
 // }
 
-// ANCIEN ANCIEN ANCIEN
-
-// Interprete et lance le prompt
 // void	launch_line(t_global *global, t_env **env, t_token *token_list)
 // {
 // 	t_cmd	*current_cmd;
 
 // 	if (!global)
 // 		return (perror("erreur, empty global struct"));
+// 	launch_redirection(global, token_list);
+// 	if (!global->cmd_list->cmd)
+// 		return ;
 // 	current_cmd = (global->cmd_list);
 // 	if (pipe_inside_token_list(global))
 // 		execute_pipe(current_cmd, global);
-// 	else if (token_list->type == INPUT || token_list->type == HEREDOC
-// 		|| token_list->type == TRUNC || token_list->type == APPEND)
-// 		handle_redirection(global, global->token_list);
 // 	else
 // 	{
 // 		while (current_cmd)

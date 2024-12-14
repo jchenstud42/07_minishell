@@ -69,6 +69,8 @@ void	free_cmd_list(t_cmd **cmd_list)
 			free(current->cmd_path);
 		if (current->cmd_args)
 			free_array(current->cmd_args);
+		if (current->filename)
+			free(current->filename);
 		free(current);
 		current = temp;
 	}
@@ -77,7 +79,7 @@ void	free_cmd_list(t_cmd **cmd_list)
 
 void	free_env_list(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (!env)
 		return ;

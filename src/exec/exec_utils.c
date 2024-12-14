@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:41:01 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/07 11:06:48 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:11:32 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ bool	check_valid_type(t_token *token_list, t_cmd *cmd_list)
 	tmp = token_list;
 	while (tmp)
 	{
-		if (tmp->type == HEREDOC || tmp->type == TRUNC || tmp->type == INPUT
-			|| tmp->type == APPEND)
+		if (tmp->type == HEREDOC || tmp->type == APPEND || tmp->type == INPUT
+			|| tmp->type == OUTPUT)
 		{
 			valid_type_found = true;
 			break ;
@@ -100,4 +100,14 @@ bool	check_valid_type(t_token *token_list, t_cmd *cmd_list)
 			return (ft_putstr_fd("error, no command entered\n", 2), false);
 	}
 	return (true);
+}
+
+// Renvoie le dernier noeud de la structure de commandes.
+t_cmd	*last_element_of_cmd_list(t_cmd *cmd_list)
+{
+	if (!cmd_list)
+		return (NULL);
+	while (cmd_list->next)
+		cmd_list = cmd_list->next;
+	return (cmd_list);
 }

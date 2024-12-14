@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 13:34:04 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/14 19:11:57 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 # include <unistd.h>
 
 /*
-[ < : INPUT(1) ] [ << : HEREDOC(2) ] [ >> : TRUNC(3) ] [ > : APPEND(4) ]
+[ < : INPUT(1) ] [ << : HEREDOC(2) ] [ >> : APPEND(3) ] [ > : OUTPUT(4) ]
 */
 enum				e_token_list
 {
 	INPUT = 1,
 	HEREDOC,
-	TRUNC,
 	APPEND,
+	OUTPUT,
 	PIPE,
 	CMD,
 	ARG
@@ -68,6 +68,7 @@ typedef struct s_cmd
 	char			*cmd_path;
 	int				infile_cmd;
 	int				outfile_cmd;
+	char			*filename;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
@@ -135,6 +136,7 @@ int					update_env(t_env **env, char *line);
 // ENV_UTILS2.c
 char				*ft_strchr_env_name(char *dest, char *src);
 char				*get_env_value(t_env *find_env, char *name_env);
+char				*ft_strndup(const char *s, size_t n);
 
 // GET_ENV.c
 char				**get_env(t_env *env);
@@ -145,6 +147,7 @@ void				catch_signals(t_global *global);
 bool				check_env_path_exists(t_global *global, char **env_cpy,
 						t_cmd *cmd_list);
 bool				check_valid_type(t_token *token_list, t_cmd *cmd_list);
+t_cmd				*last_element_of_cmd_list(t_cmd *cmd_list);
 
 // EXECVE.c
 char				*get_command_path(const char *cmd);
@@ -153,10 +156,9 @@ void				execute_command(t_global *global, t_cmd *cmd_list,
 
 // HEREDOC.c
 int					in_heredoc(int fd, char *word);
-int					ft_heredoc(t_global *global, char *word);
+int					ft_heredoc(t_global *global, char *word, t_cmd *cmd);
 
 // INIT_CMD.c
-t_cmd				*last_element_of_cmd_list(t_cmd *cmd_list);
 void				append_node_to_cmd_list(t_cmd **cmd);
 char				**fill_cmd_args(t_token *token_list);
 void				fill_cmd_node(t_cmd **cmd, t_token *current_token);
@@ -164,11 +166,11 @@ void				init_cmd_list(t_cmd **cmd, t_token **token);
 
 // LAUNCH_LINE.c
 bool				pipe_inside_token_list(t_global *global);
-void				launch_line(t_global *global, t_env **env,
-						t_token *token_list);
+void				launch_line(t_global *global, t_env **env);
 
 // PIPE.c
-void				handle_redirections(t_cmd *cmd, int input_fd, int *fds);
+void				handle_redirections_pipe(t_cmd *cmd, int input_fd,
+						int *fds);
 void				parent_process(int *fds, int *backup_fd, pid_t pid);
 void				child_process(t_cmd *cmd, int *fds, t_global *global,
 						int input_fd);
@@ -213,7 +215,9 @@ bool				tok_is_redir(t_token *token);
 bool				str_is_redirection(char *str);
 
 // REDIRECTION_2.c
-void				handle_redirection(t_global *global, t_token *token_list);
+// int					handle_redirection(t_global *global,
+// t_token *token_list);
+int					handle_redirection(t_global *global, t_cmd *cmd);
 int					redirect(char *filename, int mode, int std_fd);
 
 // SPECIAL_TOKEN.c
@@ -247,6 +251,5 @@ void				calloc_global_struct(t_global **global_data);
 char				**fill_arg_after_cmd(t_token *token_list);
 void				init_env_list(t_env **env_to_add, char **env);
 void				init_env(t_env *env_list);
-void				launch_redirection(t_global *global, t_token *token);
 
 #endif
