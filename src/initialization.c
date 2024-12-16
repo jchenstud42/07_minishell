@@ -73,5 +73,13 @@ void	init_env(t_env *env_list)
 		return ;
 	value = ft_strchr(env_list->env, '=');
 	if (value)
+	{
 		env_list->value = ft_strdup(value + 1);
+		if (env_list->value == NULL)
+		{
+			free(env_list->name);
+			env_list->name = NULL;
+			return ;
+		}
+	}
 }

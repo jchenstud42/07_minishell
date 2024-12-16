@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/14 13:10:53 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:33:40 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	update_oldpwd(t_global *global)
 		update_env(&global->env_list, stock_oldpwd);
 		free(stock_oldpwd);
 	}
-	else
-		update_env(&global->env_list, "PWD=");
 }
 
 void	update_pwd(t_global *global)

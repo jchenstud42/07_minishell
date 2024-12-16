@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/14 16:43:16 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:14:16 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ int	env_add_node(t_env **env, char *value)
 		tmp = find_last_node_env(*env);
 		if (tmp)
 			tmp->next = new_node;
+		else
+		{
+			free(new_node->env);
+			free(new_node);
+			return (1);
+		}
 	}
 	else
 		*env = new_node;
@@ -104,6 +110,10 @@ int	update_env(t_env **env, char *line)
 		{
 			if (!new_env)
 				return (1);
+			if (tmp->name)
+				free(tmp->name);
+			if (tmp->value)
+				free(tmp->value);
 			free(tmp->env);
 			tmp->env = new_env;
 			tmp->value = ft_strchr(new_env, '=') + 1;
