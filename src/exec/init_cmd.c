@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:56:51 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 19:22:37 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 14:44:00 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,61 +136,3 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 	// }
 	////////////////////////////////////////////////////////////
 }
-
-// // Initialise notre structure de commandes.
-// void	init_cmd_list(t_cmd **cmd, t_token **token)
-// {
-// 	t_token	*current_token;
-
-// 	if (cmd && *cmd)
-// 		free_cmd_list(cmd);
-// 	current_token = *token;
-// 	if (!current_token)
-// 		return ;
-// 	append_node_to_cmd_list(cmd);
-// 	while (current_token)
-// 	{
-// 		if (current_token->type == CMD)
-// 			fill_cmd_node(cmd, current_token);
-// 		else if (current_token->type == PIPE)
-// 			append_node_to_cmd_list(cmd);
-// 		current_token = current_token->next;
-// 	}
-// }
-
-// void	init_cmd_list(t_cmd **cmd, t_token **token)
-// {
-// 	t_token	*current_token;
-
-// 	// t_cmd	*start_cmd;
-// 	// t_cmd	*last_cmd_in_list;
-// 	if (cmd)
-// 		free_cmd_list(cmd);
-// 	current_token = *token;
-// 	if (!current_token)
-// 		return ;
-// 	append_node_to_cmd_list(cmd);
-// 	// last_cmd_in_list = last_element_of_cmd_list(*cmd);
-// 	while (current_token)
-// 	{
-// 		if (current_token->type == CMD)
-// 			fill_cmd_node(cmd, current_token);
-// 		else if (current_token->type == INPUT ||
-// 					current_token->type ==
-// 						APPEND ||
-// 					current_token->type == HEREDOC
-// 						|| current_token->type == OUTPUT)
-// 			handle_input_output(last_cmd_in_list, current_token, global);
-// 		else if (current_token->type == PIPE)
-// 			append_node_to_cmd_list(cmd);
-// 		current_token = current_token->next;
-// 	}
-// 	///// TEST PRINT ///////////////////////////////////////////
-// 	// start_cmd = *cmd;
-// 	// while (start_cmd)
-// 	// {
-// 	// 	ft_printf("[cmd : %s]\n", start_cmd->cmd);
-// 	// 	start_cmd = start_cmd->next;
-// 	// }
-// 	////////////////////////////////////////////////////////////
-// }

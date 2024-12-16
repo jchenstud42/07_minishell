@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 10:07:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:14:41 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int					update_env(t_env **env, char *line);
 // ENV_UTILS2.c
 char				*ft_strchr_env_name(char *dest, char *src);
 char				*get_env_value(t_env *find_env, char *name_env);
-char				*ft_strndup(const char *s, size_t n);
+char				*ft_strndup(const char *s, int n);
 
 // GET_ENV.c
 char				**get_env(t_env *env);

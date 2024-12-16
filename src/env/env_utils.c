@@ -6,41 +6,80 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 13:50:51 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:53:15 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// int	env_add_node(t_env **env, char *value)
+// {
+// 	t_env	*new_node;
+// 	t_env	*tmp;
+
+// 	if (!env || !value)
+// 		return (1);
+// 	new_node = malloc(sizeof(t_env));
+// 	if (!new_node)
+// 		return (1);
+// 	new_node->env = ft_strdup(value);
+// 	if (!new_node->env)
+// 	{
+// 		free(new_node);
+// 		return (1);
+// 	}
+// 	init_env(new_node);
+// 	new_node->next = NULL;
+// 	if (*env)
+// 	{
+// 		tmp = find_last_node_env(*env);
+// 		if (tmp)
+// 			tmp->next = new_node;
+// 		else
+// 		{
+// 			free(new_node->env);
+// 			free(new_node);
+// 			return (1);
+// 		}
+// 	}
+// 	else
+// 		*env = new_node;
+// 	return (0);
+// }
+
+static int	create_env_node(t_env **new_node, char *value)
+{
+	*new_node = malloc(sizeof(t_env));
+	if (!*new_node)
+		return (1);
+	(*new_node)->env = ft_strdup(value);
+	if (!(*new_node)->env)
+	{
+		free(*new_node);
+		return (1);
+	}
+	init_env(*new_node);
+	(*new_node)->next = NULL;
+	return (0);
+}
 
 int	env_add_node(t_env **env, char *value)
 {
 	t_env	*new_node;
 	t_env	*tmp;
 
-	if (!env || !value)
+	if (!env || !value || create_env_node(&new_node, value))
 		return (1);
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (1);
-	new_node->env = ft_strdup(value);
-	if (!new_node->env)
-	{
-		free(new_node);
-		return (1);
-	}
-	init_env(new_node);
-	new_node->next = NULL;
 	if (*env)
 	{
 		tmp = find_last_node_env(*env);
-		if (tmp)
-			tmp->next = new_node;
-		else
+		if (!tmp)
 		{
 			free(new_node->env);
 			free(new_node);
 			return (1);
 		}
+		tmp->next = new_node;
 	}
 	else
 		*env = new_node;
@@ -79,84 +118,22 @@ int	check_env_line_exist(t_env *env, char *line)
 	return (-1);
 }
 
-static char	*update_env_preparation(t_env **env, char *line, int *index)
+char	*ft_strchr_env_name(char *dest, char *src)
 {
-	char	*temp;
+	int	i;
 
-	if (!line || !env || !*env)
+	i = 0;
+	while (src[i] && src[i] != '=')
+		i++;
+	dest = malloc(sizeof(char) * (i + 1));
+	if (!dest)
 		return (NULL);
-	*index = check_env_line_exist(*env, line);
-	temp = ft_strdup(line);
-	if (!temp)
-		return (NULL);
-	return (temp);
-}
-
-// int	update_env(t_env **env, char *line)
-// {
-// 	int		index;
-// 	int		i;
-// 	char	*new_env;
-// 	t_env	*tmp;
-
-// 	new_env = update_env_preparation(env, line, &index);
-// 	if (new_env && index >= 0)
-// 	{
-// 		tmp = *env;
-// 		i = 0;
-// 		while (i++ < index && tmp)
-// 			tmp = tmp->next;
-// 		if (tmp)
-// 		{
-// 			if (!new_env)
-// 				return (1);
-// 			if (tmp->name)
-// 				free(tmp->name);
-// 			free(tmp->env);
-// 			tmp->env = new_env;
-// 			tmp->value = ft_strchr(new_env, '=') + 1;
-// 			tmp->name = ft_strndup(new_env, ft_strchr(new_env, '=') - new_env);
-// 			if (tmp->name == NULL)
-// 				return (1);
-// 		}
-// 	}
-// 	else if (new_env && env_add_node(env, new_env))
-// 		return (free(new_env), 0);
-// 	else if (new_env)
-// 		return (free(new_env), 1);
-// 	return (0);
-// }
-int	update_env(t_env **env, char *line)
-{
-	int		index;
-	char	*new_env;
-	t_env	*tmp;
-
-	new_env = update_env_preparation(env, line, &index);
-	if (!new_env)
-		return (1);
-	if (index >= 0)
+	i = 0;
+	while (src[i] && src[i] != '=')
 	{
-		tmp = *env;
-		while (tmp && index-- > 0)
-			tmp = tmp->next;
-		if (tmp)
-		{
-			free(tmp->env);
-			tmp->env = new_env;
-			tmp->value = ft_strchr(new_env, '=') + 1;
-			tmp->name = ft_strndup(new_env, ft_strchr(new_env, '=') - new_env);
-			if (tmp->name == NULL)
-			{
-				free(new_env);
-				return (1);
-			}
-		}
+		dest[i] = src[i];
+		i++;
 	}
-	else if (env_add_node(env, new_env))
-	{
-		free(new_env);
-		return (1);
-	}
-	return (0);
+	dest[i] = '\0';
+	return (dest);
 }
