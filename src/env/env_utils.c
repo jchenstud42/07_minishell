@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 10:14:16 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:50:51 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,39 +92,71 @@ static char	*update_env_preparation(t_env **env, char *line, int *index)
 	return (temp);
 }
 
+// int	update_env(t_env **env, char *line)
+// {
+// 	int		index;
+// 	int		i;
+// 	char	*new_env;
+// 	t_env	*tmp;
+
+// 	new_env = update_env_preparation(env, line, &index);
+// 	if (new_env && index >= 0)
+// 	{
+// 		tmp = *env;
+// 		i = 0;
+// 		while (i++ < index && tmp)
+// 			tmp = tmp->next;
+// 		if (tmp)
+// 		{
+// 			if (!new_env)
+// 				return (1);
+// 			if (tmp->name)
+// 				free(tmp->name);
+// 			free(tmp->env);
+// 			tmp->env = new_env;
+// 			tmp->value = ft_strchr(new_env, '=') + 1;
+// 			tmp->name = ft_strndup(new_env, ft_strchr(new_env, '=') - new_env);
+// 			if (tmp->name == NULL)
+// 				return (1);
+// 		}
+// 	}
+// 	else if (new_env && env_add_node(env, new_env))
+// 		return (free(new_env), 0);
+// 	else if (new_env)
+// 		return (free(new_env), 1);
+// 	return (0);
+// }
 int	update_env(t_env **env, char *line)
 {
 	int		index;
-	int		i;
 	char	*new_env;
 	t_env	*tmp;
 
 	new_env = update_env_preparation(env, line, &index);
-	if (new_env && index >= 0)
+	if (!new_env)
+		return (1);
+	if (index >= 0)
 	{
 		tmp = *env;
-		i = 0;
-		while (i++ < index && tmp)
+		while (tmp && index-- > 0)
 			tmp = tmp->next;
 		if (tmp)
 		{
-			if (!new_env)
-				return (1);
-			if (tmp->name)
-				free(tmp->name);
-			if (tmp->value)
-				free(tmp->value);
 			free(tmp->env);
 			tmp->env = new_env;
 			tmp->value = ft_strchr(new_env, '=') + 1;
 			tmp->name = ft_strndup(new_env, ft_strchr(new_env, '=') - new_env);
 			if (tmp->name == NULL)
+			{
+				free(new_env);
 				return (1);
+			}
 		}
 	}
-	else if (new_env && env_add_node(env, new_env))
-		return (free(new_env), 0);
-	else if (new_env)
-		return (free(new_env), 1);
+	else if (env_add_node(env, new_env))
+	{
+		free(new_env);
+		return (1);
+	}
 	return (0);
 }
