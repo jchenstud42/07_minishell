@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 14:57:21 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 19:04:19 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:46:41 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_heredoc(t_global *global, char *word, t_cmd *cmd)
 	pid_t	pid;
 	int		status;
 
-	cmd->infile_cmd = -1;
+	cmd->infile = -1;
 	fd = open(".heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (1);

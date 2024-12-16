@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:55:30 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 14:50:58 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:41:17 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static void	cleaning_for_next_loop(t_global *global)
 	{
 		while (cmd)
 		{
-			if (cmd->infile_cmd != -1)
-				close(cmd->infile_cmd);
-			if (cmd->outfile_cmd != -1)
-				close(cmd->outfile_cmd);
-			cmd->infile_cmd = -1;
-			cmd->outfile_cmd = -1;
+			if (cmd->infile != -1)
+				close(cmd->infile);
+			if (cmd->outfile != -1)
+				close(cmd->outfile);
+			cmd->infile = -1;
+			cmd->outfile = -1;
 			cmd = cmd->next;
 		}
 	}

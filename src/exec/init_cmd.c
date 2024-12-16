@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:56:51 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 14:44:00 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:39:23 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	append_node_to_cmd_list(t_cmd **cmd)
 	cmd_to_append = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd_to_append)
 		return (perror("error, cmd list malloc failed"));
-	cmd_to_append->infile_cmd = -1;
-	cmd_to_append->outfile_cmd = -1;
+	cmd_to_append->infile = -1;
+	cmd_to_append->outfile = -1;
 	cmd_to_append->filename = NULL;
 	if (*cmd == NULL)
 	{
@@ -92,13 +92,13 @@ static void	handle_input_output(t_cmd **cmd, t_token *current_token)
 
 	last_cmd = last_element_of_cmd_list(*cmd);
 	if (current_token->type == INPUT)
-		last_cmd->infile_cmd = INPUT;
+		last_cmd->infile = INPUT;
 	else if (current_token->type == HEREDOC)
-		last_cmd->infile_cmd = HEREDOC;
+		last_cmd->infile = HEREDOC;
 	else if (current_token->type == APPEND)
-		last_cmd->outfile_cmd = APPEND;
+		last_cmd->outfile = APPEND;
 	else if (current_token->type == OUTPUT)
-		last_cmd->outfile_cmd = OUTPUT;
+		last_cmd->outfile = OUTPUT;
 	if (current_token->next)
 		last_cmd->filename = ft_strdup(current_token->next->token);
 }
@@ -129,8 +129,8 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 	// start_cmd = *cmd;
 	// while (start_cmd)
 	// {
-	// 	printf("%s [in %d] [out %d] ", start_cmd->cmd, start_cmd->infile_cmd,
-	// 			start_cmd->outfile_cmd);
+	// 	printf("%s [in %d] [out %d] ", start_cmd->cmd, start_cmd->infile,
+	// 			start_cmd->outfile);
 	// 	printf("[file : %s\n]", start_cmd->filename);
 	// 	start_cmd = start_cmd->next;
 	// }

@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 14:54:52 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:41:40 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 {
+	// static int	i = 1;
+	// printf("PASSAGE N.%d\n", i);
+	// i++;
+	// printf("cmd infile = %d\n", cmd->infile);
+	// printf("cmd outfile = %d\n", cmd->outfile);
 	if (input_fd != STDIN_FILENO)
 	{
 		if (dup2(input_fd, STDIN_FILENO) == -1)
@@ -50,23 +55,29 @@ void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 		close(fds[1]);
 	}
 	close(fds[0]);
-	if (cmd->infile_cmd != -1)
+	if (cmd->infile > -1)
 	{
-		// printf("ok cmd->infile\n");
-		// if (dup2(cmd->infile_cmd, STDIN_FILENO) == -1)
-		// {
-		// 	perror("error dup2");
-		// 	exit(1);
-		// }
-		// printf("ok dup2\n");
-		// close(cmd->infile_cmd);
-		printf("ok close\n");
-	}
-	if (cmd->outfile_cmd != -1)
-	{
-		if (dup2(cmd->outfile_cmd, STDOUT_FILENO) == -1)
+		if (dup2(cmd->infile, STDIN_FILENO) == -1)
 			exit(1);
-		close(cmd->outfile_cmd);
+		close(cmd->infile);
+	}
+	// if (cmd->outfile > -1)
+	// {
+	// 	printf("ok1\n");
+	// 	if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+	// 	{
+	// 		printf("ERROR\n");
+	// 		exit(1);
+	// 	}
+	// 	printf("ok3\n");
+	// 	close(cmd->outfile);
+	// 	printf("ok4\n");
+	// }
+	if (cmd->outfile > -1)
+	{
+		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+			exit(1);
+		close(cmd->outfile);
 	}
 }
 
@@ -87,7 +98,7 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 	handle_redirections_pipe(cmd, input_fd, fds);
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
-		execute_builtin(cmd, global);
+		prepare_builtin(cmd, global);
 		exit(0);
 	}
 	execute_command_in_pipe(cmd, &global->env_list, global);

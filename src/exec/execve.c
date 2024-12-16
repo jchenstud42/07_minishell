@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:51:13 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 15:21:51 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:53:21 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,20 @@ static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 	int	saved_stdin;
 	int	saved_stdout;
 
+	if (cmd_list->infile < -1 || cmd_list->outfile < -1)
+		exit_function(global, false);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
-	if (global->cmd_list->outfile_cmd != -1)
-		dup2(global->cmd_list->outfile_cmd, STDOUT_FILENO);
-	if (global->cmd_list->infile_cmd != -1)
-		dup2(global->cmd_list->infile_cmd, STDIN_FILENO);
+	if (cmd_list->outfile > -1)
+	{
+		dup2(cmd_list->outfile, STDOUT_FILENO);
+		close(cmd_list->outfile);
+	}
+	if (cmd_list->infile > -1)
+	{
+		dup2(cmd_list->infile, STDIN_FILENO);
+		close(cmd_list->infile);
+	}
 	signal(SIGQUIT, SIG_DFL);
 	if (!access(cmd_list->cmd, X_OK))
 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
@@ -76,28 +84,6 @@ static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 	close(saved_stdin);
 	close(saved_stdout);
 }
-
-// static void	execute_child_process(t_cmd *cmd_list, char **env_array,
-// 		t_global *global, t_token *token_list)
-// {
-// 	signal(SIGQUIT, SIG_DFL);
-// 	if (!access(cmd_list->cmd, X_OK))
-// 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
-// 	if (token_list->type == HEREDOC || token_list->type == APPEND
-// 		|| token_list->type == INPUT || token_list->type == OUTPUT)
-// 		return ;
-// 	cmd_list->cmd_path = get_command_path(cmd_list->cmd);
-// 	if (!cmd_list->cmd_path || ((execve(cmd_list->cmd_path, cmd_list->cmd_args,
-// 					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
-// 				true)))
-// 	{
-// 		ft_putstr_fd("minishell: ", 2);
-// 		ft_putstr_fd(cmd_list->cmd, 2);
-// 		ft_putstr_fd(" command not found\n", 2);
-// 		global->exit_value = 127;
-// 		exit_function(global, false);
-// 	}
-// }
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {

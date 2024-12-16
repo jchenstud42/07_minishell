@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:26:02 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 19:02:02 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:57:15 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	launch_redirection(t_global *global, t_cmd *cmd)
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->infile_cmd == INPUT || tmp->infile_cmd == HEREDOC
-			|| tmp->outfile_cmd == APPEND || tmp->outfile_cmd == OUTPUT)
+		if (tmp->infile == INPUT || tmp->infile == HEREDOC
+			|| tmp->outfile == APPEND || tmp->outfile == OUTPUT)
 			handle_redirection(global, cmd);
 		tmp = tmp->next;
 	}
@@ -60,49 +60,10 @@ void	launch_line(t_global *global, t_env **env)
 		while (current_cmd)
 		{
 			if (is_builtin(current_cmd->cmd) == 0)
-				execute_builtin(current_cmd, global);
+				prepare_builtin(current_cmd, global);
 			else
 				execute_command(global, current_cmd, env);
 			current_cmd = current_cmd->next;
 		}
 	}
 }
-
-// void	launch_redirection(t_global *global, t_token *token)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = token;
-// 	while (tmp)
-// 	{
-// 		if (tmp->type == INPUT || tmp->type == HEREDOC || tmp->type == APPEND
-// 			|| tmp->type == OUTPUT)
-// 			handle_redirection(global, token);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// void	launch_line(t_global *global, t_env **env, t_token *token_list)
-// {
-// 	t_cmd	*current_cmd;
-
-// 	if (!global)
-// 		return (perror("erreur, empty global struct"));
-// 	launch_redirection(global, token_list);
-// 	if (!global->cmd_list->cmd)
-// 		return ;
-// 	current_cmd = (global->cmd_list);
-// 	if (pipe_inside_token_list(global))
-// 		execute_pipe(current_cmd, global);
-// 	else
-// 	{
-// 		while (current_cmd)
-// 		{
-// 			if (is_builtin(current_cmd->cmd) == 0)
-// 				execute_builtin(current_cmd, global);
-// 			else
-// 				execute_command(global, current_cmd, env);
-// 			current_cmd = current_cmd->next;
-// 		}
-// 	}
-// }

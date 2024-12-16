@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:42:28 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 16:07:59 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:25:46 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	env_len(t_env *env)
 	return (i);
 }
 
-static void	builtin_execution(t_cmd *cmd_list, t_global *global)
+static void	execute_builtin(t_cmd *cmd_list, t_global *global)
 {
 	if (ft_strcmp(cmd_list->cmd, "cd") == 0)
 		ft_cd(global, cmd_list->cmd_args);
@@ -56,20 +56,22 @@ static void	builtin_execution(t_cmd *cmd_list, t_global *global)
 		ft_dollar_question(global);
 }
 
-void	execute_builtin(t_cmd *cmd_list, t_global *global)
+void	prepare_builtin(t_cmd *cmd_list, t_global *global)
 {
 	int	saved_stdin;
 	int	saved_stdout;
 
+	if (cmd_list->infile < -1 || cmd_list->outfile < -1)
+		return ;
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (saved_stdin == -1 || saved_stdout == -1)
 		return (perror("dup sauvegarde"));
-	if (global->cmd_list->outfile_cmd != -1)
-		dup2(global->cmd_list->outfile_cmd, STDOUT_FILENO);
-	if (global->cmd_list->infile_cmd != -1)
-		dup2(global->cmd_list->infile_cmd, STDIN_FILENO);
-	builtin_execution(cmd_list, global);
+	if (global->cmd_list->outfile > -1)
+		dup2(global->cmd_list->outfile, STDOUT_FILENO);
+	if (global->cmd_list->infile > -1)
+		dup2(global->cmd_list->infile, STDIN_FILENO);
+	execute_builtin(cmd_list, global);
 	if (dup2(saved_stdin, STDIN_FILENO) == -1)
 		perror("Restauration stdin");
 	if (dup2(saved_stdout, STDOUT_FILENO) == -1)

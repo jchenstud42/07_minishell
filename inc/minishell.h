@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 15:47:21 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:57:15 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**cmd_args;
 	char			*cmd_path;
-	int				infile_cmd;
-	int				outfile_cmd;
+	int				infile;
+	int				outfile;
 	char			*filename;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -88,7 +88,7 @@ typedef struct global
 // BUILTINS_UTILS.C
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
-void				execute_builtin(t_cmd *cmd_list, t_global *global);
+void				prepare_builtin(t_cmd *cmd_list, t_global *global);
 void				permission_denied_message(char *error_msg,
 						t_global *global);
 

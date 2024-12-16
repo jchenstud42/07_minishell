@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 15:49:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:17:27 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,16 @@ int	ft_cd(t_global *global, char **cmd_list)
 		new_path = chdir(cmd_list[1]);
 		if (new_path == -1)
 		{
-			if (access(cmd_list[1], R_OK | W_OK | X_OK) == -1)
+			if (access(cmd_list[1], R_OK | W_OK | X_OK) == -1
+				&& access(cmd_list[1], F_OK) == 0)
 				return (permission_denied_message(cmd_list[1], global), 1);
 			return (cd_print_error_message(cmd_list[1], global), 1);
 		}
-		update_pwd(global);
-		global->exit_value = 0;
-		return (0);
+		return (update_pwd(global), global->exit_value = 0, 0);
 	}
 	else
-	{
-		global->exit_value = 1;
-		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
-	}
+		return (global->exit_value = 1,
+			ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
 }
 
 int	cd_home(t_global *global)
