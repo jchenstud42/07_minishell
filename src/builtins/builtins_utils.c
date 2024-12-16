@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:42:28 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 17:00:13 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:07:59 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,12 @@ void	execute_builtin(t_cmd *cmd_list, t_global *global)
 		perror("Restauration stdout");
 	close(saved_stdin);
 	close(saved_stdout);
+}
+
+void	permission_denied_message(char *error_msg, t_global *global)
+{
+	ft_putstr_fd("cd: Permission denied: ", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_putstr_fd("\n", 2);
+	global->exit_value = 1;
 }

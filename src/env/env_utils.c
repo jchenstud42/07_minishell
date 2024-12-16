@@ -6,46 +6,11 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 14:53:15 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:39:01 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// int	env_add_node(t_env **env, char *value)
-// {
-// 	t_env	*new_node;
-// 	t_env	*tmp;
-
-// 	if (!env || !value)
-// 		return (1);
-// 	new_node = malloc(sizeof(t_env));
-// 	if (!new_node)
-// 		return (1);
-// 	new_node->env = ft_strdup(value);
-// 	if (!new_node->env)
-// 	{
-// 		free(new_node);
-// 		return (1);
-// 	}
-// 	init_env(new_node);
-// 	new_node->next = NULL;
-// 	if (*env)
-// 	{
-// 		tmp = find_last_node_env(*env);
-// 		if (tmp)
-// 			tmp->next = new_node;
-// 		else
-// 		{
-// 			free(new_node->env);
-// 			free(new_node);
-// 			return (1);
-// 		}
-// 	}
-// 	else
-// 		*env = new_node;
-// 	return (0);
-// }
 
 static int	create_env_node(t_env **new_node, char *value)
 {

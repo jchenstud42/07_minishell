@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:34:39 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 10:33:40 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:49:15 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ int	ft_cd(t_global *global, char **cmd_list)
 	{
 		new_path = chdir(cmd_list[1]);
 		if (new_path == -1)
+		{
+			if (access(cmd_list[1], R_OK | W_OK | X_OK) == -1)
+				return (permission_denied_message(cmd_list[1], global), 1);
 			return (cd_print_error_message(cmd_list[1], global), 1);
+		}
 		update_pwd(global);
 		global->exit_value = 0;
 		return (0);

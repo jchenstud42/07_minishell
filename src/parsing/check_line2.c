@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 19:37:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 15:26:17 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:14:18 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ bool	is_point_and_slash(char *token, t_global *global)
 	int	i;
 
 	i = -1;
+	if (access(token, F_OK) == -1)
+		return (false);
+	if (access(token, X_OK) == 0)
+		return (false);
 	while (token[++i])
 	{
 		if ((token[i] != '.' && token[i] != '/'))

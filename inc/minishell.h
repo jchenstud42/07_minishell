@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 14:14:41 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:47:21 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct global
 void				ft_swap_tab(int i, int j, char **tab);
 int					env_len(t_env *env);
 void				execute_builtin(t_cmd *cmd_list, t_global *global);
+void				permission_denied_message(char *error_msg,
+						t_global *global);
 
 // CD.C
 void				cd_print_error_message(char *error_msg, t_global *global);
