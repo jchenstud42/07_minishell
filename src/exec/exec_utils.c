@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:41:01 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 17:40:27 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:43:48 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	catch_signals(t_global *global)
 {
 	int	status;
 
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_nl);
 	signal(SIGQUIT, handle_nl);
 	while (wait(&status) > 0)

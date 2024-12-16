@@ -6,13 +6,14 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 17:12:30 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:30:12 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	redirect_trunc_append(char *filename, t_global *global, int mode)
+static int	redirect_trunc_append(t_cmd *cmd, char *filename, t_global *global,
+		int mode)
 {
 	int	fd;
 
@@ -22,16 +23,17 @@ static int	redirect_trunc_append(char *filename, t_global *global, int mode)
 		ft_putstr_fd("minishell:", 2);
 		ft_putstr_fd(filename, 2);
 		ft_putstr_fd(" : No such file or directory\n", 2);
-		global->cmd_list->infile = -2;
+		cmd->infile = -2;
 		global->exit_value = 1;
 		return (1);
 	}
-	global->cmd_list->outfile = fd;
+	cmd->outfile = fd;
 	global->exit_value = 0;
 	return (0);
 }
 
-static int	redirect_input(char *filename, t_global *global, int mode)
+static int	redirect_input(t_cmd *cmd, char *filename, t_global *global,
+		int mode)
 {
 	int	fd;
 
@@ -41,11 +43,11 @@ static int	redirect_input(char *filename, t_global *global, int mode)
 		ft_putstr_fd("minishell:", 2);
 		ft_putstr_fd(filename, 2);
 		ft_putstr_fd(" : No such file or directory\n", 2);
-		global->cmd_list->infile = -2;
+		cmd->infile = -2;
 		global->exit_value = 1;
 		return (1);
 	}
-	global->cmd_list->infile = fd;
+	cmd->infile = fd;
 	global->exit_value = 0;
 	return (0);
 }
@@ -62,14 +64,14 @@ int	handle_redirection(t_global *global, t_cmd *cmd)
 	while (cmd)
 	{
 		if (cmd->infile == INPUT)
-			redirect_input(cmd->filename, global, O_RDONLY);
+			redirect_input(cmd, cmd->filename, global, O_RDONLY);
 		else if (cmd->infile == HEREDOC)
 			ft_heredoc(global, cmd->filename, cmd);
 		else if (cmd->outfile == OUTPUT)
-			redirect_trunc_append(cmd->filename, global,
+			redirect_trunc_append(cmd, cmd->filename, global,
 				O_WRONLY | O_TRUNC | O_CREAT);
 		else if (cmd->outfile == APPEND)
-			redirect_trunc_append(cmd->filename, global,
+			redirect_trunc_append(cmd, cmd->filename, global,
 				O_WRONLY | O_APPEND | O_CREAT);
 		cmd = cmd->next;
 	}

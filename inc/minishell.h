@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 14:44:54 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 16:57:15 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 17:59:52 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,6 @@ bool				tok_is_redir(t_token *token);
 bool				str_is_redirection(char *str);
 
 // REDIRECTION_2.c
-// int					handle_redirection(t_global *global,
-// t_token *token_list);
 int					handle_redirection(t_global *global, t_cmd *cmd);
 int					redirect(char *filename, int mode, int std_fd);
 

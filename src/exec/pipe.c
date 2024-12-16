@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 17:41:40 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:25:44 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 // Permet de dupliquer, rediriger et fermer les descripteurs de fichier.
 void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 {
-	// static int	i = 1;
-	// printf("PASSAGE N.%d\n", i);
-	// i++;
-	// printf("cmd infile = %d\n", cmd->infile);
-	// printf("cmd outfile = %d\n", cmd->outfile);
 	if (input_fd != STDIN_FILENO)
 	{
 		if (dup2(input_fd, STDIN_FILENO) == -1)
@@ -61,18 +56,6 @@ void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 			exit(1);
 		close(cmd->infile);
 	}
-	// if (cmd->outfile > -1)
-	// {
-	// 	printf("ok1\n");
-	// 	if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
-	// 	{
-	// 		printf("ERROR\n");
-	// 		exit(1);
-	// 	}
-	// 	printf("ok3\n");
-	// 	close(cmd->outfile);
-	// 	printf("ok4\n");
-	// }
 	if (cmd->outfile > -1)
 	{
 		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
