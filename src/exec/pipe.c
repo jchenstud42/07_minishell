@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/14 19:17:18 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 14:54:52 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ void	handle_redirections_pipe(t_cmd *cmd, int input_fd, int *fds)
 	close(fds[0]);
 	if (cmd->infile_cmd != -1)
 	{
-		if (dup2(cmd->infile_cmd, STDIN_FILENO) == -1)
-			exit(1);
-		close(cmd->infile_cmd);
+		// printf("ok cmd->infile\n");
+		// if (dup2(cmd->infile_cmd, STDIN_FILENO) == -1)
+		// {
+		// 	perror("error dup2");
+		// 	exit(1);
+		// }
+		// printf("ok dup2\n");
+		// close(cmd->infile_cmd);
+		printf("ok close\n");
 	}
 	if (cmd->outfile_cmd != -1)
 	{

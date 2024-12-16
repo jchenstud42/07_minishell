@@ -6,7 +6,7 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:27:09 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/14 19:17:39 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/16 14:42:26 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int	handle_redirection(t_global *global, t_cmd *cmd)
 		return (perror("dup sauvegarde"), 1);
 	while (cmd)
 	{
-		if (cmd->infile_cmd == INPUT) // <
+		if (cmd->infile_cmd == INPUT)
 			redirect_input(cmd->filename, global, O_RDONLY);
-		else if (cmd->infile_cmd == HEREDOC) // <<
+		else if (cmd->infile_cmd == HEREDOC)
 			ft_heredoc(global, cmd->filename, cmd);
-		else if (cmd->outfile_cmd == OUTPUT) // >
+		else if (cmd->outfile_cmd == OUTPUT)
 			redirect_trunc_append(cmd->filename, global,
-					O_WRONLY | O_TRUNC | O_CREAT);
-		else if (cmd->outfile_cmd == APPEND) // >>
+				O_WRONLY | O_TRUNC | O_CREAT);
+		else if (cmd->outfile_cmd == APPEND)
 			redirect_trunc_append(cmd->filename, global,
-					O_WRONLY | O_APPEND | O_CREAT);
+				O_WRONLY | O_APPEND | O_CREAT);
 		cmd = cmd->next;
 	}
 	if (dup2(saved_stdin, STDIN_FILENO) == -1 || dup2(saved_stdout,
