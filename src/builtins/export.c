@@ -15,29 +15,6 @@
 
 #include "../../inc/minishell.h"
 
-static int	env_exist_export(t_env *env, char *cmd)
-{
-	int		i;
-	int		j;
-	t_env	*tmp;
-
-	tmp = env;
-	if (!tmp)
-		return (-1);
-	i = 0;
-	j = 0;
-	while (cmd[i] != '=')
-		i++;
-	while (tmp != NULL)
-	{
-		if (!ft_strncmp(tmp->env, cmd, i) && (tmp->env[i] == '='
-				|| tmp->env[i] == '\0'))
-			return (j);
-		tmp = tmp->next;
-		j++;
-	}
-	return (-1);
-}
 
 static void	handle_export_line(t_env **env, char *line)
 {
@@ -45,25 +22,28 @@ static void	handle_export_line(t_env **env, char *line)
 	int		pos;
 	t_env	*env_cpy;
 
-	env_cpy = *env;
 	equal_sign = ft_strchr(line, '=');
-	if (equal_sign)
+	if (equal_sign && *(equal_sign + 1))
 	{
-		pos = env_exist_export(*env, line);
+		pos = check_env_line_exist(*env, line);
 		if (pos >= 0)
 		{
-			while (pos > 0)
+			env_cpy = *env;
+			while (pos > 0 && env_cpy)
 			{
 				env_cpy = env_cpy->next;
 				pos--;
 			}
-			free(env_cpy->value);
-			env_cpy->value = ft_strdup(equal_sign + 1);
+			if (env_cpy->value)
+			{
+				free(env_cpy->value);
+				env_cpy->value = ft_strdup(equal_sign + 1);
+			}
 		}
-		else
-			update_env(env, line);
+		update_env(env, line);
 	}
 }
+
 
 static int	export_error(t_global *global, char *line)
 {
