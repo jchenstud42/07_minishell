@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line2.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/11/27 19:37:11 by jchen             #+#    #+#             */
 /*   Updated: 2024/12/16 16:14:18 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
 
 // Verifie s'il y a un '/' dans notre token CMD, si oui
 // on verifie si c'est le chemin absolu d'une commande, ou sinon
@@ -32,23 +36,35 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 	return (false);
 }
 
+static bool	is_dir(char *token)
+{
+	int i;
+	DIR *dir;
+
+	i = 0;
+	dir = opendir(token);
+	if (dir)
+	{
+		if (token[i] == '.' && token[i + 1] && token[i + 1] == '/')
+			return (closedir(dir), true);
+		closedir(dir);
+	}
+	return (false);
+}
+
 bool	is_point_and_slash(char *token, t_global *global)
 {
-	int	i;
+	int i;
+	bool is_directory;
 
+	is_directory = is_dir(token);
 	i = -1;
-	if (access(token, F_OK) == -1)
-		return (false);
-	if (access(token, X_OK) == 0)
-		return (false);
-	while (token[++i])
+	while (token[++i] && !is_directory)
 	{
-		if ((token[i] != '.' && token[i] != '/'))
+		if (token[i] != '.' && token[i] != '/')
 			return (false);
 		if ((token[i] == '.' && token[i + 1] == '.' && token[i + 2] == '.'))
 			return (false);
-		if ((token[i] == '.' && token[i + 1] == '/'))
-			break ;
 	}
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(token, 2);
@@ -62,7 +78,8 @@ bool	pipe_after_pipe(t_global *global, t_token *token_list)
 	if (token_list->type == PIPE && token_list->next
 		&& token_list->next->type == PIPE)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
+			2);
 		return (global->exit_value = 2, true);
 	}
 	return (false);

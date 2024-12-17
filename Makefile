@@ -60,7 +60,7 @@ OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
 
 # Color codes for terminal output
-DEF_COLOR = \033[0;39m
+RESET = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m
 GREEN = \033[0;92m
@@ -79,14 +79,23 @@ all: $(LIBFT) $(NAME)
 
 # Target for making the Libft
 $(LIBFT):
-	@echo "$(GREEN)Making $(LIBFT)..."
+	@echo "$(BLUE)Making $(LIBFT)..."
 	@make -sC $(LIBFT_PATH)
 
 # Target to build the mandatory part
 $(NAME): $(OBJS)
-	@echo "$(GREEN)Compiling $(NAME)..."
+	@echo "$(GREEN)Compiling..."
+	@echo "                                           /&&                 /&& /&&"
+	@echo "               /&&           /&&          | &&                | &&| &&"
+	@echo "              |__/          |__/          | &&                | &&| &&"
+	@echo " /&&&&&&/&&&&  /&& /&&&&&&&  /&&  /&&&&&&&| &&&&&&&   /&&&&&& | &&| &&"
+	@echo "| &&_  &&_  &&| &&| &&__  &&| && /&&_____/| &&__  && /&&__  &&| &&| &&"
+	@echo "| && \ && \ &&| &&| &&  \ &&| &&|  &&&&&& | &&  \ &&| &&&&&&&&| &&| &&"
+	@echo "| && | && | &&| &&| &&  | &&| && \____  &&| &&  | &&| &&_____/| &&| &&"
+	@echo "| && | && | &&| &&| &&  | &&| && /&&&&&&&/| &&  | &&|  &&&&&&&| &&| &&"
+	@echo "|__/ |__/ |__/|__/|__/  |__/|__/|_______/ |__/  |__/ \_______/|__/|__/$(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(INC) $(READLINE_FLAG)
-	@echo "$(YELLOW)\n\o\ Compilation completed! /o/\n"
+	@echo "$(YELLOW)\n		\o\ Compilation completed! /o/\n"
 
 # Compiles C source files into object files
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c

@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/12/14 16:51:13 by jchen             #+#    #+#             */
 /*   Updated: 2024/12/16 16:53:21 by jchen            ###   ########.fr       */
 /*                                                                            */
@@ -12,13 +15,14 @@
 
 #include "../../inc/minishell.h"
 
+
 // Permet d'obtenir le chemin absolu d'une commande
 char	*get_command_path(const char *cmd)
 {
-	int		i;
-	char	*exec;
-	char	**allpath;
-	char	*path_part;
+	int i;
+	char *exec;
+	char **allpath;
+	char *path_part;
 
 	allpath = ft_split(getenv("PATH"), ':');
 	if (!allpath)
@@ -49,26 +53,32 @@ static void	exit_cmd_not_found(t_cmd *cmd_list, t_global *global)
 	exit_function(global, false);
 }
 
+static void	infile_outfile_handler(int *saved_stdin, int *saved_stdout,
+		t_cmd *cmd, t_global *global)
+{
+	if (cmd->infile < -1 || cmd->outfile < -1)
+		exit_function(global, false);
+	*saved_stdin = dup(STDIN_FILENO);
+	*saved_stdout = dup(STDOUT_FILENO);
+	if (cmd->outfile > -1)
+	{
+		dup2(cmd->outfile, STDOUT_FILENO);
+		close(cmd->outfile);
+	}
+	if (cmd->infile > -1)
+	{
+		dup2(cmd->infile, STDIN_FILENO);
+		close(cmd->infile);
+	}
+}
+
 static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 		t_global *global)
 {
-	int	saved_stdin;
-	int	saved_stdout;
+	int saved_stdin;
+	int saved_stdout;
 
-	if (cmd_list->infile < -1 || cmd_list->outfile < -1)
-		exit_function(global, false);
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (cmd_list->outfile > -1)
-	{
-		dup2(cmd_list->outfile, STDOUT_FILENO);
-		close(cmd_list->outfile);
-	}
-	if (cmd_list->infile > -1)
-	{
-		dup2(cmd_list->infile, STDIN_FILENO);
-		close(cmd_list->infile);
-	}
+	infile_outfile_handler(&saved_stdin, &saved_stdout, cmd_list, global);
 	signal(SIGQUIT, SIG_DFL);
 	if (!access(cmd_list->cmd, X_OK))
 		execve(cmd_list->cmd, cmd_list->cmd_args, env_array);
@@ -77,17 +87,16 @@ static void	execute_child_process(t_cmd *cmd_list, char **env_array,
 					env_array) == -1) && !slash_in_cmd_token(cmd_list->cmd,
 				true)))
 		exit_cmd_not_found(cmd_list, global);
-	if (dup2(saved_stdin, STDIN_FILENO) == -1)
+	if (dup2(saved_stdin, STDIN_FILENO) == -1 || dup2(saved_stdout,
+			STDOUT_FILENO) == -1)
 		perror("Restauration stdin");
-	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
-		perror("Restauration stdout");
 	close(saved_stdin);
 	close(saved_stdout);
 }
 
 void	execute_command(t_global *global, t_cmd *cmd_list, t_env **env)
 {
-	pid_t	pid;
+	pid_t pid;
 
 	if (global->env_array)
 		free_array(global->env_array);

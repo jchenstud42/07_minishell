@@ -15,6 +15,7 @@
 
 #include "../../inc/minishell.h"
 
+
 void	sig_c(int sig)
 {
 	if (sig == SIGINT)
@@ -42,9 +43,8 @@ void	sig_heredoc(int sig)
 	}
 }
 
-void	init_signals(t_global *global)
+void	init_signals(void)
 {
-	(void)global;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGINT, sig_c);

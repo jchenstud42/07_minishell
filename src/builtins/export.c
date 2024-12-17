@@ -18,9 +18,9 @@
 
 static void	handle_export_line(t_env **env, char *line)
 {
-	char	*equal_sign;
-	int		pos;
-	t_env	*env_cpy;
+	char *equal_sign;
+	int pos;
+	t_env *env_cpy;
 
 	equal_sign = ft_strchr(line, '=');
 	if (equal_sign && *(equal_sign + 1))
@@ -44,7 +44,6 @@ static void	handle_export_line(t_env **env, char *line)
 	}
 }
 
-
 static int	export_error(t_global *global, char *line)
 {
 	ft_putstr_fd("minishell: export: '", 2);
@@ -56,7 +55,7 @@ static int	export_error(t_global *global, char *line)
 
 int	ft_export(t_global *global, t_env **env, char **line)
 {
-	int	i;
+	int i;
 
 	i = 1;
 	if (!line[i] || !line)
