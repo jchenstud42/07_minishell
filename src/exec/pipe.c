@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 09:16:40 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:46:20 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	execute_command_in_pipe(t_cmd *cmd_list, t_env **env,
 		t_global *global)
 {
+	if (global->env_array)
+		free_array(global->env_array);
 	global->env_array = get_env(*env);
 	if (!check_valid_type(global->token_list, cmd_list)
 		|| !check_env_path_exists(global, global->env_array, cmd_list))
