@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:23:06 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/18 10:32:43 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:51:27 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int ac, char **av, char **env)
 			launch_line(global, &global->env_list);
 		if (global->line)
 			free(global->line);
-		// printf("exit value : %d\n", global->exit_value);
 	}
 	free_all(global);
 }

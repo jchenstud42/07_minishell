@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:56:51 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 09:16:36 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:51:33 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,4 @@ void	init_cmd_list(t_cmd **cmd, t_token **token)
 			append_node_to_cmd_list(cmd);
 		current_token = current_token->next;
 	}
-	///// TEST PRINT ///////////////////////////////////////////
-	// t_cmd	*start_cmd;
-	// start_cmd = *cmd;
-	// while (start_cmd)
-	// {
-	// 	printf("%s [in %d] [out %d] ", start_cmd->cmd, start_cmd->infile,
-	// 			start_cmd->outfile);
-	// 	printf("[file : %s\n]", start_cmd->filename);
-	// 	start_cmd = start_cmd->next;
-	// }
-	////////////////////////////////////////////////////////////
 }

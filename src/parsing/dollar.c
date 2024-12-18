@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 17:17:03 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 11:21:30 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:59:48 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*dollar_env(int *i, t_global *global, char **result)
 }
 
 static char	*translate_dollar_sign(t_global *gl, char *result, int *i,
-		bool double_quotes)
+		bool dbl_qts)
 {
 	if (gl->line[(*i) + 1] == '?')
 		result = dollar_question(result, gl, i);
@@ -87,15 +87,13 @@ static char	*translate_dollar_sign(t_global *gl, char *result, int *i,
 		while (gl->line[++(*i)] != '\'')
 			result = free_and_strcharjoin(&result, gl->line[(*i)++]);
 	}
-	else if (gl->line[(*i) + 1] == '"' && !double_quotes && gl->line[(*i)
-		+ 2] != '"')
+	else if (gl->line[(*i) + 1] == '"' && !dbl_qts && gl->line[(*i) + 2] != '"')
 	{
 		while (gl->line[++(*i)] != '"')
 			result = free_and_strcharjoin(&result, gl->line[(*i)++]);
 	}
-	else if (is_white_space(gl->line[(*i) + 1]) || (!ft_isalnum(gl->line[(*i)
-				+ 1]) && gl->line[(*i) + 2] != '\'' && gl->line[(*i)
-			+ 2] != '"'))
+	else if ((!ft_isalnum(gl->line[(*i) + 1]) && gl->line[(*i) + 2] != '\''
+			&& gl->line[(*i) + 2] != '"') || is_white_space(gl->line[(*i) + 1]))
 	{
 		result = free_and_strcharjoin(&result, '$');
 		(*i)++;

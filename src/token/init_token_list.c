@@ -6,7 +6,7 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:47:41 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 09:23:39 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:51:14 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,4 @@ void	append_node_to_token_list(t_global **global, char *prompt)
 		to_append->prev = last_node;
 		to_append->index = last_node->index + 1;
 	}
-	// A RETIRER PLUS TARD
-	// ft_printf("[%d] Type : %d, %s\n", to_append->index, to_append->type,
-	// 		to_append->token);
 }
