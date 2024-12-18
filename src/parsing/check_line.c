@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/12/09 15:53:50 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 18:16:43 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/18 09:25:26 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/12/18 11:07:52 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 static bool	invalid_double_special(t_token *token_list)
 {
@@ -97,7 +93,7 @@ bool	check_in_first_token(t_global *global, t_token *token_list)
 
 int	check_line(t_global *global, t_token *token_list)
 {
-	t_token *temp_token;
+	t_token	*temp_token;
 
 	if (!global | !token_list)
 		return (1);

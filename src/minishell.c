@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: jchen <jchen@student.42.fr>                +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/12/09 16:55:30 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 18:47:26 by jchen            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/18 09:23:06 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/12/18 10:32:43 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
 
 static void	minishell_initialization(t_global *global, int ac, char **av,
 		char **env)
@@ -26,7 +22,7 @@ static void	minishell_initialization(t_global *global, int ac, char **av,
 
 int	main(int ac, char **av, char **env)
 {
-	t_global *global;
+	t_global	*global;
 
 	calloc_global_struct(&global);
 	minishell_initialization(global, ac, av, env);

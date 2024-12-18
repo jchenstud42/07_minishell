@@ -3,28 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 10:54:25 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/17 14:57:43 by romain           ###   ########.fr       */
+/*   Updated: 2024/12/18 09:36:47 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void free_env_tab(char **env_tab)
+void	free_env_tab(char **env_tab)
 {
-    int i = 0;
-    if (!env_tab)
-        return;
-    while (env_tab[i])
-    {
-        free(env_tab[i]);
-        i++;
-    }
-    free(env_tab);
-}
+	int	i;
 
+	i = 0;
+	if (!env_tab)
+		return ;
+	while (env_tab[i])
+	{
+		free(env_tab[i]);
+		i++;
+	}
+	free(env_tab);
+}
 
 int	export_no_arg(t_env *env)
 {
@@ -39,7 +40,7 @@ int	export_no_arg(t_env *env)
 	i = 0;
 	while (env_tab[i])
 	{
-		j = 0; 
+		j = 0;
 		ft_printf("declare -x ");
 		while (env_tab[i][j] && env_tab[i][j] != '=')
 			ft_printf("%c", env_tab[i][j++]);

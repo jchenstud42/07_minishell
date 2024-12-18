@@ -2,25 +2,21 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/10/30 14:02:48 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/11/23 13:14:30 by rbouquet         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/18 09:26:22 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/12/18 09:26:23 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
 static void	handle_export_line(t_env **env, char *line)
 {
-	char *equal_sign;
-	int pos;
-	t_env *env_cpy;
+	char	*equal_sign;
+	int		pos;
+	t_env	*env_cpy;
 
 	equal_sign = ft_strchr(line, '=');
 	if (equal_sign && *(equal_sign + 1))
@@ -55,7 +51,7 @@ static int	export_error(t_global *global, char *line)
 
 int	ft_export(t_global *global, t_env **env, char **line)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!line[i] || !line)

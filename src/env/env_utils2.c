@@ -6,12 +6,13 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:49:36 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 14:54:37 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:22:35 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Prendre la value d'un env
 char	*get_env_value(t_env *find_env, char *name_env)
 {
 	while (find_env)
@@ -23,6 +24,7 @@ char	*get_env_value(t_env *find_env, char *name_env)
 	return (NULL);
 }
 
+// strdup avec une taille definit
 char	*ft_strndup(const char *s, int n)
 {
 	char	*temp;
@@ -43,6 +45,7 @@ char	*ft_strndup(const char *s, int n)
 	return (temp);
 }
 
+// Les 3 prochaines fonctions servent a update l'env quand il doit etre change
 static char	*update_env_preparation(t_env **env, char *line, int *index)
 {
 	char	*temp;

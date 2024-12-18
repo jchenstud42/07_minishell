@@ -6,12 +6,13 @@
 /*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 12:01:54 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/16 15:39:01 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/18 09:22:54 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Permet de creer un nouveau node pour dans les env
 static int	create_env_node(t_env **new_node, char *value)
 {
 	*new_node = malloc(sizeof(t_env));
@@ -28,6 +29,7 @@ static int	create_env_node(t_env **new_node, char *value)
 	return (0);
 }
 
+// Ajoute le nouveau node aux env
 int	env_add_node(t_env **env, char *value)
 {
 	t_env	*new_node;
@@ -51,6 +53,7 @@ int	env_add_node(t_env **env, char *value)
 	return (0);
 }
 
+// Permet de chercher le dernier node dans les env
 t_env	*find_last_node_env(t_env *env)
 {
 	if (!env)
@@ -60,6 +63,7 @@ t_env	*find_last_node_env(t_env *env)
 	return (env);
 }
 
+// Verifie si l'env passe en parametre existe deja ou pas
 int	check_env_line_exist(t_env *env, char *line)
 {
 	int		i;
@@ -83,6 +87,7 @@ int	check_env_line_exist(t_env *env, char *line)
 	return (-1);
 }
 
+// Permet de prendre seulement le "NAME" des env
 char	*ft_strchr_env_name(char *dest, char *src)
 {
 	int	i;

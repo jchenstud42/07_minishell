@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:24 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/17 14:55:10 by romain           ###   ########.fr       */
+/*   Updated: 2024/12/18 10:58:39 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// Recuper l'env et en faire une copie
 char	**get_env(t_env *env)
 {
 	t_env	*env_size;

@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_line2.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/11/27 19:37:11 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/16 16:14:18 by rbouquet         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/18 09:25:14 by rbouquet          #+#    #+#             */
+/*   Updated: 2024/12/18 10:44:03 by rbouquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 // Verifie s'il y a un '/' dans notre token CMD, si oui
 // on verifie si c'est le chemin absolu d'une commande, ou sinon
@@ -38,8 +34,8 @@ bool	slash_in_cmd_token(char *token, bool print_msg)
 
 static bool	is_dir(char *token)
 {
-	int i;
-	DIR *dir;
+	int	i;
+	DIR	*dir;
 
 	i = 0;
 	dir = opendir(token);
@@ -54,8 +50,8 @@ static bool	is_dir(char *token)
 
 bool	is_point_and_slash(char *token, t_global *global)
 {
-	int i;
-	bool is_directory;
+	int		i;
+	bool	is_directory;
 
 	is_directory = is_dir(token);
 	i = -1;
@@ -78,8 +74,7 @@ bool	pipe_after_pipe(t_global *global, t_token *token_list)
 	if (token_list->type == PIPE && token_list->next
 		&& token_list->next->type == PIPE)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `||'\n",
-			2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
 		return (global->exit_value = 2, true);
 	}
 	return (false);
