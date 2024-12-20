@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:09:52 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 11:46:20 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:00:42 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	child_process(t_cmd *cmd, int *fds, t_global *global, int input_fd)
 	if (is_builtin(cmd->cmd_args[0]) == 0)
 	{
 		prepare_builtin(cmd, global);
-		exit(0);
+		free_all(global);
 	}
 	execute_command_in_pipe(cmd, &global->env_list, global);
 }

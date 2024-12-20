@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbouquet <rbouquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:26:22 by rbouquet          #+#    #+#             */
-/*   Updated: 2024/12/18 09:26:23 by rbouquet         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:00:06 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_export_line(t_env **env, char *line)
 	t_env	*env_cpy;
 
 	equal_sign = ft_strchr(line, '=');
-	if (equal_sign && *(equal_sign + 1))
+	if (equal_sign)
 	{
 		pos = check_env_line_exist(*env, line);
 		if (pos >= 0)
@@ -36,8 +36,8 @@ static void	handle_export_line(t_env **env, char *line)
 				env_cpy->value = ft_strdup(equal_sign + 1);
 			}
 		}
-		update_env(env, line);
 	}
+	update_env(env, line);
 }
 
 static int	export_error(t_global *global, char *line)

@@ -6,12 +6,14 @@
 /*   By: jchen <jchen@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:40:55 by jchen             #+#    #+#             */
-/*   Updated: 2024/12/18 11:41:29 by jchen            ###   ########.fr       */
+/*   Updated: 2024/12/20 11:59:30 by jchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+// valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
 # include "libft.h"
 # include <dirent.h>
